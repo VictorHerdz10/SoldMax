@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Online - SoldMax</title>
+    <link rel="icon" href="/images/icono.jpg" type="image/jpeg">
+    <script src="/scripts/taildwindcss-3.4.16.js"></script>
+    <link rel="stylesheet" href="/css/fontawesome-free-6.7.2-web/css/all.css">
+    <link rel="stylesheet" href='/css/user.css'>
+    
+    
+</head>
+
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-green-600 text-white shadow-lg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <a href="userprincipal.html" class="flex items-center">
+                    <span class="font-bold text-2xl">SoldMax</span>
+                </a>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#productos" class="hover:text-green-200 transition-colors">Productos</a>
+                    <a href="#ofertas" class="hover:text-green-200 transition-colors">Ofertas</a>
+                    <a href="#favoritos" class="hover:text-green-200 transition-colors">Favoritos</a>
+                    <a href="#compras" class="hover:text-green-200 transition-colors">Mis Compras</a>
+                </nav>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button id="cartBtn" class="relative">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </button>
+                </div>
+                <button id="userMenuBtn" class="flex items-center space-x-2">
+                    <span id="userName" class="font-medium"></span>
+                    <i class="fas fa-user-circle text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Menú móvil -->
+    <div class="md:hidden fixed bottom-4 right-4 z-40">
+        <button id="mobileMenuBtn"
+            class="bg-green-600 text-white p-4 rounded-full shadow-lg hover:bg-green-700 transition-transform transform hover:scale-105">
+            <i class="fas fa-bars text-lg"></i>
+        </button>
+    </div>
+
+    <!-- Sidebar móvil -->
+    <div id="mobileMenu"
+        class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg transform -translate-x-full md:hidden z-50 transition-transform duration-300 ease-in-out">
+        <div class="p-4 bg-green-600 text-white flex justify-between items-center">
+            <span class="font-bold text-xl">SoldMax</span>
+            <button id="closeMobileMenu" class="text-white">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav class="p-4 space-y-4">
+            <a href="#productos" class="block hover:text-green-600">Productos</a>
+            <a href="#ofertas" class="block hover:text-green-600">Ofertas</a>
+            <a href="#favoritos" class="block hover:text-green-600">Favoritos</a>
+            <a href="#compras" class="block hover:text-green-600">Mis Compras</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Bienvenida -->
+        <!-- Reemplaza la sección de Bienvenida con este nuevo hero animado -->
+<section class="mb-12 relative overflow-hidden">
+    <div class="bg-gradient-to-r from-green-600 to-green-800 rounded-xl p-8 text-white relative z-10">
+        <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-6 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4" id="welcomeName">Bienvenido a SoldMax</h1>
+                <p class="text-xl md:text-2xl mb-6">Los mejores productos al mejor precio</p>
+                <a href="#productos" class="inline-block bg-white text-green-600 px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors text-lg">
+                    Ver Productos
+                </a>
+            </div>
+            <div class="md:w-1/2 relative h-64">
+                <!-- Animación de entrega de paquetes -->
+                <div id="deliveryAnimation" class="absolute inset-0 flex items-center justify-center">
+                    <div class="relative w-full h-full">
+                        <!-- Camión -->
+                        <div class="absolute bottom-0 left-1/4 transform -translate-x-1/2 animate-truck">
+                            <i class="fas fa-truck text-4xl text-yellow-300"></i>
+                        </div>
+                        <!-- Paquetes -->
+                        <div class="absolute bottom-8 right-1/4 animate-package-1">
+                            <i class="fas fa-box text-2xl text-white"></i>
+                        </div>
+                        <div class="absolute bottom-12 right-1/3 animate-package-2">
+                            <i class="fas fa-box-open text-2xl text-white"></i>
+                        </div>
+                        <div class="absolute bottom-16 right-1/2 animate-package-3">
+                            <i class="fas fa-box text-xl text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="absolute inset-0 bg-green-500 opacity-10 z-0">
+        <div class="absolute inset-0 bg-gradient-to-t from-green-900 to-transparent opacity-20"></div>
+    </div>
+</section>
+
+        <!-- Productos Destacados -->
+        <section id="productos" class="mb-12">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold">Productos Destacados</h2>
+                <div class="relative">
+                    <input id="searchInput" type="text" placeholder="Buscar productos..." 
+           class="w-full max-w-2xl mx-auto p-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="productsContainer">
+                <!-- Productos se cargarán dinámicamente aquí -->
+            </div>
+        </section>
+
+        <!-- Ofertas Especiales -->
+        <section id="ofertas" class="mb-12">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold">Ofertas Especiales</h2>
+                <button class="text-green-600 hover:text-green-800 transition-colors">
+                    Ver todas
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="offersContainer">
+                <!-- Ofertas se cargarán dinámicamente aquí -->
+            </div>
+        </section>
+
+        <!-- Favoritos -->
+        <section id="favoritos" class="mb-12">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold">Mis Favoritos</h2>
+                <button class="text-green-600 hover:text-green-800 transition-colors">
+                    Ver todos
+                </button>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="favoritesContainer">
+                <!-- Favoritos se cargarán dinámicamente aquí -->
+            </div>
+        </section>
+
+        <!-- Mis Compras -->
+        <section id="compras" class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">Mis Compras</h2>
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="purchasesTable" class="bg-white divide-y divide-gray-200">
+                            <!-- Compras se cargarán dinámicamente aquí -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="pendientes" class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">Mis Pedidos Pendientes</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="pendingOrdersContainer">
+                <!-- Pedidos pendientes se cargarán aquí -->
+            </div>
+        </section>
+
+        <!-- Categorías -->
+        <section id="categorias" class="mb-12">
+            <h2 class="text-2xl font-semibold mb-6">Explora por Categorías</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4" id="categoriesContainer">
+                <!-- Categorías se cargarán dinámicamente aquí -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">SoldMax</h3>
+                    <p>Tu tienda en línea favorita con los mejores productos y precios.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Enlaces</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#productos" class="hover:text-green-300 transition-colors">Productos</a></li>
+                        <li><a href="#ofertas" class="hover:text-green-300 transition-colors">Ofertas</a></li>
+                        <li><a href="#favoritos" class="hover:text-green-300 transition-colors">Favoritos</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Ayuda</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-green-300 transition-colors">Preguntas Frecuentes</a></li>
+                        <li><a href="#" class="hover:text-green-300 transition-colors">Envíos</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contacto</h3>
+                    <p>Email: info@soldmax.com</p>
+                    <p>Teléfono: +1 800 123 4567</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center">
+                <p>&copy; <span id="currentYear"></span> SoldMax. Todos los derechos reservados.</p>
+                <p class="text-sm mt-2" id="currentDate"></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Carrito -->
+    <div id="cartModal" class="modal-overlay hidden">
+        <div class="modal-container">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">Tu Carrito</h3>
+                    <button id="closeCartModal" class="text-gray-500 hover:text-gray-700 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="cartItems" class="space-y-4 mb-4 max-h-96 overflow-y-auto">
+                    <!-- Productos del carrito se cargarán aquí -->
+                </div>
+                <div class="border-t pt-4">
+                    <div class="flex justify-between mb-4">
+                        <span class="font-semibold">Total:</span>
+                        <span id="cartTotal" class="font-bold">$0.00</span>
+                    </div>
+                    <button id="checkoutBtn" class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition-colors">
+                        Proceder al Pago
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Usuario -->
+    <div id="userModal" class="modal-overlay hidden">
+        <div class="modal-container">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">Mi Cuenta</h3>
+                    <button id="closeUserModal" class="text-gray-500 hover:text-gray-700 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="space-y-4">
+                    <button id="viewProfileBtn" class="w-full text-left p-3 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fas fa-user mr-2"></i> Mi Perfil
+                    </button>
+                    <button id="logoutBtn" class="w-full text-left p-3 hover:bg-gray-100 rounded-lg transition-colors text-red-500">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de logout -->
+    <div id="logoutModal" class="modal-overlay hidden">
+        <div class="modal-container">
+            <div class="p-6">
+                <h3 class="text-lg font-semibold mb-4">¿Seguro que quieres cerrar sesión?</h3>
+                <div class="flex justify-end space-x-4">
+                    <button id="logoutCancel" class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">
+                        Cancelar
+                    </button>
+                    <button id="logoutConfirm" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors">
+                        Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <!-- Modal de pago mejorado para Cuba -->
+<div id="paymentModal" class="modal-overlay hidden">
+    <div class="modal-container max-w-2xl">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Confirmar Compra</h3>
+                <button id="closePaymentModal" class="text-gray-500 hover:text-gray-700 transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- Vista previa de la tarjeta -->
+            <div id="cardPreview" class="relative rounded-xl p-6 mb-6 text-white shadow-lg transition-all duration-300" 
+                 style="background: linear-gradient(135deg, #4b5563, #9ca3af)">
+                <div class="flex justify-between items-start mb-8">
+                    <img id="bankLogo" src="" alt="Banco" class="h-8 hidden">
+                    <span class="text-sm">Tarjeta MLC</span>
+                </div>
+                <div class="mb-6">
+                    <p class="text-sm mb-1">Número de tarjeta</p>
+                    <p id="cardNumberDisplay" class="text-xl font-mono tracking-wider">•••• •••• •••• ••••</p>
+                </div>
+                <div class="flex justify-between">
+                    <div>
+                        <p class="text-sm mb-1">Fecha de expiración</p>
+                        <p id="cardExpiryDisplay" class="font-mono">••/••</p>
+                    </div>
+                    <div>
+                        <p class="text-sm mb-1">CVV</p>
+                        <p class="font-mono">•••</p>
+                    </div>
+                </div>
+            </div>
+            
+            <form id="paymentForm" class="space-y-4">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium">Total a pagar:</span>
+                        <span id="paymentTotal" class="font-bold text-lg">$0.00</span>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-medium mb-2">Método de Pago</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <label class="payment-method">
+                            <input type="radio" name="paymentMethod" value="credit" checked>
+                            <div class="flex items-center">
+                                <i class="far fa-credit-card text-2xl mr-3 text-blue-500"></i>
+                                <div>
+                                    <p class="font-medium">Tarjeta de Crédito</p>
+                                    <p class="text-sm text-gray-600">Pago seguro con tu tarjeta</p>
+                                </div>
+                            </div>
+                        </label>
+                        
+                        <label class="payment-method">
+                            <input type="radio" name="paymentMethod" value="debit">
+                            <div class="flex items-center">
+                                <i class="fas fa-credit-card text-2xl mr-3 text-green-500"></i>
+                                <div>
+                                    <p class="font-medium">Tarjeta de Débito</p>
+                                    <p class="text-sm text-gray-600">Pago directo desde tu banco</p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="cardNumber" class="block mb-1">Número de Tarjeta</label>
+                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" 
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <p class="text-xs text-gray-500 mt-1">Ingresa los 16 dígitos de tu tarjeta (BANMET, BANDEC o BPA)</p>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="cardExpiry" class="block mb-1">Fecha de Expiración</label>
+                        <input type="text" id="cardExpiry" placeholder="MM/YY" 
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    
+                    <div>
+                        <label for="cvv" class="block mb-1">CVV</label>
+                        <input type="text" id="cvv" placeholder="123" 
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <p class="text-xs text-gray-500 mt-1">3 o 4 dígitos en el reverso</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="shippingAddress" class="block mb-1">Dirección de Envío</label>
+                    <textarea id="shippingAddress" rows="3" 
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                        placeholder="Ingresa tu dirección completa para el envío"></textarea>
+                </div>
+                
+                <div class="flex items-center">
+                    <input type="checkbox" id="autoProcess" class="mr-2" checked>
+                    <label for="autoProcess">Procesar pago inmediatamente</label>
+                </div>
+                
+                <div class="flex justify-end space-x-4 pt-4">
+                    <button type="button" id="cancelPaymentBtn" class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">
+                        Cancelar
+                    </button>
+                    <button type="button" id="confirmPaymentBtn" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
+                        Confirmar Compra
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal de detalles del producto -->
+    <div id="productDetailModal" class="modal-overlay hidden">
+        <div class="modal-container max-w-3xl">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold" id="productDetailTitle">Detalles del Producto</h3>
+                    <button id="closeProductDetailModal" class="text-gray-500 hover:text-gray-700 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <img id="productDetailImage" src=" " alt="Producto" class="w-full rounded-lg">
+                    </div>
+                    <div>
+                        <h4 class="text-2xl font-semibold mb-2" id="productDetailName"></h4>
+                        <div class="flex items-center mb-4">
+                            <span class="text-lg font-bold text-green-600 mr-2" id="productDetailPrice"></span>
+                            <span class="text-sm text-gray-500 line-through hidden" id="productDetailOldPrice"></span>
+                            <span class="text-sm text-red-500 ml-2 hidden" id="productDetailDiscount"></span>
+                        </div>
+                        <p class="text-gray-700 mb-4" id="productDetailDescription"></p>
+                        <div class="mb-4">
+                            <span class="font-medium">Categoría:</span>
+                            <span class="ml-2" id="productDetailCategory"></span>
+                        </div>
+                        <div class="mb-4">
+                            <span class="font-medium">Disponibilidad:</span>
+                            <span class="ml-2" id="productDetailStock"></span>
+                        </div>
+                        <div class="flex items-center space-x-4 mb-6">
+                            <div class="flex items-center">
+                                <button class="quantity-btn px-3 py-1 border rounded" id="decreaseQuantity">-</button>
+                                <input type="number" min="1" value="1" class="w-12 text-center border-t border-b" id="productQuantity">
+                                <button class="quantity-btn px-3 py-1 border rounded" id="increaseQuantity">+</button>
+                            </div>
+                            <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors" id="addToCartFromDetail">
+                                Añadir al carrito
+                            </button>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <button class="text-gray-700 hover:text-red-500 transition-colors" id="toggleFavoriteFromDetail">
+                                <i class="far fa-heart mr-2"></i>
+                                <span id="favoriteText">Añadir a favoritos</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de detalles de compra -->
+    <div id="purchaseDetailModal" class="modal-overlay hidden">
+        <div class="modal-container max-w-3xl">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">Detalles de Compra</h3>
+                    <button id="closePurchaseDetailModal" class="text-gray-500 hover:text-gray-700 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="mb-6">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-medium">ID de Compra:</span>
+                        <span id="purchaseId"></span>
+                    </div>
+                    <div class="flex justify-between mb-2">
+                        <span class="font-medium">Fecha:</span>
+                        <span id="purchaseDate"></span>
+                    </div>
+                    <div class="flex justify-between mb-2">
+                        <span class="font-medium">Total:</span>
+                        <span id="purchaseTotal"></span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="font-medium">Estado:</span>
+                        <span id="purchaseStatus"></span>
+                    </div>
+                </div>
+                <div class="border-t pt-4">
+                    <h4 class="font-semibold mb-4">Productos:</h4>
+                    <div class="space-y-4" id="purchaseProducts">
+                        <!-- Productos de la compra se cargarán aquí -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Agrega este modal de perfil (puedes colocarlo junto a los otros modales) -->
+<div id="profileModalInfo" class="modal-overlay hidden">
+    <div class="modal-container max-w-2xl">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Mi Perfil</h3>
+                <button id="closeProfileModal" class="text-gray-500 hover:text-gray-700 transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="md:col-span-1 flex flex-col items-center">
+                    <div class="relative mb-4">
+                        <div class="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden border-4 border-white shadow-lg">
+                            <i class="fas fa-user-circle text-6xl text-gray-400" id="profileAvatar"></i>
+                        </div>
+                        <button class="absolute bottom-0 right-0 bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 transition-colors">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    </div>
+                    <h4 id="profileNameDisplay" class="text-xl font-semibold text-center"></h4>
+                    <p id="profileUsernameDisplay" class="text-gray-600 text-center"></p>
+                </div>
+                <div class="md:col-span-2">
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <h4 class="font-semibold text-lg mb-4 border-b pb-2">Información Personal</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-500">Nombre completo</label>
+                                <p id="profileFullName" class="mt-1 text-gray-900"></p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-500">Correo electrónico</label>
+                                <p id="profileEmail" class="mt-1 text-gray-900"></p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-500">Teléfono</label>
+                                <p id="profilePhone" class="mt-1 text-gray-900"></p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-500">Dirección</label>
+                                <p id="profileAddress" class="mt-1 text-gray-900"></p>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t flex justify-end">
+                            <button id="editProfileBtn" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2">
+                                <i class="fas fa-edit"></i> Editar Perfil
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Modal de confirmación de contraseña -->
+<div id="passwordConfirmModal" class="modal-overlay hidden">
+    <div class="modal-container max-w-md">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Confirmar Pago</h3>
+                <button id="closePasswordConfirmModal" class="text-gray-500 hover:text-gray-700 transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <p>Para completar el pago, por favor confirme su contraseña:</p>
+                <div>
+                    <label for="confirmPasswordInput" class="block mb-1">Contraseña</label>
+                    <input type="password" id="confirmPasswordInput" 
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <p id="confirmPasswordError" class="text-red-500 text-sm hidden"></p>
+                </div>
+                <div class="flex justify-end space-x-4 pt-4">
+                    <button type="button" id="cancelPasswordConfirm" class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">
+                        Cancelar
+                    </button>
+                    <button type="button" id="confirmPaymentWithPassword" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
+                        Confirmar Pago
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal de Perfil -->
+<div id="profileModal"
+class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
+<div class="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
+    <div class="flex justify-between items-center border-b p-4 sticky top-0 bg-white z-10">
+        <h3 class="text-xl font-semibold text-gray-800">Editar Perfil</h3>
+        <button onclick="window.profileModule.closeProfileModal()" class="text-gray-500 hover:text-gray-700">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <form id="profileForm" class="p-4 space-y-3">
+        <!-- Nombre -->
+        <div class="space-y-1">
+            <label for="profileName" class="block text-sm font-medium text-gray-700">
+                Nombre Completo <span class="text-red-500">*</span>
+            </label>
+            <input type="text" id="profileName" maxlength="50"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm">
+            <div class="flex justify-between items-start">
+                <p id="profileNameError" class="text-xs text-red-600 hidden mt-1 max-w-[70%]"></p>
+                <p id="profileNameCounter" class="text-xs text-gray-500 text-right">50 caracteres restantes</p>
+            </div>
+        </div>
+
+        <!-- Nombre de Usuario -->
+        <div class="space-y-1">
+            <label for="profileUserName" class="block text-sm font-medium text-gray-700">
+                Nombre de Usuario <span class="text-red-500">*</span>
+            </label>
+            <input type="text" id="profileUserName" maxlength="20"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm">
+            <div class="flex justify-between items-start">
+                <p id="profileUserNameError" class="text-xs text-red-600 hidden mt-1 max-w-[70%]"></p>
+                <p id="profileUserNameCounter" class="text-xs text-gray-500 text-right">20 caracteres restantes
+                </p>
+            </div>
+        </div>
+
+        <!-- Email -->
+        <div class="space-y-1">
+            <label for="profileEmail" class="block text-sm font-medium text-gray-700">
+                Email <span class="text-red-500">*</span>
+            </label>
+            <input type="email" id="profileEmail" maxlength="50"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm">
+            <p id="profileEmailError" class="text-xs text-red-600 hidden mt-1"></p>
+        </div>
+
+        <!-- Teléfono -->
+        <div class="space-y-1">
+            <label for="profilePhone" class="block text-sm font-medium text-gray-700">
+                Teléfono <span class="text-red-500">*</span>
+            </label>
+            <input type="tel" id="profilePhone" pattern="[0-9]{8}" maxlength="8"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm"
+                placeholder="8 dígitos">
+            <p id="profilePhoneError" class="text-xs text-red-600 hidden mt-1"></p>
+        </div>
+
+        <!-- Contraseña -->
+        <div class="space-y-1">
+            <label for="profilePassword" class="block text-sm font-medium text-gray-700">
+                Nueva Contraseña
+            </label>
+            <input type="password" id="profilePassword"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm">
+            <p id="profilePasswordError" class="text-xs text-red-600 hidden mt-1"></p>
+            <div id="passwordRequirements" class="mt-1 text-xs hidden space-y-0.5">
+                <p id="passwordReq1" class="text-red-500">✓ Mínimo 8 caracteres</p>
+                <p id="passwordReq2" class="text-red-500">✓ Al menos 1 mayúscula</p>
+                <p id="passwordReq3" class="text-red-500">✓ Al menos 1 minúscula</p>
+                <p id="passwordReq4" class="text-red-500">✓ Al menos 1 número</p>
+                <p id="passwordReq5" class="text-red-500">✓ Al menos 1 carácter especial (@$!%*?&)</p>
+            </div>
+        </div>
+
+        <!-- Confirmar Contraseña -->
+        <div class="space-y-1">
+            <label for="profileConfirmPassword" class="block text-sm font-medium text-gray-700">
+                Confirmar Contraseña
+            </label>
+            <input type="password" id="profileConfirmPassword"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm">
+            <p id="profileConfirmPasswordError" class="text-xs text-red-600 hidden mt-1"></p>
+        </div>
+
+        <div class="flex justify-end space-x-3 pt-3 border-t mt-3">
+            <button type="button" onclick="window.profileModule.closeProfileModal()"
+                class="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition-colors text-sm">
+                Cancelar
+            </button>
+            <button type="submit"
+                class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm">
+                Guardar Cambios
+            </button>
+        </div>
+    </form>
+</div>
+</div>
+
+
+    <!-- Importaciones principales (dependencias externas) -->
+<script type="module" src="/scripts/auth-middleware.js"></script>
+<script type="module" src="/scripts/dataHandler.js"></script>
+<script type="module" src="/scripts/userValidations.js"></script>
+<script type="module" src="/scripts/profile.js"></script>
+
+<!-- Componentes básicos -->
+ <script type="module" src="/scripts/profileAccount.js"></script>
+<script type="module" src="/scripts/auth.js"></script>
+<script type="module" src="/scripts/mobileMenu.js"></script>
+<script type="module" src="/scripts/navigation.js"></script>
+
+<!-- Componentes de funcionalidad -->
+<script type="module" src="/scripts/categories.js"></script>
+<script type="module" src="/scripts/cart.js"></script>
+<script type="module" src="/scripts/favorites.js"></script>
+<script type="module" src="/scripts/productDetails.js"></script>
+<script type="module" src="/scripts/productUser.js"></script>
+<script type="module" src="/scripts/purchases.js"></script>
+<script type="module" src="/scripts/search.js"></script>
+
+<!-- Componentes de UI -->
+<script type="module" src="/scripts/ui.js"></script>
+<script type="module" src="/scripts/modals.js"></script>
+
+<!-- Archivo principal (debe ir último) -->
+<script type="module" src="/scripts/userPrincipal.js"></script>
+</body>
+</html>

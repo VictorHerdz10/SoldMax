@@ -1,0 +1,157 @@
+import { DataHandler } from './dataHandler.js';
+import { error } from './validations.js';
+const dataHandler = new DataHandler();
+
+export function logout() {
+    const dataHandler = new DataHandler();
+    dataHandler.clearSession();
+    window.location.href = 'login.html';
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    await dataHandler.initialize();
+    
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+    }
+    
+    if (registerForm) {
+        registerForm.addEventListener('submit', handleRegister);
+    }
+});
+
+async function handleLogin(e) {
+    e.preventDefault();
+    const userAcount = document.getElementById('userAcount').value;
+    const password = document.getElementById('passwordLogin').value;
+    
+    if (!userAcount || !password) {
+        showError('Ambos campos son requeridos');
+        return;
+    }
+    
+    try {
+
+        let message = await dataHandler.verifyAcount(userAcount);
+        if (typeof message === 'string') {
+            showError(message);
+            return;
+        }
+
+        const user = await dataHandler.verifyUser(message.email,password);
+        if(!user){
+            showError('Las contraseña es incorrecta');
+            return;
+        }
+        
+        dataHandler.setSession(user);
+        
+        if (user.role === 'admin') {
+            window.location.href = 'admin.html';
+        } else {
+            window.location.href = 'userprincipal.html';
+        }
+    } catch (error) {
+        showError('Error al iniciar sesión');
+        console.error('Login error:', error);
+    }
+}
+
+async function handleRegister(e) {
+    e.preventDefault();
+    if(error){
+        return
+    } 
+    const formData = {
+        name: document.getElementById('name').value,
+        username: document.getElementById('username').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        password: document.getElementById('password').value
+    };
+    
+    try {
+        const userExists = await dataHandler.findUserByEmail(formData.email);
+        if (userExists) {
+            showError('El email ya está registrado');
+            return;
+        }
+        
+        const created = await dataHandler.createUser(formData);
+        if (created) {
+            showSuccess('¡Registro completado con éxito!');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+        }
+    } catch (error) {
+        showError('Error en el registro');
+        console.error('Registration error:', error);
+    }
+}
+  
+// Función para mostrar mensajes de éxito
+export function showSuccess(message) {
+    const existingToast = document.querySelector('.toast-message.success');
+    if (existingToast) existingToast.remove();
+  
+    const successDiv = document.createElement('div');
+    successDiv.className = 'fixed top-16 right-4 z-50 bg-green-100 border border-green-400 text-green-700 px-6 py-3 rounded-lg shadow-lg toast-message success animate-slide-in';
+    successDiv.innerHTML = `
+      <div class="flex items-center">
+        <i class="fas fa-check-circle mr-2"></i>
+        <span>${message}</span>
+      </div>
+    `;
+    
+    document.body.appendChild(successDiv);
+    setTimeout(() => {
+      successDiv.classList.replace('animate-slide-in', 'animate-slide-out');
+      setTimeout(() => successDiv.remove(), 800);
+    }, 5000);
+  }
+  
+  // Función para mostrar mensajes de información
+  export function showInfo(message) {
+    const existingToast = document.querySelector('.toast-message.info');
+    if (existingToast) existingToast.remove();
+  
+    const infoDiv = document.createElement('div');
+    infoDiv.className = 'fixed top-16 right-4 z-50 bg-blue-100 border border-blue-400 text-blue-700 px-6 py-3 rounded-lg shadow-lg toast-message info animate-slide-in';
+    infoDiv.innerHTML = `
+      <div class="flex items-center">
+        <i class="fas fa-info-circle mr-2"></i>
+        <span>${message}</span>
+      </div>
+    `;
+    
+    document.body.appendChild(infoDiv);
+    setTimeout(() => {
+      infoDiv.classList.replace('animate-slide-in', 'animate-slide-out');
+      setTimeout(() => infoDiv.remove(), 800);
+    }, 5000);
+  }
+  
+  // Función para mostrar mensajes de error
+  export function showError(message) {
+    const existingToast = document.querySelector('.toast-message.error');
+    if (existingToast) existingToast.remove();
+  
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'fixed top-16 right-4 z-50 bg-red-100 border border-red-400 text-red-700 px-6 py-3 rounded-lg shadow-lg toast-message error animate-slide-in';
+    errorDiv.innerHTML = `
+      <div class="flex items-center">
+        <i class="fas fa-exclamation-circle mr-2"></i>
+        <span>${message}</span>
+      </div>
+    `;
+    
+    document.body.appendChild(errorDiv);
+    setTimeout(() => {
+      errorDiv.classList.replace('animate-slide-in', 'animate-slide-out');
+      setTimeout(() => errorDiv.remove(), 800);
+    }, 5000);
+  }

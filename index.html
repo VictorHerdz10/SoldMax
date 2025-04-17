@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoldMax - Tu Tienda Online de Confianza</title>
+    <link rel="icon" href="/images/icono.jpg" type="image/jpeg">
+    <script src="/scripts/taildwindcss-3.4.16.js"></script>
+    <link rel="stylesheet" href="/css/fontawesome-free-6.7.2-web/css/all.css">
+    <link rel="stylesheet" href="/css/landing.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <span class="font-bold text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">SoldMax</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="pages/login.html" class="text-gray-600 hover:text-blue-600 transition duration-300 font-medium">Iniciar Sesión</a>
+                    <a href="pages/register.html" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-300 shadow-md">
+                        Registrarse
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen max-h-[800px] overflow-hidden">
+        <div class="absolute inset-0 bg-black/30 z-10"></div>
+        <div class="absolute inset-0 bg-[url('/images/landing-bg.avif')] bg-cover bg-center"></div>
+        
+        <div class="relative z-20 h-full flex items-center">
+            <div class="container mx-auto px-6 text-center text-white animate-fade-in">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">Todo lo que necesitas en un solo lugar</h1>
+                <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">Descubre los mejores productos al mejor precio en nuestra tienda online.</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#featured" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition duration-300 shadow-lg transform hover:scale-105">
+                        Productos Destacados
+                    </a>
+                    <a href="pages/register.html" class="bg-white hover:bg-gray-100 text-blue-600 px-8 py-3 rounded-lg font-medium transition duration-300 shadow-lg transform hover:scale-105">
+                        Únete Ahora
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-0 right-0 z-20 flex justify-center animate-bounce">
+            <a href="#featured" class="text-white text-3xl">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section id="featured" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Productos Destacados</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Los productos más populares entre nuestros clientes</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" id="featuredProducts">
+                <!-- Product cards will be loaded dynamically -->
+                <div class="text-center py-12">
+                    <div class="animate-pulse">
+                        <div class="h-64 bg-gray-200 rounded-lg mb-4"></div>
+                        <div class="h-4 bg-gray-200 rounded w-3/4 mx-auto mb-2"></div>
+                        <div class="h-4 bg-gray-200 rounded w-1/2 mx-auto mb-4"></div>
+                        <div class="h-10 bg-gray-200 rounded w-1/2 mx-auto"></div>
+                    </div>
+                </div>
+                <div class="text-center py-12">
+                    <div class="animate-pulse">
+                        <div class="h-64 bg-gray-200 rounded-lg mb-4"></div>
+                        <div class="h-4 bg-gray-200 rounded w-3/4 mx-auto mb-2"></div>
+                        <div class="h-4 bg-gray-200 rounded w-1/2 mx-auto mb-4"></div>
+                        <div class="h-10 bg-gray-200 rounded w-1/2 mx-auto"></div>
+                    </div>
+                </div>
+                <div class="text-center py-12">
+                    <div class="animate-pulse">
+                        <div class="h-64 bg-gray-200 rounded-lg mb-4"></div>
+                        <div class="h-4 bg-gray-200 rounded w-3/4 mx-auto mb-2"></div>
+                        <div class="h-4 bg-gray-200 rounded w-1/2 mx-auto mb-4"></div>
+                        <div class="h-10 bg-gray-200 rounded w-1/2 mx-auto"></div>
+                    </div>
+                </div>
+                <div class="text-center py-12">
+                    <div class="animate-pulse">
+                        <div class="h-64 bg-gray-200 rounded-lg mb-4"></div>
+                        <div class="h-4 bg-gray-200 rounded w-3/4 mx-auto mb-2"></div>
+                        <div class="h-4 bg-gray-200 rounded w-1/2 mx-auto mb-4"></div>
+                        <div class="h-10 bg-gray-200 rounded w-1/2 mx-auto"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="pages/register.html" class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg font-medium hover:opacity-90 transition duration-300 shadow-lg transform hover:scale-105">
+                    Ver Todos los Productos
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">¿Por qué elegir SoldMax?</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Ofrecemos la mejor experiencia de compra online</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 p-6 rounded-xl hover:shadow-lg transition duration-300">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Envío Rápido</h3>
+                    <p class="text-gray-600">Recibe tus productos en 24-48 horas con nuestro servicio premium de envíos.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-xl hover:shadow-lg transition duration-300">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Compra Segura</h3>
+                    <p class="text-gray-600">Protegemos tus datos con tecnología de encriptación avanzada.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-xl hover:shadow-lg transition duration-300">
+                    <div class="text-blue-600 text-4xl mb-4">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Soporte 24/7</h3>
+                    <p class="text-gray-600">Nuestro equipo está disponible para ayudarte en cualquier momento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Lo que dicen nuestros clientes</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Experiencias reales de compradores satisfechos</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gray-300 overflow-hidden">
+                            <img src="/images/maria.avif" alt="Cliente" class="w-full h-full object-cover">
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold">María González</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"Excelente servicio al cliente y productos de alta calidad. Siempre recibo mis pedidos antes de lo esperado."</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gray-300 overflow-hidden">
+                            <img src="/images/carlos.avif" alt="Cliente" class="w-full h-full object-cover">
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold">Carlos Martínez</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"La variedad de productos es increíble y los precios son muy competitivos. Mi tienda online favorita."</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gray-300 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="Cliente" class="w-full h-full object-cover">
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-semibold">Laura Rodríguez</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">"El proceso de compra es muy sencillo y la atención postventa es excepcional. Totalmente recomendado."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">¿Listo para comenzar?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Únete a miles de clientes satisfechos y descubre la mejor experiencia de compra online.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="pages/register.html" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition duration-300 shadow-lg transform hover:scale-105">
+                    Crear Cuenta Gratis
+                </a>
+                <a href="#featured" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-blue-600 transition duration-300 shadow-lg transform hover:scale-105">
+                    Ver Productos
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">SoldMax</h3>
+                    <p class="text-gray-400">Tu tienda online de confianza con los mejores productos al mejor precio.</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Enlaces Rápidos</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition duration-300">Inicio</a></li>
+                        <li><a href="#featured" class="text-gray-400 hover:text-white transition duration-300">Productos</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Ofertas</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Nuevos Lanzamientos</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Ayuda</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Centro de Ayuda</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Estado del Pedido</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Devoluciones</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contacto</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>123 Calle Principal, Ciudad</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-2"></i>
+                            <span>+123 456 7890</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2"></i>
+                            <span>info@soldmax.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; <span id="currentYear"></span> SoldMax. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="scripts/dataHandler.js"></script>
+    <script type="module" src="scripts/productsLanding.js"></script>
+    <script>
+        // Mostrar año actual
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+       
+    </script>
+</body>
+</html>

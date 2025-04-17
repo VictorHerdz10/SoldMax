@@ -1,0 +1,295 @@
+
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Hero section */
+.hero-section {
+    height: 500px;
+    position: relative;
+}
+
+.hero-content {
+    z-index: 10;
+    position: relative;
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+}
+
+/* Profile modal */
+.profile-avatar {
+    transition: all 0.3s ease;
+}
+
+.profile-avatar:hover {
+    transform: scale(1.05);
+}
+
+.profile-info-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.profile-info-item:last-child {
+    border-bottom: none;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+         /* Transiciones suaves */
+         .transition-colors {
+            transition-property: background-color, border-color, color;
+            transition-duration: 150ms;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Estilos para las notificaciones */
+        .toast-message {
+            transition: all 0.5s ease;
+            transform: translateX(120%);
+            opacity: 0;
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        .animate-slide-out {
+            animation: slideOut 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateX(120%);
+                opacity: 0;
+            }
+
+            80% {
+                transform: translateX(-10%);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            0% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            20% {
+                transform: translateX(-10%);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateX(120%);
+                opacity: 0;
+            }
+        }
+
+        /* Agrega esto en el style */
+        .ranking-item {
+            transition: all 0.2s ease;
+        }
+
+        .ranking-item:hover {
+            background-color: #f8fafc;
+            transform: translateX(2px);
+        }
+
+        .ranking-number {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: #3b82f6;
+            color: white;
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+        }
+
+        .ranking-1 .ranking-number {
+            background-color: #f59e0b;
+        }
+
+        .ranking-2 .ranking-number {
+            background-color: #94a3b8;
+        }
+
+        .ranking-3 .ranking-number {
+            background-color: #b45309;
+        }
+
+        @media (max-width: 768px) {
+            .table-container {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .mobile-hidden {
+                display: none;
+            }
+        }
+
+        .product-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            padding: 1rem;
+        }
+
+        .modal-container {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 32rem;
+            max-height: calc(100vh - 2rem);
+            overflow-y: auto;
+        }
+
+        .favorite-active {
+            color: #ef4444 !important;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #ef4444;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: bold;
+            border-radius: 0 0 0.5rem 0;
+        }
+        /* Nuevos estilos */
+        .offer-card {
+            transition: all 0.3s ease;
+            border-top: 4px solid #f59e0b;
+        }
+        
+        .favorite-card {
+            transition: all 0.3s ease;
+            border-top: 4px solid #ec4899;
+        }
+        
+        .pending-order {
+            transition: all 0.3s ease;
+        }
+        
+        .category-chip {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .category-chip.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        .category-chip:hover:not(.active) {
+            background-color: #e2e8f0;
+        }
+        
+        .payment-method {
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .payment-method:hover {
+            border-color: #3b82f6;
+        }
+        
+        .payment-method.selected {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+        
+        .payment-method input[type="radio"] {
+            display: none;
+        }
+        /* Agregar esto en la sección de estilos */
+#confirmPasswordInput.input-error {
+    border-color: #ef4444;
+}
+
+#confirmPasswordInput.input-success {
+    border-color: #10b981;
+}
+/* Estilos para el modal de perfil */
+.profile-avatar {
+  transition: all 0.3s ease;
+}
+
+.profile-avatar:hover {
+  transform: scale(1.05);
+}
+
+.profile-info-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.profile-info-item:last-child {
+  border-bottom: none;
+}
+
+/* Estilos para validación */
+.input-error {
+  border-color: #ef4444 !important;
+}
+
+.input-success {
+  border-color: #10b981 !important;
+}

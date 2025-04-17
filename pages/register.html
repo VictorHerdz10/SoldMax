@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/icono.jpg" type="image/jpeg">
+    <title>SoldMax - Registro</title>
+    <script src="/scripts/taildwindcss-3.4.16.js"></script>
+    <link rel="stylesheet" href="/css/fontawesome-free-6.7.2-web/css/all.css">
+    <link rel="stylesheet" href="/css/auth.css">
+    <style>
+       
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-[url('/images/register-bg.avif')] bg-cover bg-center">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg fixed top-0 z-50 w-full">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between">
+                <div class="flex space-x-7">
+                    <a href="../../index.html" class="flex items-center py-4">
+                        <span class="font-bold text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">SoldMax</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <a href="/pages/login.html" 
+                       class="px-4 text-gray-600 hover:text-blue-600 font-medium transition duration-300 relative group">
+                       Iniciar Sesión
+                       <span class="absolute left-1/2 -translate-x-1/2 bottom-0 w-0 h-0.5 bg-blue-600 transition-all duration-400 group-hover:w-full"></span>
+                    </a>
+                    <a href="/pages/register.html"
+                       class="py-2 px-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:opacity-90 transition duration-300 shadow-md">
+                       Registrarse
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="w-full max-w-2xl mx-4 mt-16  mb-8">
+        <div class="register-container mt-2 p-5 pb-8 rounded-xl shadow-2xl transition-all duration-500 hover:shadow-xl">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">Crea tu cuenta</h1>
+                <p class="text-gray-600">Comienza tu experiencia de compra con SoldMax</p>
+            </div>
+            
+            <form id="registerForm" class="space-y-6" novalidate>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Nombre Completo -->
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-medium">Nombre completo <span id="nameAsterisk" class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-user text-gray-400"></i>
+                            </div>
+                            <input type="text" id="name" name="name"
+                                   class="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                   data-counter="50" maxlength="50" placeholder="Juan García" required>
+                        </div>
+                        <div class="flex justify-between">
+                            <div id="nameError" class="text-red-500 text-sm mt-1 hidden"></div>
+                            <div id="nameCounter" class="text-gray-500 text-sm mt-1">50 caracteres restantes</div>
+                        </div>
+                    </div>
+
+                    <!-- Usuario -->
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-medium">Usuario <span id="usernameAsterisk" class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-at text-gray-400"></i>
+                            </div>
+                            <input type="text" id="username" name="username"
+                                   class="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                   data-counter="15" maxlength="15" placeholder="User123" required>
+                        </div>
+                        <div class="flex justify-between">
+                            <div id="usernameError" class="text-red-500 text-sm mt-1 hidden"></div>
+                            <div id="usernameCounter" class="text-gray-500 text-sm mt-1">15 caracteres restantes</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Email -->
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-medium">Correo electrónico <span id="emailAsterisk" class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-envelope text-gray-400"></i>
+                            </div>
+                            <input type="email" id="email" name="email"
+                                   class="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                   placeholder="correo@ejemplo.com" required>
+                        </div>
+                        <div id="emailError" class="text-red-500 text-sm mt-1 hidden"></div>
+                    </div>
+
+                    <!-- Teléfono -->
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-medium">Teléfono <span id="phoneAsterisk" class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-phone text-gray-400"></i>
+                            </div>
+                            <input type="tel" id="phone" name="phone"
+                                   class="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                   maxlength="8" placeholder="55555555" required>
+                        </div>
+                        <div id="phoneError" class="text-red-500 text-sm mt-1 hidden"></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Contraseña -->
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-medium">Contraseña <span id="passwordAsterisk" class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-lock text-gray-400"></i>
+                            </div>
+                            <input type="password" id="password" name="password"
+                                   class="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                   data-counter="20" maxlength="20" placeholder="*********" required>
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                <button type="button" class="text-gray-400 hover:text-gray-600" id="togglePassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex justify-between">
+                            <div id="passwordError" class="text-red-500 text-sm mt-1 hidden"></div>
+                            <div id="passwordCounter" class="text-gray-500 text-sm mt-1">20 caracteres restantes</div>
+                        </div>
+                        <div id="passwordRequirements" class="mt-2 hidden text-xs space-y-1">
+                            <div id="passwordReq1" class="text-gray-500"><i class="fas fa-circle text-gray-300 mr-1"></i> Al menos 8 caracteres</div>
+                            <div id="passwordReq2" class="text-gray-500"><i class="fas fa-circle text-gray-300 mr-1"></i> 1 letra mayúscula</div>
+                            <div id="passwordReq3" class="text-gray-500"><i class="fas fa-circle text-gray-300 mr-1"></i> 1 número</div>
+                            <div id="passwordReq4" class="text-gray-500"><i class="fas fa-circle text-gray-300 mr-1"></i> 1 carácter especial</div>
+                            <div id="passwordReq5" class="text-gray-500"><i class="fas fa-circle text-gray-300 mr-1"></i> 1 letra minúscula</div>
+                        </div>
+                    </div>
+
+                    <!-- Confirmar Contraseña -->
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-medium">Confirmar Contraseña <span id="confirmPasswordAsterisk" class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-lock text-gray-400"></i>
+                            </div>
+                            <input type="password" id="confirmPassword" name="confirmPassword"
+                                   class="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                   maxlength="20" placeholder="*********" required>
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                <button type="button" class="text-gray-400 hover:text-gray-600" id="toggleConfirmPassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="confirmPasswordError" class="text-red-500 text-sm mt-1 hidden"></div>
+                    </div>
+                </div>
+
+                <div class="flex items-center">
+                    <input id="terms" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" required>
+                    <label for="terms" class="ml-2 block text-sm text-gray-700">
+                        Acepto los <a href="#" class="text-blue-600 hover:text-blue-800">Términos y Condiciones</a> y la 
+                        <a href="#" class="text-blue-600 hover:text-blue-800">Política de Privacidad</a>
+                    </label>
+                </div>
+                <div id="termsError" class="text-red-500 text-sm mt-1 hidden">Debes aceptar los términos y condiciones</div>
+
+                <button type="submit" 
+                        class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-medium hover:opacity-90 transition duration-300 shadow-md transform hover:scale-[1.01]">
+                    Registrarse
+                </button>
+
+                <p class="text-center text-gray-600 mt-6">
+                    ¿Ya tienes cuenta? 
+                    <a href="/pages/login.html" class="text-blue-600 hover:text-blue-800 font-medium transition duration-300 relative group">
+                        Inicia sesión aquí
+                        <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-blue-600 transition-all duration-400 group-hover:w-full"></span>
+                    </a>
+                </p>
+            </form>
+        </div>
+    </main>
+
+    <script type="module" src="/scripts/auth.js"></script>
+    <script type="module" src="/scripts/validations.js"></script>
+    <script>
+        // Mostrar/ocultar contraseña
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+
+        // Mostrar/ocultar confirmar contraseña
+        document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const icon = this.querySelector('i');
+            
+            if (confirmPasswordInput.type === 'password') {
+                confirmPasswordInput.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                confirmPasswordInput.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+    </script>
+</body>
+</html>

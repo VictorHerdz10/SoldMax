@@ -1,0 +1,27 @@
+.input-error {
+    border-color: #ef4444 !important;
+}
+.input-success {
+    border-color: #10b981 !important;
+}
+.login-container {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+}
+@media (max-width: 768px) {
+    .login-container {
+        background: rgba(255, 255, 255, 0.95);
+    }
+}
+.asterisk-valid {
+    color: #1f2937 !important;
+}
+.register-container {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+}
+@media (max-width: 768px) {
+    .register-container {
+        background: rgba(255, 255, 255, 0.95);
+    }
+}

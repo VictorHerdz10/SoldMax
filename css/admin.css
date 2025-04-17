@@ -1,0 +1,245 @@
+ /* Estilos mejorados para responsive */
+ html {
+    scroll-behavior: smooth;
+}
+
+/* Estilos para validaciones */
+.border-rose-500 {
+    border-color: #f43f5e !important;
+}
+
+.bg-rose-50 {
+    background-color: #fff1f2 !important;
+}
+
+.text-rose-600 {
+    color: #e11d48 !important;
+}
+
+/* Mejora visual para los inputs */
+.border-2 {
+    border-width: 2px !important;
+}
+
+.border-gray-200 {
+    border-color: #e5e7eb !important;
+}
+
+/* Transiciones suaves */
+.transition-colors {
+    transition-property: background-color, border-color, color;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Estilos para las notificaciones */
+.toast-message {
+    transition: all 0.5s ease;
+    transform: translateX(120%);
+    opacity: 0;
+}
+
+.animate-slide-in {
+    animation: slideIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.animate-slide-out {
+    animation: slideOut 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+
+    80% {
+        transform: translateX(-10%);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    20% {
+        transform: translateX(-10%);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+}
+
+/* Agrega esto en el style */
+.ranking-item {
+    transition: all 0.2s ease;
+}
+
+.ranking-item:hover {
+    background-color: #f8fafc;
+    transform: translateX(2px);
+}
+
+.ranking-number {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #3b82f6;
+    color: white;
+    font-size: 0.75rem;
+    margin-right: 0.5rem;
+}
+
+.ranking-1 .ranking-number {
+    background-color: #f59e0b;
+}
+
+.ranking-2 .ranking-number {
+    background-color: #94a3b8;
+}
+
+.ranking-3 .ranking-number {
+    background-color: #b45309;
+}
+
+
+@media (max-width: 768px) {
+    .table-container {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .mobile-hidden {
+        display: none;
+    }
+
+    .whitespace-nowrap {
+        white-space: nowrap;
+    }
+}
+
+/* Estilos para modales */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.modal-container {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 32rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    margin: 0 auto;
+}
+
+.modal-lg {
+    max-width: 42rem;
+}
+
+.modal-sm {
+    max-width: 24rem;
+}
+
+/* Estilos para validación */
+.input-error {
+    border-color: #ef4444 !important;
+}
+
+.input-success {
+    border-color: #10b981 !important;
+}
+
+/* Mejoras de espaciado */
+section {
+    margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    section {
+        margin-bottom: 2rem;
+    }
+}
+
+.asterisk {
+    color: black;
+    /* Color normal */
+}
+
+.asterisk-required {
+    color: #ef4444 !important;
+    /* Rojo para campos requeridos vacíos */
+}
+
+
+.text-red-500 {
+    color: #ef4444 !important;
+    /* Rojo para campos inválidos */
+}
+/* Agrega esto en el <style> del head */
+.discount-badge {
+position: relative;
+display: inline-block;
+}
+
+.discount-badge::after {
+content: "OFERTA";
+position: absolute;
+top: -8px;
+right: -8px;
+background: #ef4444;
+color: white;
+font-size: 10px;
+font-weight: bold;
+padding: 2px 4px;
+border-radius: 4px;
+}
+
+.discount-tooltip {
+position: absolute;
+z-index: 10;
+background: white;
+box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+padding: 8px;
+border-radius: 4px;
+font-size: 12px;
+width: 160px;
+bottom: 100%;
+left: 50%;
+transform: translateX(-50%);
+opacity: 0;
+transition: opacity 0.2s;
+pointer-events: none;
+}
+
+.discount-icon:hover .discount-tooltip {
+opacity: 1;
+}
