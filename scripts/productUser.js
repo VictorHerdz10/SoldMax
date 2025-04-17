@@ -21,7 +21,7 @@ export function renderProducts(products) {
         <div class="product-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1" 
              data-product-id="${product.id}">
             <div class="relative h-48 overflow-hidden">
-                <img src="${product.image || ''}" 
+                <img src="${product.image || '/images/no-image-icon.png'}" 
                      alt="${product.name}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
                 ${product.discountPrice ? 
                     `<div class="discount-badge bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
@@ -86,7 +86,7 @@ export function renderDiscountedProducts(products) {
         return `
         <div class="offer-card bg-gradient-to-br from-yellow-50 to-amber-50 rounded-lg shadow-md overflow-hidden border border-amber-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1" data-product-id="${product.id}">
             <div class="relative h-48 overflow-hidden">
-                <img src="${product.image || ''}" 
+                <img src="${product.image || '/images/no-image-icon.png'}" 
                      alt="${product.name}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
                 <div class="discount-badge bg-red-500 text-white text-sm font-bold px-2 py-1 rounded">
                     ${Math.round(((product.price - product.discountPrice) / product.price * 100))}% OFF
@@ -123,6 +123,50 @@ export function renderDiscountedProducts(products) {
     }).join('');
 
     setupProductEvents(container);
+}
+
+export function updateProductAvailability(products) {
+    const containers = [
+        document.getElementById('productsContainer'),
+        document.getElementById('offersContainer'),
+        document.getElementById('favoritesContainer'), // Asegurarnos de incluir favoritos
+        document.getElementById('topProductsContainer')
+    ].filter(container => container !== null);
+
+    containers.forEach(container => {
+        products.forEach(product => {
+            const card = container.querySelector(`[data-product-id="${product.id}"]`);
+            if (card) {
+                // Actualizar badge de stock
+                const stockBadge = card.querySelector('.add-to-cart')?.previousElementSibling;
+                if (stockBadge) {
+                    stockBadge.textContent = product.stock > 0 ? 
+                        (container.id === 'favoritesContainer' ? 'Disponible' : `${product.stock} disponibles`) : 'Agotado';
+                    stockBadge.className = `text-xs px-2 py-1 rounded ${
+                        product.stock > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                    }`;
+                }
+
+                // Actualizar botón de añadir al carrito
+                const addToCartBtn = card.querySelector('.add-to-cart');
+                if (addToCartBtn) {
+                    addToCartBtn.disabled = product.stock <= 0;
+                    if (product.stock <= 0) {
+                        addToCartBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                    } else {
+                        addToCartBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    }
+                }
+
+                // Actualizar estado de descuento si es necesario
+                const discountBadge = card.querySelector('.discount-badge');
+                if (discountBadge && product.discountPrice) {
+                    const discountPercent = Math.round(((product.price - product.discountPrice) / product.price * 100));
+                    discountBadge.textContent = `${discountPercent}% OFF`;
+                }
+            }
+        });
+    });
 }
 
 export function setupProductEvents(container) {

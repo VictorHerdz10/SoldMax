@@ -53,7 +53,7 @@ export function updateCartModal() {
             <div class="cart-item border-b pb-4 mb-4">
                 <div class="flex justify-between">
                     <div class="flex items-start space-x-4 w-3/4">
-                        <img src="${item.product.image || ' '}" 
+                        <img src="${item.product.image || '/images/no-image-icon.png'}" 
                              alt="${item.product.name}" 
                              class="w-16 h-16 object-cover rounded-lg">
                         <div class="flex-1">

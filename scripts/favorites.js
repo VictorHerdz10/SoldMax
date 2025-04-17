@@ -7,6 +7,7 @@ const dataHandler = new DataHandler();
 export async function loadFavorites() {
     try {
         const favorites = dataHandler.getFavorites();
+        const allProducts = await dataHandler.readProducts(); // Obtener productos actualizados
         const container = document.getElementById('favoritesContainer');
         if (!container) return;
         
@@ -23,10 +24,16 @@ export async function loadFavorites() {
             return;
         }
 
-        container.innerHTML = favorites.map(product => `
+        // Actualizar el estado de stock de los favoritos
+        const updatedFavorites = favorites.map(fav => {
+            const currentProduct = allProducts.find(p => p.id === fav.id);
+            return currentProduct ? {...fav, stock: currentProduct.stock, status: currentProduct.status} : fav;
+        });
+
+        container.innerHTML = updatedFavorites.map(product => `
             <div class="favorite-card bg-gradient-to-br from-pink-50 to-rose-50 rounded-lg shadow-md overflow-hidden border border-pink-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1" data-product-id="${product.id}">
                 <div class="relative h-48 overflow-hidden">
-                    <img src="${product.image || ''}" 
+                    <img src="${product.image || '/images/no-image-icon.png'}" 
                          alt="${product.name}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
                     <button class="favorite-btn absolute top-2 right-2 bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors"
                             data-product-id="${product.id}">

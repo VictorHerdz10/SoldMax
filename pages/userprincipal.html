@@ -169,6 +169,7 @@
                             <!-- Compras se cargarán dinámicamente aquí -->
                         </tbody>
                     </table>
+                    <div id="purchasesPagination" class="mt-4"></div>
                 </div>
             </div>
         </section>
@@ -177,7 +178,9 @@
             <h2 class="text-2xl font-semibold mb-6">Mis Pedidos Pendientes</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="pendingOrdersContainer">
                 <!-- Pedidos pendientes se cargarán aquí -->
+                
             </div>
+            <div id="pendingOrdersPagination" class="mt-4"></div>
         </section>
 
         <!-- Categorías -->
@@ -290,7 +293,7 @@
         </div>
     </div>
 
-   <!-- Modal de pago mejorado para Cuba -->
+<!-- Modal de pago simplificado -->
 <div id="paymentModal" class="modal-overlay hidden">
     <div class="modal-container max-w-2xl">
         <div class="p-6">
@@ -332,52 +335,28 @@
                     </div>
                 </div>
                 
-                <div>
-                    <h4 class="font-medium mb-2">Método de Pago</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <label class="payment-method">
-                            <input type="radio" name="paymentMethod" value="credit" checked>
-                            <div class="flex items-center">
-                                <i class="far fa-credit-card text-2xl mr-3 text-blue-500"></i>
-                                <div>
-                                    <p class="font-medium">Tarjeta de Crédito</p>
-                                    <p class="text-sm text-gray-600">Pago seguro con tu tarjeta</p>
-                                </div>
-                            </div>
-                        </label>
-                        
-                        <label class="payment-method">
-                            <input type="radio" name="paymentMethod" value="debit">
-                            <div class="flex items-center">
-                                <i class="fas fa-credit-card text-2xl mr-3 text-green-500"></i>
-                                <div>
-                                    <p class="font-medium">Tarjeta de Débito</p>
-                                    <p class="text-sm text-gray-600">Pago directo desde tu banco</p>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-                
-                <div>
-                    <label for="cardNumber" class="block mb-1">Número de Tarjeta</label>
-                    <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" 
-                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <p class="text-xs text-gray-500 mt-1">Ingresa los 16 dígitos de tu tarjeta (BANMET, BANDEC o BPA)</p>
-                </div>
-                
-                <div class="grid grid-cols-2 gap-4">
+                <!-- Campos para tarjeta -->
+                <div class="space-y-4">
                     <div>
-                        <label for="cardExpiry" class="block mb-1">Fecha de Expiración</label>
-                        <input type="text" id="cardExpiry" placeholder="MM/YY" 
+                        <label for="cardNumber" class="block mb-1">Número de Tarjeta</label>
+                        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" 
                             class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <p class="text-xs text-gray-500 mt-1">Ingresa los 16 dígitos de tu tarjeta (BANMET, BANDEC o BPA)</p>
                     </div>
                     
-                    <div>
-                        <label for="cvv" class="block mb-1">CVV</label>
-                        <input type="text" id="cvv" placeholder="123" 
-                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <p class="text-xs text-gray-500 mt-1">3 o 4 dígitos en el reverso</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="cardExpiry" class="block mb-1">Fecha de Expiración</label>
+                            <input type="text" id="cardExpiry" placeholder="MM/YY" 
+                                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label for="cvv" class="block mb-1">CVV</label>
+                            <input type="text" id="cvv" placeholder="123" 
+                                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <p class="text-xs text-gray-500 mt-1">3 o 4 dígitos en el reverso</p>
+                        </div>
                     </div>
                 </div>
                 
@@ -402,6 +381,74 @@
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmación de contraseña -->
+<div id="passwordConfirmModal" class="modal-overlay hidden">
+    <div class="modal-container max-w-md">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Confirmar Pago</h3>
+                <button id="cancelPasswordConfirm" class="text-gray-500 hover:text-gray-700 transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <p>Por seguridad, ingresa tu contraseña para confirmar el pago:</p>
+                
+                <div>
+                    <label for="confirmPasswordInput" class="block mb-1">Contraseña</label>
+                    <input type="password" id="confirmPasswordInput" 
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <p id="confirmPasswordError" class="text-xs text-red-500 mt-1 hidden"></p>
+                </div>
+                
+                <div class="flex justify-end space-x-4 pt-4">
+                    <button type="button" id="cancelPasswordConfirm" class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">
+                        Cancelar
+                    </button>
+                    <button type="button" id="confirmPaymentWithPassword" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
+                        Confirmar Pago
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmación de contraseña -->
+<div id="passwordConfirmModal" class="modal-overlay hidden">
+    <div class="modal-container max-w-md">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Confirmar Pago</h3>
+                <button id="cancelPasswordConfirm" class="text-gray-500 hover:text-gray-700 transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <p>Por seguridad, ingresa tu contraseña para confirmar el pago:</p>
+                
+                <div>
+                    <label for="confirmPasswordInput" class="block mb-1">Contraseña</label>
+                    <input type="password" id="confirmPasswordInput" 
+                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <p id="confirmPasswordError" class="text-xs text-red-500 mt-1 hidden"></p>
+                </div>
+                
+                <div class="flex justify-end space-x-4 pt-4">
+                    <button type="button" id="cancelPasswordConfirm" class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">
+                        Cancelar
+                    </button>
+                    <button type="button" id="confirmPaymentWithPassword" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
+                        Confirmar Pago
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

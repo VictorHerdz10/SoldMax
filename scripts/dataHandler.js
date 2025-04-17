@@ -473,7 +473,7 @@ async getTopFavorites(limit = 5) {
 
     // Verificar datos de pago
     if (!this.validatePaymentData(paymentData)) {
-      throw new Error("Datos de pago inválidos");
+        throw new Error("Datos de pago inválidos");
     }
 
     const cart = this.getCart();
@@ -485,57 +485,63 @@ async getTopFavorites(limit = 5) {
     const stockErrors = [];
 
     cart.forEach((cartItem) => {
-      const productIndex = updatedProducts.findIndex(p => p.id === cartItem.product.id);
-      if (productIndex === -1 || updatedProducts[productIndex].stock < cartItem.quantity) {
-        stockErrors.push({
-          product: cartItem.product.name,
-          requested: cartItem.quantity,
-          available: productIndex !== -1 ? updatedProducts[productIndex].stock : 0,
-        });
-      }
+        const productIndex = updatedProducts.findIndex(p => p.id === cartItem.product.id);
+        if (productIndex === -1 || updatedProducts[productIndex].stock < cartItem.quantity) {
+            stockErrors.push({
+                product: cartItem.product.name,
+                requested: cartItem.quantity,
+                available: productIndex !== -1 ? updatedProducts[productIndex].stock : 0,
+            });
+        }
     });
 
     if (stockErrors.length > 0) {
-      throw {
-        name: "StockError",
-        message: "Algunos productos no tienen suficiente stock",
-        errors: stockErrors,
-      };
+        throw {
+            name: "StockError",
+            message: "Algunos productos no tienen suficiente stock",
+            errors: stockErrors,
+        };
     }
 
     // Crear orden (pendiente o completada según paymentData.autoProcess)
     const orderData = {
-      id: paymentData.autoProcess ? `V-${Date.now()}` : `P-${Date.now()}`,
-      userId: session.user.id,
-      customer: session.user.name,
-      products: cart.map(item => ({
-        productId: item.product.id,
-        productName: item.product.name,
-        quantity: item.quantity,
-        unitPrice: item.product.price,
-      })),
-      total: cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0),
-      date: new Date().toISOString(),
-      shippingAddress: paymentData.shippingAddress,
-      paymentMethod: paymentData.paymentMethod,
-      status: paymentData.autoProcess ? "Completada" : "Pendiente"
+        id: paymentData.autoProcess ? `V-${Date.now()}` : `P-${Date.now()}`,
+        userId: session.user.id,
+        customer: session.user.name,
+        products: cart.map(item => ({
+            productId: item.product.id,
+            productName: item.product.name,
+            quantity: item.quantity,
+            unitPrice: item.product.discountPrice || item.product.price,
+        })),
+        total: cart.reduce((sum, item) => {
+            const price = item.product.discountPrice || item.product.price;
+            return sum + (price * item.quantity);
+        }, 0),
+        date: new Date().toISOString(),
+        shippingAddress: paymentData.shippingAddress,
+        paymentMethod: paymentData.paymentMethod,
+        status: paymentData.autoProcess ? "Completada" : "Pendiente",
+        expiresAt: paymentData.autoProcess ? null : Date.now() + 24 * 60 * 60 * 1000, // 24 horas para pendientes
+        reservedStock: paymentData.autoProcess ? null : cart.map(item => ({
+            productId: item.product.id,
+            quantity: item.quantity
+        }))
     };
 
-    if (paymentData.autoProcess) {
-      // Actualizar stock para productos vendidos
-      cart.forEach(cartItem => {
+    // Actualizar stock (tanto para completados como pendientes)
+    cart.forEach(cartItem => {
         const productIndex = updatedProducts.findIndex(p => p.id === cartItem.product.id);
         if (productIndex !== -1) {
-          updatedProducts[productIndex].stock -= cartItem.quantity;
-          updatedProducts[productIndex].sold += cartItem.quantity;
-          if (updatedProducts[productIndex].stock <= 0) {
-            updatedProducts[productIndex].status = "Agotado";
-          }
+            updatedProducts[productIndex].stock -= cartItem.quantity;
+            updatedProducts[productIndex].sold += (paymentData.autoProcess ? cartItem.quantity : 0);
+            if (updatedProducts[productIndex].stock <= 0) {
+                updatedProducts[productIndex].status = "Agotado";
+            }
         }
-      });
+    });
 
-      await this.writeProducts(updatedProducts);
-    }
+    await this.writeProducts(updatedProducts);
 
     // Guardar en ventas (tanto pendientes como completadas)
     const sales = await this.readSales();
@@ -544,16 +550,66 @@ async getTopFavorites(limit = 5) {
 
     // Si es pendiente, guardar también en pendientes
     if (!paymentData.autoProcess) {
-      const pendingOrders = this.getPendingOrders();
-      pendingOrders.push(orderData);
-      localStorage.setItem(`${this.pendingOrdersKey}${session.user.id}`, JSON.stringify(pendingOrders));
+        const pendingOrders = this.getPendingOrders();
+        pendingOrders.push(orderData);
+        localStorage.setItem(`${this.pendingOrdersKey}${session.user.id}`, JSON.stringify(pendingOrders));
     }
 
     // Limpiar carrito
     await this.clearCart();
 
     return orderData;
+}
+
+// Reemplazar ambos métodos cancelOrder con este único método:
+async cancelOrder(orderId) {
+  const session = this.getSession();
+  if (!session) throw new Error("Debe iniciar sesión");
+
+  // Buscar en ventas
+  const sales = await this.readSales();
+  const orderIndex = sales.findIndex(o => o.id === orderId);
+  
+  if (orderIndex === -1) {
+    throw new Error("Orden no encontrada");
   }
+
+  const order = sales[orderIndex];
+  
+  // Devolver stock si era pendiente y tenía stock reservado
+  if (order.status === "Pendiente" && order.reservedStock) {
+    const products = await this.readProducts();
+    let updatedProducts = [...products];
+    
+    order.reservedStock.forEach(reserved => {
+      const productIndex = updatedProducts.findIndex(p => p.id === reserved.productId);
+      if (productIndex !== -1) {
+        updatedProducts[productIndex].stock += reserved.quantity;
+        if (updatedProducts[productIndex].stock > 0 && 
+            updatedProducts[productIndex].status === "Agotado") {
+          updatedProducts[productIndex].status = "Activo";
+        }
+      }
+    });
+    
+    await this.writeProducts(updatedProducts);
+  }
+
+  // Actualizar estado a Cancelada en ventas
+  sales[orderIndex].status = "Cancelada";
+  sales[orderIndex].cancellationDate = new Date().toISOString();
+  await this.writeSales(sales);
+  
+  // Eliminar de pendientes si aún está allí
+  const pendingOrders = this.getPendingOrders();
+  const pendingIndex = pendingOrders.findIndex(o => o.id === orderId);
+  if (pendingIndex !== -1) {
+    pendingOrders.splice(pendingIndex, 1);
+    localStorage.setItem(`${this.pendingOrdersKey}${session.user.id}`, JSON.stringify(pendingOrders));
+  }
+  
+  return true;
+}
 
   validatePaymentData(paymentData) {
     // Validar tarjeta de crédito (formato ficticio)
@@ -581,22 +637,6 @@ async getTopFavorites(limit = 5) {
     return orders ? JSON.parse(orders) : [];
   }
 
-  async cancelOrder(orderId) {
-    const session = this.getSession();
-    if (!session) throw new Error("Debe iniciar sesión");
-
-    const orders = this.getPendingOrders();
-    const orderIndex = orders.findIndex(o => o.id === orderId);
-    
-    if (orderIndex === -1) {
-      throw new Error("Orden no encontrada");
-    }
-
-    orders.splice(orderIndex, 1);
-    localStorage.setItem(`${this.pendingOrdersKey}${session.user.id}`, JSON.stringify(orders));
-    return true;
-  }
-
   async processPendingOrder(orderId) {
     const session = this.getSession();
     if (!session) throw new Error("Debe iniciar sesión");
@@ -605,43 +645,23 @@ async getTopFavorites(limit = 5) {
     const order = pendingOrders.find(o => o.id === orderId);
     
     if (!order) {
-      throw new Error("Orden no encontrada");
+        throw new Error("Orden no encontrada");
     }
 
-    // Verificar stock nuevamente
+    // No necesitamos verificar el stock nuevamente porque ya fue reservado
     const products = await this.readProducts();
     const updatedProducts = [...products];
-    const stockErrors = [];
 
+    // Actualizar stock (restar lo ya reservado)
     order.products.forEach(item => {
-      const productIndex = updatedProducts.findIndex(p => p.id === item.productId);
-      if (productIndex === -1 || updatedProducts[productIndex].stock < item.quantity) {
-        stockErrors.push({
-          product: item.productName,
-          requested: item.quantity,
-          available: productIndex !== -1 ? updatedProducts[productIndex].stock : 0,
-        });
-      }
-    });
-
-    if (stockErrors.length > 0) {
-      throw {
-        name: "StockError",
-        message: "Algunos productos no tienen suficiente stock",
-        errors: stockErrors,
-      };
-    }
-
-    // Actualizar stock
-    order.products.forEach(item => {
-      const productIndex = updatedProducts.findIndex(p => p.id === item.productId);
-      if (productIndex !== -1) {
-        updatedProducts[productIndex].stock -= item.quantity;
-        updatedProducts[productIndex].sold += item.quantity;
-        if (updatedProducts[productIndex].stock <= 0) {
-          updatedProducts[productIndex].status = "Agotado";
+        const productIndex = updatedProducts.findIndex(p => p.id === item.productId);
+        if (productIndex !== -1) {
+            // No necesitamos verificar stock, solo actualizar las ventas
+            updatedProducts[productIndex].sold += item.quantity;
+            if (updatedProducts[productIndex].stock <= 0) {
+                updatedProducts[productIndex].status = "Agotado";
+            }
         }
-      }
     });
 
     await this.writeProducts(updatedProducts);
@@ -650,15 +670,20 @@ async getTopFavorites(limit = 5) {
     const sales = await this.readSales();
     const saleIndex = sales.findIndex(s => s.id === orderId);
     if (saleIndex !== -1) {
-      sales[saleIndex].status = "Completada";
-      await this.writeSales(sales);
+        sales[saleIndex].status = "Completada";
+        sales[saleIndex].completedAt = new Date().toISOString();
+        await this.writeSales(sales);
     }
 
-    // Eliminar de pendientes
-    await this.cancelOrder(orderId);
-    
+    // Eliminar de pedidos pendientes
+    const pendingIndex = pendingOrders.findIndex(o => o.id === orderId);
+    if (pendingIndex !== -1) {
+        pendingOrders.splice(pendingIndex, 1);
+        localStorage.setItem(`${this.pendingOrdersKey}${session.user.id}`, JSON.stringify(pendingOrders));
+    }
+
     return sales[saleIndex] || order;
-  }
+}
 
   async createSale(saleData) {
     const sales = await this.readSales();

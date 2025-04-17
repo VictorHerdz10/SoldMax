@@ -64,7 +64,7 @@ export async function showProductDetails(productId) {
         modal.dataset.productId = productId;
         
         document.getElementById('productDetailTitle').textContent = product.name;
-        document.getElementById('productDetailImage').src = product.image || '';
+        document.getElementById('productDetailImage').src = product.image || '/images/no-image-icon.png';
         document.getElementById('productDetailName').textContent = product.name;
         document.getElementById('productDetailPrice').textContent = `$${product.discountPrice ? product.discountPrice.toFixed(2) : product.price.toFixed(2)}`;
         
