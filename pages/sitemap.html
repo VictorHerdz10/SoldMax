@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa del Sitio - SoldMax</title>
+    <!-- Mismos includes que en los otros archivos -->
+    <link rel="icon" href="/images/icono.jpg" type="image/jpeg">
+    <script src="/scripts/taildwindcss-3.4.16.js"></script>
+    <link rel="stylesheet" href="/css/fontawesome-free-6.7.2-web/css/all.css">
+    <link rel="stylesheet" href="/css/landing.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <style>
+        .sitemap-category {
+            transition: all 0.3s ease;
+        }
+        .sitemap-category:hover {
+            transform: translateX(5px);
+        }
+        .sitemap-link {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        .sitemap-link::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+            transition: all 0.3s ease;
+        }
+        .sitemap-link:hover::before {
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center">
+                        <span class="font-bold text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">SoldMax</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="login.html" class="text-gray-600 hover:text-blue-600 transition duration-300 font-medium">Iniciar Sesión</a>
+                    <a href="register.html" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-300 shadow-md">
+                        Registrarse
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 sm:px-6 py-12">
+        <h1 class="text-3xl font-bold mb-8 text-center text-gray-800">Mapa del Sitio</h1>
+        
+        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="p-6 md:p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="sitemap-category">
+                        <h2 class="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-200 pb-2">Compras</h2>
+                        <ul class="space-y-3">
+                            <li><a href="../index.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Inicio</a></li>
+                            <li><a href="../index.html#featured" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Productos Destacados</a></li>
+                            <li><a href="categories.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Categorías</a></li>
+                            <li><a href="offers.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Ofertas</a></li>
+                            <li><a href="new-arrivals.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Nuevos Lanzamientos</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="sitemap-category">
+                        <h2 class="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-200 pb-2">Mi Cuenta</h2>
+                        <ul class="space-y-3">
+                            <li><a href="login.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Iniciar Sesión</a></li>
+                            <li><a href="register.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Registrarse</a></li>
+                            <li><a href="profile.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Mi Perfil</a></li>
+                            <li><a href="orders.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Mis Pedidos</a></li>
+                            <li><a href="wishlist.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Lista de Deseos</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="sitemap-category">
+                        <h2 class="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-200 pb-2">Servicio al Cliente</h2>
+                        <ul class="space-y-3">
+                            <li><a href="help-center.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Centro de Ayuda</a></li>
+                            <li><a href="order-status.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Estado del Pedido</a></li>
+                            <li><a href="returns.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Devoluciones</a></li>
+                            <li><a href="contact.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Contacto</a></li>
+                            <li><a href="faq.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Preguntas Frecuentes</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="sitemap-category">
+                        <h2 class="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-200 pb-2">Sobre Nosotros</h2>
+                        <ul class="space-y-3">
+                            <li><a href="about.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Nuestra Empresa</a></li>
+                            <li><a href="testimonials.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Testimonios</a></li>
+                            <li><a href="blog.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Blog</a></li>
+                            <li><a href="careers.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Trabaja con Nosotros</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="sitemap-category">
+                        <h2 class="text-lg font-semibold mb-4 text-gray-800 border-b border-gray-200 pb-2">Legal</h2>
+                        <ul class="space-y-3">
+                            <li><a href="privacy-policy.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Política de Privacidad</a></li>
+                            <li><a href="terms-of-service.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Términos de Servicio</a></li>
+                            <li><a href="shipping-policy.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Política de Envíos</a></li>
+                            <li><a href="return-policy.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Política de Devoluciones</a></li>
+                            <li><a href="cookies.html" class="sitemap-link text-gray-600 hover:text-blue-600 transition duration-300">Política de Cookies</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">SoldMax</h3>
+                <p class="text-gray-400">Tu tienda online de confianza con los mejores productos al mejor precio.</p>
+                <div class="mt-6">
+                    <h4 class="text-lg font-semibold mb-3">Suscríbete a nuestro newsletter</h4>
+                    <form id="newsletterForm" class="flex">
+                        <input type="email" id="newsletterEmail" placeholder="Tu email" 
+                               class="px-4 py-2 rounded-l-lg focus:outline-none text-gray-800 w-full">
+                        <button type="submit" 
+                                class="bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 rounded-r-lg hover:opacity-90 transition duration-300">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                    <p id="newsletterMessage" class="mt-2 text-sm"></p>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Enlaces Rápidos</h4>
+                <ul class="space-y-2">
+                    <li><a href="../index.html" class="text-gray-400 hover:text-white transition duration-300">Inicio</a></li>
+                    <li><a href="../index.html#featured" class="text-gray-400 hover:text-white transition duration-300">Productos</a></li>
+                    <li><a href="testimonials.html" class="text-gray-400 hover:text-white transition duration-300">Testimonios</a></li>
+                    <li><a href="about.html" class="text-gray-400 hover:text-white transition duration-300">Acerca de Nosotros</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Ayuda</h4>
+                <ul class="space-y-2">
+                    <li><a href="help-center.html" class="text-gray-400 hover:text-white transition duration-300">Centro de Ayuda</a></li>
+                    <li><a href="order-status.html" class="text-gray-400 hover:text-white transition duration-300">Estado del Pedido</a></li>
+                    <li><a href="returns.html" class="text-gray-400 hover:text-white transition duration-300">Devoluciones</a></li>
+                    <li><a href="contact.html" class="text-gray-400 hover:text-white transition duration-300">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Contacto</h4>
+                <ul class="space-y-2 text-gray-400">
+                    <li class="flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        <span>123 Calle Principal, Ciudad</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-phone-alt mr-2"></i>
+                        <span>+123 456 7890</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-envelope mr-2"></i>
+                        <span>info@soldmax.com</span>
+                    </li>
+                </ul>
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-3">Redes Sociales</h4>
+                    <div class="flex space-x-4">
+                        <a href="https://facebook.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://whatsapp.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+            <p>&copy; <span id="currentYear"></span> SoldMax. Todos los derechos reservados.</p>
+            <div class="mt-4">
+                <a href="privacy-policy.html" class="text-gray-400 hover:text-white transition duration-300 mx-2">Política de Privacidad</a>
+                <span>•</span>
+                <a href="terms-of-service.html" class="text-gray-400 hover:text-white transition duration-300 mx-2">Términos de Servicio</a>
+                <span>•</span>
+                <a href="sitemap.html" class="text-gray-400 hover:text-white transition duration-300 mx-2">Mapa del Sitio</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTopBtn" class="fixed bottom-8 right-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white w-12 h-12 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 flex items-center justify-center">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+</footer>
+        
+
+    <script type="module" src="/scripts/footer.js"></script>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

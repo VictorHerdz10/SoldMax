@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - SoldMax</title>
+    <link rel="icon" href="/images/icono.jpg" type="image/jpeg">
+    <script src="/scripts/taildwindcss-3.4.16.js"></script>
+    <link rel="stylesheet" href="/css/fontawesome-free-6.7.2-web/css/all.css">
+    <link rel="stylesheet" href="/css/landing.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/contact.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center">
+                        <span class="font-bold text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">SoldMax</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="login.html" class="text-gray-600 hover:text-blue-600 transition duration-300 font-medium">Iniciar Sesión</a>
+                    <a href="register.html" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-300 shadow-md">
+                        Registrarse
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 sm:px-6 py-12">
+        <h1 class="text-3xl font-bold mb-8 text-center text-gray-800">Contáctanos</h1>
+        
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div class="bg-white rounded-xl shadow-md overflow-hidden p-6 contact-form-container">
+                    <h2 class="text-xl font-semibold mb-6 text-gray-800">Formulario de Contacto</h2>
+                    
+                    <form id="contactForm" class="space-y-4" novalidate>
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nombre Completo</label>
+                            <input type="text" id="name" name="name" required
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <div id="nameError" class="text-red-500 text-xs mt-1"></div>
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
+                            <input type="email" id="email" name="email" required
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <div id="emailError" class="text-red-500 text-xs mt-1"></div>
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Asunto</label>
+                            <select id="subject" name="subject" required
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Selecciona un asunto</option>
+                                <option value="order">Consulta sobre un pedido</option>
+                                <option value="return">Devolución o reembolso</option>
+                                <option value="product">Consulta sobre un producto</option>
+                                <option value="other">Otro asunto</option>
+                            </select>
+                            <div id="subjectError" class="text-red-500 text-xs mt-1"></div>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Mensaje</label>
+                            <textarea id="message" name="message" rows="5" required
+                                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                            <div id="messageError" class="text-red-500 text-xs mt-1"></div>
+                        </div>
+                        
+                        <div>
+                            <button type="submit"
+                                    class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition duration-300 shadow-md">
+                                Enviar Mensaje
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="contact-card bg-white p-6 rounded-xl shadow-md">
+                        <div class="flex items-start">
+                            <div class="contact-icon bg-blue-100 p-3 rounded-full mr-4 text-blue-600">
+                                <i class="fas fa-phone-alt text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800 mb-1">Teléfono</h3>
+                                <p class="text-gray-600">+1 (123) 456-7890</p>
+                                <p class="text-gray-500 text-sm mt-2">Lunes a Viernes: 9:00 AM - 6:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card bg-white p-6 rounded-xl shadow-md">
+                        <div class="flex items-start">
+                            <div class="contact-icon bg-blue-100 p-3 rounded-full mr-4 text-blue-600">
+                                <i class="fas fa-envelope text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800 mb-1">Correo Electrónico</h3>
+                                <p class="text-gray-600">soporte@soldmax.com</p>
+                                <p class="text-gray-500 text-sm mt-2">Respuesta en menos de 24 horas</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card bg-white p-6 rounded-xl shadow-md">
+                        <div class="flex items-start">
+                            <div class="contact-icon bg-blue-100 p-3 rounded-full mr-4 text-blue-600">
+                                <i class="fas fa-map-marker-alt text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800 mb-1">Oficina Principal</h3>
+                                <p class="text-gray-600">123 Calle Comercial</p>
+                                <p class="text-gray-600">Ciudad, Estado 12345</p>
+                                <p class="text-gray-600">País</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card bg-white p-6 rounded-xl shadow-md">
+                        <div class="flex items-start">
+                            <div class="contact-icon bg-blue-100 p-3 rounded-full mr-4 text-blue-600">
+                                <i class="fas fa-comments text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-800 mb-1">Chat en Vivo</h3>
+                                <p class="text-gray-600">Disponible 24/7</p>
+                                <button class="mt-3 bg-green-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-600 transition duration-300">
+                                    Iniciar Chat
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-md overflow-hidden p-6">
+                <h2 class="text-xl font-semibold mb-4 text-gray-800">Preguntas Frecuentes</h2>
+                
+                <div class="space-y-4">
+                    <div class="border-b border-gray-200 pb-4">
+                        <h3 class="font-medium text-gray-800 mb-2">¿Cuál es el tiempo de respuesta para consultas?</h3>
+                        <p class="text-gray-600 text-sm">Nuestro equipo responde a la mayoría de consultas dentro de las 24 horas hábiles. Para asuntos urgentes, recomendamos utilizar nuestro servicio de chat en vivo o llamarnos por teléfono.</p>
+                    </div>
+                    
+                    <div class="border-b border-gray-200 pb-4">
+                        <h3 class="font-medium text-gray-800 mb-2">¿Cómo puedo hacer un seguimiento de mi consulta?</h3>
+                        <p class="text-gray-600 text-sm">Al enviar tu consulta, recibirás un número de ticket por correo electrónico que puedes usar para hacer seguimiento a través de nuestra página web.</p>
+                    </div>
+                    
+                    <div class="border-b border-gray-200 pb-4">
+                        <h3 class="font-medium text-gray-800 mb-2">¿Ofrecen soporte en otros idiomas?</h3>
+                        <p class="text-gray-600 text-sm">Actualmente ofrecemos soporte en español e inglés. Nuestro equipo de chat en vivo está disponible en ambos idiomas las 24 horas del día.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+     <!-- Footer -->
+     <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">SoldMax</h3>
+                    <p class="text-gray-400">Tu tienda online de confianza con los mejores productos al mejor precio.</p>
+                    <div class="mt-6">
+                        <h4 class="text-lg font-semibold mb-3">Suscríbete a nuestro newsletter</h4>
+                        <form id="newsletterForm" class="flex">
+                            <input type="email" id="newsletterEmail" placeholder="Tu email" 
+                                   class="px-4 py-2 rounded-l-lg focus:outline-none text-gray-800 w-full">
+                            <button type="submit" 
+                                    class="bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 rounded-r-lg hover:opacity-90 transition duration-300">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                        <p id="newsletterMessage" class="mt-2 text-sm"></p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Enlaces Rápidos</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../index.html" class="text-gray-400 hover:text-white transition duration-300">Inicio</a></li>
+                        <li><a href="../index.html#featured" class="text-gray-400 hover:text-white transition duration-300">Productos</a></li>
+                        <li><a href="testimonials.html" class="text-gray-400 hover:text-white transition duration-300">Testimonios</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition duration-300">Acerca de Nosotros</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Ayuda</h4>
+                    <ul class="space-y-2">
+                        <li><a href="help-center.html" class="text-gray-400 hover:text-white transition duration-300">Centro de Ayuda</a></li>
+                        <li><a href="order-status.html" class="text-gray-400 hover:text-white transition duration-300">Estado del Pedido</a></li>
+                        <li><a href="returns.html" class="text-gray-400 hover:text-white transition duration-300">Devoluciones</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition duration-300">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contacto</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>123 Calle Principal, Ciudad</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-2"></i>
+                            <span>+123 456 7890</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2"></i>
+                            <span>info@soldmax.com</span>
+                        </li>
+                    </ul>
+                    <div class="mt-4">
+                        <h4 class="text-lg font-semibold mb-3">Redes Sociales</h4>
+                        <div class="flex space-x-4">
+                            <a href="https://facebook.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="https://twitter.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://whatsapp.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; <span id="currentYear"></span> SoldMax. Todos los derechos reservados.</p>
+                <div class="mt-4">
+                    <a href="privacy-policy.html" class="text-gray-400 hover:text-white transition duration-300 mx-2">Política de Privacidad</a>
+                    <span>•</span>
+                    <a href="terms-of-service.html" class="text-gray-400 hover:text-white transition duration-300 mx-2">Términos de Servicio</a>
+                    <span>•</span>
+                    <a href="sitemap.html" class="text-gray-400 hover:text-white transition duration-300 mx-2">Mapa del Sitio</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll to Top Button -->
+        <button id="scrollToTopBtn" class="fixed bottom-8 right-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white w-12 h-12 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 flex items-center justify-center">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </footer>
+
+    <script type="module" src="/scripts/footer.js"></script>
+    <script type="module" src="/scripts/contact.js"></script>
+</body>
+</html>

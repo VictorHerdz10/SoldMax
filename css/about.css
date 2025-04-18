@@ -1,0 +1,343 @@
+/* Animaciones */
+@keyframes slide-in-from-left {
+    from {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-in-from-right {
+    from {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in {
+    from { 
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    opacity: 0;
+    animation: fade-in 0.8s ease forwards;
+}
+
+/* Hero Section */
+.hero-section {
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Valores */
+.value-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    transition: all 0.4s ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.value-card.active {
+    animation: fade-in 0.8s ease forwards;
+}
+
+.value-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.value-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    transition: all 0.4s ease;
+    background-color: #f0f7ff;
+    color: #3b82f6;
+}
+
+.value-card:hover .value-icon {
+    transform: scale(1.15);
+    background-color: #3b82f6;
+    color: white;
+}
+
+/* Equipo */
+.team-member {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+.team-member.active {
+    animation: fade-in 0.8s ease forwards;
+}
+
+.member-photo {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid #f0f7ff;
+    transition: all 0.4s ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.team-member:hover .member-photo {
+    border-color: #3b82f6;
+    transform: scale(1.1);
+    box-shadow: 0 15px 35px rgba(59, 130, 246, 0.2);
+}
+
+/* Responsive general */
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: 350px;
+    }
+    
+    .value-card,
+    .team-member {
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .member-photo {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+
+
+/* Timeline - Versión Mejorada */
+.about-timeline {
+    position: relative;
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+}
+
+.about-timeline::before {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+    z-index: 1;
+}
+
+.timeline-item {
+    position: relative;
+    width: 100%;
+    margin-bottom: 8rem;
+    opacity: 0;
+    transition: all 0.5s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 4rem;
+}
+
+.timeline-item.active {
+    opacity: 1;
+}
+
+/* Contenido (izquierda) para items impares */
+.timeline-item:nth-child(odd) .timeline-content {
+    width: calc(50% - 6rem);
+    padding: 2.5rem;
+    margin-right: 2rem;
+    animation: slide-in-from-left 0.8s ease forwards;
+}
+
+/* Imagen (derecha) para items impares */
+.timeline-item:nth-child(odd) .timeline-image {
+    width: calc(50% - 6rem);
+    padding: 1rem;
+    margin-left: 2rem;
+    animation: slide-in-from-right 0.8s ease forwards 0.3s;
+}
+
+/* Contenido (derecha) para items pares */
+.timeline-item:nth-child(even) .timeline-content {
+    width: calc(50% - 6rem);
+    padding: 2.5rem;
+    margin-left: 2rem;
+    animation: slide-in-from-right 0.8s ease forwards;
+}
+
+/* Imagen (izquierda) para items pares */
+.timeline-item:nth-child(even) .timeline-image {
+    width: calc(50% - 6rem);
+    padding: 1rem;
+    margin-right: 2rem;
+    animation: slide-in-from-left 0.8s ease forwards 0.3s;
+}
+
+.timeline-content {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.timeline-content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.timeline-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+.timeline-image img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 300px;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    transition: all 0.5s ease;
+}
+
+.timeline-image:hover img {
+    transform: scale(1.05);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: #3b82f6;
+    border: 5px solid white;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+    transition: all 0.3s ease;
+}
+
+.timeline-item:hover::after {
+    transform: translate(-50%, -50%) scale(1.1);
+    background-color: #8b5cf6;
+}
+
+/* Responsive para Timeline */
+@media (max-width: 1024px) {
+    .timeline-content, 
+    .timeline-image {
+        width: calc(50% - 4rem) !important;
+        padding: 1.5rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-timeline::before {
+        left: 2.5rem;
+    }
+    
+    .timeline-item {
+        margin-bottom: 5rem;
+        flex-direction: column;
+        padding-left: 4rem;
+    }
+    
+    .timeline-item:nth-child(odd) .timeline-content,
+    .timeline-item:nth-child(even) .timeline-content,
+    .timeline-item:nth-child(odd) .timeline-image,
+    .timeline-item:nth-child(even) .timeline-image {
+        width: 100% !important;
+        padding: 2rem !important;
+        margin: 0 !important;
+        animation: slide-in-from-right 0.6s ease forwards;
+    }
+    
+    .timeline-image {
+        margin-top: 2.5rem !important;
+    }
+    
+    .timeline-item::after {
+        left: 2.5rem;
+        top: 30px;
+        transform: none;
+    }
+    
+    .timeline-content {
+        order: 1;
+    }
+    
+    .timeline-image {
+        order: 2;
+    }
+}
+
+@media (max-width: 576px) {
+    .about-timeline {
+        padding: 0 1rem;
+    }
+    
+    .timeline-item {
+        padding-left: 3rem;
+    }
+    
+    .timeline-content {
+        padding: 1.5rem !important;
+    }
+    
+    .timeline-item::after {
+        width: 22px;
+        height: 22px;
+        left: 1.5rem;
+    }
+    
+    .timeline-image img {
+        min-height: 200px;
+    }
+}

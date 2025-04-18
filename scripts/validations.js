@@ -34,7 +34,11 @@ const validations = {
     },
     userAcount:{
       empty: "Este campo no puede estar vacio", 
-    }
+    },
+    terms: {
+      error: "Debes aceptar los términos y condiciones",
+      empty: "Debes aceptar los términos y condiciones"
+  }
   };
   export let error=false;
   
@@ -53,11 +57,22 @@ const validations = {
     const errorElement = document.getElementById(`${field}Error`);
   
     // Limpiar errores previos
-    input.classList.remove("input-error", "input-success");
-    errorElement.classList.add("hidden");
+    input?.classList?.remove("input-error", "input-success");
+    errorElement?.classList?.add("hidden");
   
-    // Validar campo vacío
-    if (value.trim() === "") {
+    // Caso especial para el checkbox de términos
+    if (field === 'terms') {
+      const isValid = input?.checked || false;
+      input?.classList?.toggle("input-error", !isValid);
+      input?.classList?.toggle("input-success", isValid);
+      errorElement?.classList?.toggle("hidden", isValid);
+      errorElement.textContent = isValid ? "" : validations.terms.error;
+      updateAsterisk(field, isValid);
+      return isValid;
+    }
+  
+    // Validar campo vacío para otros tipos de inputs
+    if (input && (value === "" || value === null || value === undefined)) {
       errorElement.textContent = validations[field].empty;
       input.classList.add("input-error");
       errorElement.classList.remove("hidden");
@@ -67,7 +82,7 @@ const validations = {
   
     // Validación especial para confirmar contraseña
     if (field === "confirmPassword") {
-      const password = document.getElementById("password").value;
+      const password = document.getElementById("password")?.value;
       if (value !== password) {
         errorElement.textContent = validations.confirmPassword.error;
         input.classList.add("input-error");
@@ -196,29 +211,36 @@ const validations = {
     });
   
     // Manejar envío del formulario
-    document
-      .getElementById("registerForm")
-      ?.addEventListener("submit", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        let isValid = true;
-        const formData = {
-          password: document.getElementById("password").value,
-        };
-  
-        // Validar todos los campos
-        Object.keys(validations).forEach((field) => {
-          const value = document.getElementById(field)?.value;
-          if (value !== undefined) {
-            if (!validateField(field, value, formData)) {
-              isValid = false;
-              error=true;
-            }
+    document.getElementById("registerForm")?.addEventListener("submit", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      let isValid = true;
+      const formData = {
+        password: document.getElementById("password")?.value,
+      };
+    
+      // Validar todos los campos incluyendo términos
+      Object.keys(validations).forEach((field) => {
+        const input = document.getElementById(field);
+        if (input) {
+          let value;
+          if (input.type === 'checkbox') {
+            value = input.checked; // Para checkboxes, usamos el estado checked
+          } else {
+            value = input.value;
           }
-        });
-      if(isValid){
-          error=false;
-      }
+          
+          if (!validateField(field, value, formData)) {
+            isValid = false;
+            error = true;
+          }
+        }
       });
+    
+      if (isValid) {
+        error = false;
+        this.submit();
+      } 
+    });
   });
   

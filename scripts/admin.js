@@ -479,14 +479,7 @@ async function loadAdminData() {
 }
 
 // Mostrar fecha actual
-const currentDateElement = document.getElementById("currentDate");
-if (currentDateElement) {
-  currentDateElement.textContent = new Date().toLocaleDateString("es-ES", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-}
+document.getElementById('currentYear').textContent = new Date().getFullYear();
 
 // Configurar eventos de scroll y carga
 window.addEventListener("scroll", highlightActiveSection);

@@ -28,7 +28,13 @@
     padding: 4rem 0;
   }
   
-  .testimonials {
-    background-color: #f8fafc;
-    padding: 4rem 0;
-  }
+  .testimonial-card {
+    transition: all 0.3s ease;
+    border: 1px solid #e5e7eb;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-color: #3b82f6;
+}

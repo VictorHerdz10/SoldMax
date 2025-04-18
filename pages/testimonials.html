@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testimonios - SoldMax</title>
+    <link rel="icon" href="/images/icono.jpg" type="image/jpeg">
+    <script src="/scripts/taildwindcss-3.4.16.js"></script>
+    <link rel="stylesheet" href="/css/fontawesome-free-6.7.2-web/css/all.css">
+    <link rel="stylesheet" href="/css/landing.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/testimonials.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center">
+                        <span class="font-bold text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">SoldMax</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="login.html" class="text-gray-600 hover:text-blue-600 transition duration-300 font-medium">Iniciar Sesión</a>
+                    <a href="register.html" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-300 shadow-md">
+                        Registrarse
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="container mx-auto px-4 sm:px-6 py-12">
+        <h1 class="text-3xl font-bold mb-8 text-center text-gray-800">Lo que dicen nuestros clientes</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <!-- Testimonio 1 -->
+            <div class="testimonial-card bg-white p-6 rounded-xl shadow-md">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-full bg-gray-300 overflow-hidden">
+                        <img src="/images/maria.avif" alt="María González" class="w-full h-full object-cover">
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="font-semibold text-gray-800">María González</h4>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600">"Excelente servicio al cliente y productos de alta calidad. Siempre recibo mis pedidos antes de lo esperado."</p>
+            </div>
+            
+            <!-- Testimonio 2 -->
+            <div class="testimonial-card bg-white p-6 rounded-xl shadow-md">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-full bg-gray-300 overflow-hidden">
+                        <img src="/images/carlos.avif" alt="Carlos Martínez" class="w-full h-full object-cover">
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="font-semibold text-gray-800">Carlos Martínez</h4>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600">"La variedad de productos es increíble y los precios son muy competitivos. Mi tienda online favorita."</p>
+            </div>
+        
+            <!-- Testimonio 3 -->
+            <div class="testimonial-card bg-white p-6 rounded-xl shadow-md">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-full bg-gray-300 overflow-hidden">
+                        <img src="/images/laura.avif" alt="Laura Rodríguez" class="w-full h-full object-cover">
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="font-semibold text-gray-800">Laura Rodríguez</h4>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600">"Muy buena experiencia de compra. La entrega fue puntual y el producto cumplió con mis expectativas. Volveré a comprar."</p>
+            </div>
+        </div>
+
+        
+        <!-- Formulario de Testimonios -->
+        <div class="max-w-2xl mx-auto">
+            <div id="testimonialForm" class="bg-white p-8 rounded-xl shadow-md transition-all duration-300 hover:shadow-lg">
+                <h2 class="text-2xl font-semibold mb-6 text-center text-gray-800">Deja tu testimonio</h2>
+                <form id="testimonialFormData" novalidate>
+                    <div class="mb-4">
+                        <label for="name" class="block text-gray-700 mb-2 font-medium">Nombre</label>
+                        <input type="text" id="name" name="name" 
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                        <div id="nameError" class="form-error mt-1"></div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="email" class="block text-gray-700 mb-2 font-medium">Email</label>
+                        <input type="email" id="email" name="email" 
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                        <div id="emailError" class="form-error mt-1"></div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2 font-medium">Calificación</label>
+                        <div class="flex space-x-2" id="ratingStars">
+                            <i class="far fa-star text-2xl text-gray-400 cursor-pointer transition duration-200" data-rating="1"></i>
+                            <i class="far fa-star text-2xl text-gray-400 cursor-pointer transition duration-200" data-rating="2"></i>
+                            <i class="far fa-star text-2xl text-gray-400 cursor-pointer transition duration-200" data-rating="3"></i>
+                            <i class="far fa-star text-2xl text-gray-400 cursor-pointer transition duration-200" data-rating="4"></i>
+                            <i class="far fa-star text-2xl text-gray-400 cursor-pointer transition duration-200" data-rating="5"></i>
+                        </div>
+                        <input type="hidden" id="rating" name="rating" value="0">
+                        <div id="ratingError" class="form-error mt-1"></div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="message" class="block text-gray-700 mb-2 font-medium">Tu testimonio</label>
+                        <textarea id="message" name="message" rows="4" 
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"></textarea>
+                        <div id="messageError" class="form-error mt-1"></div>
+                    </div>
+                    
+                    <button type="submit" 
+                            class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                        Enviar Testimonio
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">SoldMax</h3>
+                    <p class="text-gray-400">Tu tienda online de confianza con los mejores productos al mejor precio.</p>
+                    <div class="mt-6">
+                        <h4 class="text-lg font-semibold mb-3">Suscríbete a nuestro newsletter</h4>
+                        <form id="newsletterForm" class="flex">
+                            <input type="email" id="newsletterEmail" placeholder="Tu email" 
+                                   class="px-4 py-2 rounded-l-lg focus:outline-none text-gray-800 w-full">
+                            <button type="submit" 
+                                    class="bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 rounded-r-lg hover:opacity-90 transition duration-300">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                        <p id="newsletterMessage" class="mt-2 text-sm"></p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Enlaces Rápidos</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../index.html" class="text-gray-400 hover:text-white transition duration-300">Inicio</a></li>
+                        <li><a href="../index.html#featured" class="text-gray-400 hover:text-white transition duration-300">Productos</a></li>
+                        <li><a href="testimonials.html" class="text-gray-400 hover:text-white transition duration-300">Testimonios</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition duration-300">Acerca de Nosotros</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Ayuda</h4>
+                    <ul class="space-y-2">
+                        <li><a href="help-center.html" class="text-gray-400 hover:text-white transition duration-300">Centro de Ayuda</a></li>
+                        <li><a href="order-status.html" class="text-gray-400 hover:text-white transition duration-300">Estado del Pedido</a></li>
+                        <li><a href="returns.html" class="text-gray-400 hover:text-white transition duration-300">Devoluciones</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition duration-300">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contacto</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>123 Calle Principal, Ciudad</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-2"></i>
+                            <span>+123 456 7890</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2"></i>
+                            <span>info@soldmax.com</span>
+                        </li>
+                    </ul>
+                    <div class="mt-4">
+                        <h4 class="text-lg font-semibold mb-3">Redes Sociales</h4>
+                        <div class="flex space-x-4">
+                            <a href="https://facebook.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="https://twitter.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://whatsapp.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; <span id="currentYear"></span> SoldMax. Todos los derechos reservados.</p>
+                <div class="mt-4">
+                    <a href="privacy-policy.html" class="text-gray-400 hover:text-white transition duration-300 mx-2">Política de Privacidad</a>
+                    <span>•</span>
+                    <a href="terms-of-service.html" class="text-gray-400 hover:text-white transition duration-300 mx-2">Términos de Servicio</a>
+                    <span>•</span>
+                    <a href="sitemap.html" class="text-gray-400 hover:text-white transition duration-300 mx-2">Mapa del Sitio</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll to Top Button -->
+        <button id="scrollToTopBtn" class="fixed bottom-8 right-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white w-12 h-12 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 flex items-center justify-center">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </footer>
+        
+
+    <script type="module" src="/scripts/testimonials.js"></script>
+    <script type="module" src="/scripts/footer.js"></script>
+    <script>
+        // Mostrar año actual
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

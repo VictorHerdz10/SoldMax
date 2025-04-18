@@ -9,55 +9,90 @@ export function logout() {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    await dataHandler.initialize();
-    
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-    
-    if (loginForm) {
-        loginForm.addEventListener('submit', handleLogin);
-    }
-    
-    if (registerForm) {
-        registerForm.addEventListener('submit', handleRegister);
-    }
+  await dataHandler.initialize();
+  
+  // Esperar a que el DOM esté completamente cargado
+  setTimeout(() => {
+      checkRememberedUser();
+  }, 100);
+  
+  const loginForm = document.getElementById('loginForm');
+  const registerForm = document.getElementById('registerForm');
+  
+  if (loginForm) {
+      loginForm.addEventListener('submit', handleLogin);
+  }
+  
+  if (registerForm) {
+      registerForm.addEventListener('submit', handleRegister);
+  }
 });
 
 async function handleLogin(e) {
-    e.preventDefault();
-    const userAcount = document.getElementById('userAcount').value;
-    const password = document.getElementById('passwordLogin').value;
-    
-    if (!userAcount || !password) {
-        showError('Ambos campos son requeridos');
-        return;
-    }
-    
-    try {
+  e.preventDefault();
+  const userAcount = document.getElementById('userAcount').value;
+  const password = document.getElementById('passwordLogin').value;
+  const rememberMe = document.getElementById('rememberMe').checked;
+  
+  if (!userAcount || !password) {
+      showError('Ambos campos son requeridos');
+      return;
+  }
+  
+  try {
+      let message = await dataHandler.verifyAcount(userAcount);
+      if (typeof message === 'string') {
+          showError(message);
+          return;
+      }
 
-        let message = await dataHandler.verifyAcount(userAcount);
-        if (typeof message === 'string') {
-            showError(message);
-            return;
-        }
+      const user = await dataHandler.verifyUser(message.email, password);
+      if(!user){
+          showError('La contraseña es incorrecta');
+          return;
+      }
+      
+      dataHandler.setSession(user);
+      
+      // Guardar credenciales si "Recuérdame" está marcado (SOLO PARA PRUEBAS)
+      if (rememberMe) {
+          localStorage.setItem('rememberedCredentials', JSON.stringify({
+              userAcount: userAcount,
+              password: password // Solo para pruebas, no usar en producción
+          }));
+      } else {
+          localStorage.removeItem('rememberedCredentials');
+      }
+      
+      if (user.role === 'admin') {
+          window.location.href = 'admin.html';
+      } else {
+          window.location.href = 'userprincipal.html';
+      }
+  } catch (error) {
+      showError('Error al iniciar sesión');
+      console.error('Login error:', error);
+  }
+}
 
-        const user = await dataHandler.verifyUser(message.email,password);
-        if(!user){
-            showError('Las contraseña es incorrecta');
-            return;
-        }
-        
-        dataHandler.setSession(user);
-        
-        if (user.role === 'admin') {
-            window.location.href = 'admin.html';
-        } else {
-            window.location.href = 'userprincipal.html';
-        }
-    } catch (error) {
-        showError('Error al iniciar sesión');
-        console.error('Login error:', error);
-    }
+// Añade esta función para verificar credenciales guardadas al cargar la página
+function checkRememberedUser() {
+  const rememberedCredentials = localStorage.getItem('rememberedCredentials');
+  if (rememberedCredentials) {
+      try {
+          const credentials = JSON.parse(rememberedCredentials);
+          const userAcountInput = document.getElementById('userAcount');
+          const passwordInput = document.getElementById('passwordLogin');
+          const rememberCheckbox = document.getElementById('rememberMe');
+          
+          if (userAcountInput) userAcountInput.value = credentials.userAcount || '';
+          if (passwordInput) passwordInput.value = credentials.password || '';
+          if (rememberCheckbox) rememberCheckbox.checked = true;
+      } catch (e) {
+          console.error('Error al parsear rememberedCredentials:', e);
+          localStorage.removeItem('rememberedCredentials');
+      }
+  }
 }
 
 async function handleRegister(e) {

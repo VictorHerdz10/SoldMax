@@ -8,6 +8,7 @@
     <script src="/scripts/taildwindcss-3.4.16.js"></script>
     <link rel="stylesheet" href="/css/fontawesome-free-6.7.2-web/css/all.css">
     <link rel="stylesheet" href="/css/landing.css">
+    <link rel="stylesheet" href="/css/footer.css">
 </head>
 <body class="bg-gray-50">
     <!-- Navbar -->
@@ -153,7 +154,7 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-xl shadow-md">
+                <div class="testimonial-card bg-white p-6 rounded-xl shadow-md">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 rounded-full bg-gray-300 overflow-hidden">
                             <img src="/images/maria.avif" alt="Cliente" class="w-full h-full object-cover">
@@ -172,7 +173,7 @@
                     <p class="text-gray-600">"Excelente servicio al cliente y productos de alta calidad. Siempre recibo mis pedidos antes de lo esperado."</p>
                 </div>
                 
-                <div class="bg-white p-6 rounded-xl shadow-md">
+                <div class=" testimonial-card bg-white p-6 rounded-xl shadow-md">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 rounded-full bg-gray-300 overflow-hidden">
                             <img src="/images/carlos.avif" alt="Cliente" class="w-full h-full object-cover">
@@ -191,10 +192,10 @@
                     <p class="text-gray-600">"La variedad de productos es increíble y los precios son muy competitivos. Mi tienda online favorita."</p>
                 </div>
                 
-                <div class="bg-white p-6 rounded-xl shadow-md">
+                <div class="testimonial-card bg-white p-6 rounded-xl shadow-md">
                     <div class="flex items-center mb-4">
                         <div class="w-12 h-12 rounded-full bg-gray-300 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="Cliente" class="w-full h-full object-cover">
+                            <img src="/images/laura.avif" alt="Cliente" class="w-full h-full object-cover">
                         </div>
                         <div class="ml-4">
                             <h4 class="font-semibold">Laura Rodríguez</h4>
@@ -229,73 +230,103 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">SoldMax</h3>
-                    <p class="text-gray-400">Tu tienda online de confianza con los mejores productos al mejor precio.</p>
-                    <div class="flex space-x-4 mt-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Enlaces Rápidos</h4>
-                    <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-400 hover:text-white transition duration-300">Inicio</a></li>
-                        <li><a href="#featured" class="text-gray-400 hover:text-white transition duration-300">Productos</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Ofertas</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Nuevos Lanzamientos</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Ayuda</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Centro de Ayuda</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Estado del Pedido</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Devoluciones</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Contacto</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Contacto</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li class="flex items-center">
-                            <i class="fas fa-map-marker-alt mr-2"></i>
-                            <span>123 Calle Principal, Ciudad</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-phone-alt mr-2"></i>
-                            <span>+123 456 7890</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope mr-2"></i>
-                            <span>info@soldmax.com</span>
-                        </li>
-                    </ul>
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-12">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">SoldMax</h3>
+                <p class="text-gray-400">Tu tienda online de confianza con los mejores productos al mejor precio.</p>
+                <div class="mt-6">
+                    <h4 class="text-lg font-semibold mb-3">Suscríbete a nuestro newsletter</h4>
+                    <form id="newsletterForm" class="flex">
+                        <input type="email" id="newsletterEmail" placeholder="Tu email"  
+                               class="px-4 py-2 rounded-l-lg focus:outline-none text-gray-800 w-full">
+                        <button type="submit" 
+                                class="bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 rounded-r-lg hover:opacity-90 transition duration-300">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                    <p id="newsletterMessage" class="mt-2 text-sm"></p>
                 </div>
             </div>
             
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; <span id="currentYear"></span> SoldMax. Todos los derechos reservados.</p>
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Enlaces Rápidos</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Inicio</a></li>
+                    <li><a href="#featured" class="text-gray-400 hover:text-white transition duration-300">Productos</a></li>
+                    <li><a href="pages/testimonials.html" class="text-gray-400 hover:text-white transition duration-300">Testimonios</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Ayuda</h4>
+                <ul class="space-y-2">
+                    <li><a href="pages/help-center.html" class="text-gray-400 hover:text-white transition duration-300">Centro de Ayuda</a></li>
+                    <li><a href="pages/order-status.html" class="text-gray-400 hover:text-white transition duration-300">Estado del Pedido</a></li>
+                    <li><a href="pages/returns.html" class="text-gray-400 hover:text-white transition duration-300">Devoluciones</a></li>
+                    <li><a href="pages/contact.html" class="text-gray-400 hover:text-white transition duration-300">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Contacto</h4>
+                <ul class="space-y-2 text-gray-400">
+                    <li class="flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        <span>123 Calle Principal, Ciudad</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-phone-alt mr-2"></i>
+                        <span>+123 456 7890</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-envelope mr-2"></i>
+                        <span>info@soldmax.com</span>
+                    </li>
+                </ul>
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-3">Redes Sociales</h4>
+                    <div class="flex space-x-4">
+                        <a href="https://facebook.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://whatsapp.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-    </footer>
+        
+        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+            <p>&copy; <span id="currentYear"></span> SoldMax. Todos los derechos reservados.</p>
+            <div class="mt-4">
+                <a href="pages/privacy-policy.html" class="text-gray-400 hover:text-white transition duration-300 mx-2">Política de Privacidad</a>
+                <span>•</span>
+                <a href="pages/terms-of-service.html" class="text-gray-400 hover:text-white transition duration-300 mx-2">Términos de Servicio</a>
+                <span>•</span>
+                <a href="pages/sitemap.html" class="text-gray-400 hover:text-white transition duration-300 mx-2">Mapa del Sitio</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTopBtn" class="fixed bottom-8 right-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white w-12 h-12 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 flex items-center justify-center">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+</footer>
 
     <script type="module" src="scripts/dataHandler.js"></script>
     <script type="module" src="scripts/productsLanding.js"></script>
+    <script type="module" src="scripts/footer.js"></script>
     <script>
         // Mostrar año actual
         document.getElementById('currentYear').textContent = new Date().getFullYear();

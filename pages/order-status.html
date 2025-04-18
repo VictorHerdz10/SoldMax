@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estado de Pedido - SoldMax</title>
+    <link rel="icon" href="/images/icono.jpg" type="image/jpeg">
+    <script src="/scripts/taildwindcss-3.4.16.js"></script>
+    <link rel="stylesheet" href="/css/fontawesome-free-6.7.2-web/css/all.css">
+    <link rel="stylesheet" href="/css/landing.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/order-status.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="../index.html" class="flex items-center">
+                        <span class="font-bold text-2xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">SoldMax</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="login.html" class="text-gray-600 hover:text-blue-600 transition duration-300 font-medium">Iniciar Sesión</a>
+                    <a href="register.html" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition duration-300 shadow-md">
+                        Registrarse
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 sm:px-6 py-12">
+        <h1 class="text-3xl font-bold mb-8 text-center text-gray-800 animate-fade-in">Estado de tu Pedido</h1>
+        
+        <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6 animate-fade-in">
+            <div class="mb-8">
+                <h2 class="text-xl font-semibold mb-4">Resumen del Pedido #SMX-2023-45678</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="summary-card bg-gray-50 p-4 rounded-lg hover:shadow-md transition duration-300">
+                        <h3 class="text-sm font-medium text-gray-500 mb-1">Fecha</h3>
+                        <p class="font-medium">15 Noviembre 2023</p>
+                    </div>
+                    <div class="summary-card bg-gray-50 p-4 rounded-lg hover:shadow-md transition duration-300">
+                        <h3 class="text-sm font-medium text-gray-500 mb-1">Total</h3>
+                        <p class="font-medium">$189.99</p>
+                    </div>
+                    <div class="summary-card bg-gray-50 p-4 rounded-lg hover:shadow-md transition duration-300">
+                        <h3 class="text-sm font-medium text-gray-500 mb-1">Método de Pago</h3>
+                        <p class="font-medium">Tarjeta de Crédito</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <h2 class="text-xl font-semibold mb-6">Seguimiento del Envío</h2>
+                <div class="order-timeline">
+                    <div class="timeline-step completed">
+                        <h3 class="font-medium text-gray-800">Pedido Confirmado</h3>
+                        <p class="text-gray-600 text-sm">15 Nov, 10:30 AM</p>
+                        <p class="text-gray-600 mt-1">Hemos recibido tu pedido correctamente.</p>
+                    </div>
+                    <div class="timeline-step completed">
+                        <h3 class="font-medium text-gray-800">En Proceso</h3>
+                        <p class="text-gray-600 text-sm">15 Nov, 2:15 PM</p>
+                        <p class="text-gray-600 mt-1">Tu pedido está siendo preparado para el envío.</p>
+                    </div>
+                    <div class="timeline-step active">
+                        <h3 class="font-medium text-gray-800">En Camino</h3>
+                        <p class="text-gray-600 text-sm">16 Nov, 9:00 AM</p>
+                        <p class="text-gray-600 mt-1">Tu pedido ha sido enviado con el código de seguimiento: <span class="font-medium text-blue-600">SMX45678ABC</span></p>
+                    </div>
+                    <div class="timeline-step">
+                        <h3 class="font-medium text-gray-800">Entregado</h3>
+                        <p class="text-gray-600 text-sm">Estimado: 18 Nov</p>
+                        <p class="text-gray-600 mt-1">Tu pedido llegará pronto.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <h2 class="text-xl font-semibold mb-4">Productos</h2>
+                <div class="divide-y divide-gray-200">
+                    <div class="product-card py-4 flex items-start hover:bg-gray-50 transition duration-300">
+                        <div class="w-20 h-20 bg-gray-200 rounded-lg overflow-hidden mr-4 flex-shrink-0">
+                            <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" 
+                                 alt="Smartphone X10 Pro" class="w-full h-full object-cover"
+                                 onerror="this.onerror=null; this.src='/images/no-image-icon.png'">
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-medium text-gray-800">Smartphone X10 Pro</h3>
+                            <p class="text-gray-600 text-sm">Cantidad: 1</p>
+                            <p class="text-gray-600 text-sm">$159.99</p>
+                            <button onclick="openProductModal('smartphone')" class="mt-2 bg-gray-100 text-gray-600 px-3 py-1 rounded text-xs font-medium hover:bg-gray-200 transition duration-300">
+                                Ver detalles
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-card py-4 flex items-start hover:bg-gray-50 transition duration-300">
+                        <div class="w-20 h-20 bg-gray-200 rounded-lg overflow-hidden mr-4 flex-shrink-0">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXF-zdtRee8MfqRaa2KoLCiOOR9ssGHbp5FQ&s" 
+                                 alt="Funda Protectora" class="w-full h-full object-cover"
+                                 onerror="this.onerror=null; this.src='/images/no-image-icon.png'">
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-medium text-gray-800">Funda Protectora Premium</h3>
+                            <p class="text-gray-600 text-sm">Cantidad: 1</p>
+                            <p class="text-gray-600 text-sm">$29.99</p>
+                            <button onclick="openProductModal('case')" class="mt-2 bg-gray-100 text-gray-600 px-3 py-1 rounded text-xs font-medium hover:bg-gray-200 transition duration-300">
+                                Ver detalles
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="help-card bg-blue-50 p-4 rounded-lg border border-blue-200 hover:shadow-md transition duration-300">
+                <h3 class="font-medium text-blue-800 mb-2 flex items-center">
+                    <i class="fas fa-question-circle mr-2"></i>
+                    ¿Necesitas ayuda con tu pedido?
+                </h3>
+                <p class="text-blue-600 text-sm mb-3">Si tienes alguna pregunta sobre tu pedido, no dudes en contactar a nuestro equipo de soporte.</p>
+                <a href="contact.html" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition duration-300 transform hover:-translate-y-1">
+                    Contactar Soporte
+                </a>
+            </div>
+        </div>
+    </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">SoldMax</h3>
+                <p class="text-gray-400">Tu tienda online de confianza con los mejores productos al mejor precio.</p>
+                <div class="mt-6">
+                    <h4 class="text-lg font-semibold mb-3">Suscríbete a nuestro newsletter</h4>
+                    <form id="newsletterForm" class="flex">
+                        <input type="email" id="newsletterEmail" placeholder="Tu email" 
+                               class="px-4 py-2 rounded-l-lg focus:outline-none text-gray-800 w-full">
+                        <button type="submit" 
+                                class="bg-gradient-to-r from-blue-500 to-purple-500 px-4 py-2 rounded-r-lg hover:opacity-90 transition duration-300">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                    <p id="newsletterMessage" class="mt-2 text-sm"></p>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Enlaces Rápidos</h4>
+                <ul class="space-y-2">
+                    <li><a href="../index.html" class="text-gray-400 hover:text-white transition duration-300">Inicio</a></li>
+                    <li><a href="../index.html#featured" class="text-gray-400 hover:text-white transition duration-300">Productos</a></li>
+                    <li><a href="testimonials.html" class="text-gray-400 hover:text-white transition duration-300">Testimonios</a></li>
+                    <li><a href="about.html" class="text-gray-400 hover:text-white transition duration-300">Acerca de Nosotros</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Ayuda</h4>
+                <ul class="space-y-2">
+                    <li><a href="help-center.html" class="text-gray-400 hover:text-white transition duration-300">Centro de Ayuda</a></li>
+                    <li><a href="order-status.html" class="text-gray-400 hover:text-white transition duration-300">Estado del Pedido</a></li>
+                    <li><a href="returns.html" class="text-gray-400 hover:text-white transition duration-300">Devoluciones</a></li>
+                    <li><a href="contact.html" class="text-gray-400 hover:text-white transition duration-300">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="text-lg font-semibold mb-4">Contacto</h4>
+                <ul class="space-y-2 text-gray-400">
+                    <li class="flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2"></i>
+                        <span>123 Calle Principal, Ciudad</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-phone-alt mr-2"></i>
+                        <span>+123 456 7890</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-envelope mr-2"></i>
+                        <span>info@soldmax.com</span>
+                    </li>
+                </ul>
+                <div class="mt-4">
+                    <h4 class="text-lg font-semibold mb-3">Redes Sociales</h4>
+                    <div class="flex space-x-4">
+                        <a href="https://facebook.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://whatsapp.com" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+            <p>&copy; <span id="currentYear"></span> SoldMax. Todos los derechos reservados.</p>
+            <div class="mt-4">
+                <a href="privacy-policy.html" class="text-gray-400 hover:text-white transition duration-300 mx-2">Política de Privacidad</a>
+                <span>•</span>
+                <a href="terms-of-service.html" class="text-gray-400 hover:text-white transition duration-300 mx-2">Términos de Servicio</a>
+                <span>•</span>
+                <a href="sitemap.html" class="text-gray-400 hover:text-white transition duration-300 mx-2">Mapa del Sitio</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTopBtn" class="fixed bottom-8 right-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white w-12 h-12 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 flex items-center justify-center">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+</footer>
+<!-- Modal de Producto -->
+<div id="productModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-start mb-4">
+                <h3 id="modalProductTitle" class="text-xl font-bold text-gray-800"></h3>
+                <button onclick="closeProductModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="mb-4">
+                <img id="modalProductImage" src="" alt="" class="w-full h-48 object-contain rounded-lg bg-gray-100">
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <p class="text-sm text-gray-500">Precio</p>
+                    <p id="modalProductPrice" class="font-medium"></p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Cantidad</p>
+                    <p id="modalProductQuantity" class="font-medium"></p>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <p class="text-sm text-gray-500">Descripción</p>
+                <p id="modalProductDescription" class="text-gray-700"></p>
+            </div>
+            
+            <div class="mb-4">
+                <p class="text-sm text-gray-500">Especificaciones</p>
+                <ul id="modalProductSpecs" class="list-disc list-inside text-sm text-gray-700 space-y-1 mt-1"></ul>
+            </div>
+            
+            <button onclick="closeProductModal()" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+                Cerrar
+            </button>
+        </div>
+    </div>
+</div>
+
+    <script type="module" src="/scripts/footer.js"></script>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+// Datos de los productos
+const products = {
+    smartphone: {
+        title: "Smartphone X10 Pro",
+        image: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+        price: "$159.99",
+        quantity: "1",
+        description: "El Smartphone X10 Pro ofrece un rendimiento excepcional con su pantalla AMOLED de 6.5 pulgadas, cámara triple de 48MP y batería de larga duración.",
+        specs: [
+            "Pantalla AMOLED 6.5\" Full HD+",
+            "Procesador Octa-core 2.8GHz",
+            "128GB almacenamiento, 6GB RAM",
+            "Cámara triple: 48MP + 8MP + 5MP",
+            "Batería 4500mAh con carga rápida",
+            "Android 12 con 3 años de actualizaciones"
+        ]
+    },
+    case: {
+        title: "Funda Protectora Premium",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXF-zdtRee8MfqRaa2KoLCiOOR9ssGHbp5FQ&s",
+        price: "$29.99",
+        quantity: "1",
+        description: "Funda protectora de alta calidad diseñada específicamente para el Smartphone X10 Pro, con protección contra golpes y bordes elevados para proteger la pantalla.",
+        specs: [
+            "Material: Policarbonato + TPU",
+            "Diseño delgado y ligero",
+            "Protección contra caídas hasta 2 metros",
+            "Agarre antideslizante",
+            "Compatible con carga inalámbrica",
+            "Disponible en varios colores"
+        ]
+    }
+};
+
+// Función para abrir el modal
+function openProductModal(productId) {
+    const product = products[productId];
+    const modal = document.getElementById('productModal');
+    
+    document.getElementById('modalProductTitle').textContent = product.title;
+    document.getElementById('modalProductImage').src = product.image;
+    document.getElementById('modalProductImage').alt = product.title;
+    document.getElementById('modalProductPrice').textContent = product.price;
+    document.getElementById('modalProductQuantity').textContent = product.quantity;
+    document.getElementById('modalProductDescription').textContent = product.description;
+    
+    const specsList = document.getElementById('modalProductSpecs');
+    specsList.innerHTML = '';
+    product.specs.forEach(spec => {
+        const li = document.createElement('li');
+        li.textContent = spec;
+        specsList.appendChild(li);
+    });
+    
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+// Función para cerrar el modal
+function closeProductModal() {
+    document.getElementById('productModal').classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+
+// Cerrar modal al hacer clic fuera del contenido
+document.getElementById('productModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeProductModal();
+    }
+});
+    </script>
+</body>
+</html>

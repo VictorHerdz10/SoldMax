@@ -1,0 +1,164 @@
+/* Estilos generales para el centro de ayuda */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9fafb;
+}
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+.help-center-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Secciones de ayuda */
+.help-section {
+    transition: all 0.3s ease;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.help-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-color: #3b82f6;
+}
+
+.help-section h2 {
+    transition: color 0.3s ease;
+    padding: 1rem;
+    background-color: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.help-section:hover h2 {
+    color: #3b82f6;
+    background-color: #f0f4ff;
+}
+
+/* Íconos */
+.help-section i {
+    transition: all 0.3s ease;
+    width: 1.5rem;
+    text-align: center;
+}
+
+.help-section:hover i {
+    transform: scale(1.2);
+    color: #3b82f6;
+}
+
+/* Preguntas */
+.help-question {
+    transition: all 0.2s ease;
+    padding: 1rem;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.help-question:last-child {
+    border-bottom: none;
+}
+
+.help-question:hover {
+    background-color: #f9fafb;
+}
+
+.help-question h3 {
+    transition: color 0.2s ease;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.help-question:hover h3 {
+    color: #3b82f6;
+}
+
+.help-question p {
+    color: #6b7280;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+/* Botón de contacto */
+.contact-btn-container {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.contact-btn {
+    transition: all 0.3s ease;
+    display: inline-block;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}
+
+.contact-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+    opacity: 0.95;
+}
+
+/* Efectos de hover para preguntas */
+.help-question {
+    position: relative;
+}
+
+.help-question::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #3b82f6;
+    transition: width 0.3s ease;
+}
+
+.help-question:hover::after {
+    width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .help-center-container {
+        padding: 0 1rem;
+    }
+    
+    .help-section {
+        margin-bottom: 1rem;
+    }
+    
+    .help-section h2 {
+        font-size: 1.125rem;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.help-section {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.help-section:nth-child(1) { animation-delay: 0.1s; }
+.help-section:nth-child(2) { animation-delay: 0.2s; }
+.help-section:nth-child(3) { animation-delay: 0.3s; }
+.help-section:nth-child(4) { animation-delay: 0.4s; }
