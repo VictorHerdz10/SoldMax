@@ -439,6 +439,13 @@ async function showPurchaseDetails(purchaseId) {
       "purchaseTotal"
     ).textContent = `$${purchase.total.toFixed(2)}`;
     document.getElementById("purchaseStatus").textContent = purchase.status;
+    const estilo = purchase.status  === "Completada"
+    ? "bg-green-100 text-green-800 px-2 py-1 text-xs font-semibold rounded-full"
+    : purchase.status === "Pendiente"
+    ? "bg-yellow-100 text-yellow-800 px-2 py-1 text-xs font-semibold rounded-full"
+    : "bg-red-100 text-red-800 px-2 py-1 text-xs font-semibold rounded-full";
+    document.getElementById("purchaseStatus").className = estilo;
+
 
     const productsContainer = document.getElementById("purchaseProducts");
     productsContainer.innerHTML = purchase.products

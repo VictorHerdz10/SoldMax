@@ -10,6 +10,9 @@ let currentAction = null;
 let selectedUserId = null;
 let actionData = null;
 let currentUsers = []; // Variable global para almacenar los usuarios
+const itemsPerPage = 10;
+let currentUsersPage = 1;
+let totalUsersPages = 1;
 
 // Configurar menú móvil
 const mobileMenuBtn = document.getElementById("mobileMenuBtn");
@@ -52,17 +55,17 @@ const logoutModal = document.getElementById("logoutModal");
 const logoutCancel = document.getElementById("logoutCancel");
 const logoutConfirm = document.getElementById("logoutConfirm");
 
-logoutBtn.addEventListener("click", () => {
-  logoutModal.classList.remove("hidden");
-});
-
-logoutCancel.addEventListener("click", () => {
-  logoutModal.classList.add("hidden");
-});
-
-logoutConfirm.addEventListener("click", () => {
-  logout();
-});
+//logoutBtn.addEventListener("click", () => {
+//  logoutModal.classList.remove("hidden");
+//});
+//
+//logoutCancel.addEventListener("click", () => {
+//  logoutModal.classList.add("hidden");
+//});
+//
+//logoutConfirm.addEventListener("click", () => {
+//  logout();
+//});
 
 // Configurar modales
 const modal = document.getElementById("modal");
@@ -383,11 +386,6 @@ async function loadAdminData() {
       userNameElement.textContent = session.user.name;
       userNameElement.style.cursor = "pointer";
       userNameElement.classList.add("hover:text-blue-300", "transition-colors");
-      userNameElement.addEventListener("click", () => {
-        if (window.profileModule) {
-          window.profileModule.openProfileModal();
-        }
-      });
     }
 
     // Cargar usuarios excluyendo al admin actual y actualizar la lista global
@@ -399,6 +397,10 @@ async function loadAdminData() {
     if (userCountElement) {
       userCountElement.textContent = currentUsers.length;
     }
+
+    // Renderizar tabla con paginación
+    renderUsersTable(currentUsers);
+
 
     // Cargar productos y actualizar contador
     const products = await dataHandler.readProducts();
@@ -541,4 +543,125 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+  document.getElementById('viewProfileBtn')?.addEventListener('click', () => {
+    setTimeout(() => {
+      window.profileModule.setupProfileAvatar();
+    }, 100);
+  });
+  window.profileModule.updateHeaderAvatar();
 });
+
+// Función para renderizar la tabla de usuarios con paginación
+function renderUsersTable(users) {
+  const tbody = document.getElementById("usersTable");
+  if (!tbody) return;
+
+  tbody.innerHTML = "";
+
+  // Calcular índices para la paginación
+  const startIndex = (currentUsersPage - 1) * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, users.length);
+  const paginatedUsers = users.slice(startIndex, endIndex);
+
+  paginatedUsers.forEach((user) => {
+    const row = document.createElement("tr");
+    row.className = "border-b hover:bg-gray-50";
+    row.innerHTML = `
+      <td class="py-3 px-4 text-center">${user.name}</td>
+      <td class="py-3 px-4 text-center">${user.email}</td>
+      <td class="py-3 px-4 text-center">${user.phone || "N/A"}</td>
+      <td class="py-3 px-4 text-center">${user.role}</td>
+      <td class="py-3 px-4 text-center whitespace-nowrap">
+        <button onclick="window.showDetails(${user.id})" class="text-blue-500 hover:text-blue-700 mr-2">
+          <i class="fas fa-eye"></i>
+        </button>
+        <button onclick="window.showRoleEdit(${user.id})" class="text-green-500 hover:text-green-700 mr-2">
+          <i class="fas fa-user-edit"></i>
+        </button>
+        <button onclick="window.showDeleteConfirm(${user.id})" class="text-red-500 hover:text-red-700">
+          <i class="fas fa-trash"></i>
+        </button>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  // Actualizar información de paginación
+  document.getElementById("usersPaginationInfo").textContent = 
+    `Mostrando ${startIndex + 1}-${endIndex} de ${users.length} usuarios`;
+
+  // Actualizar controles de paginación
+  updateUsersPaginationControls(users.length);
+}
+
+// Función para actualizar los controles de paginación de usuarios
+function updateUsersPaginationControls(totalItems) {
+  totalUsersPages = Math.ceil(totalItems / itemsPerPage);
+  const prevBtn = document.getElementById("usersPrevPage");
+  const nextBtn = document.getElementById("usersNextPage");
+  const pageNumbers = document.getElementById("usersPageNumbers");
+
+  prevBtn.disabled = currentUsersPage === 1;
+  nextBtn.disabled = currentUsersPage === totalUsersPages;
+
+  // Limpiar números de página existentes
+  pageNumbers.innerHTML = "";
+
+  // Mostrar máximo 5 números de página alrededor de la página actual
+  const startPage = Math.max(1, currentUsersPage - 2);
+  const endPage = Math.min(totalUsersPages, currentUsersPage + 2);
+
+  for (let i = startPage; i <= endPage; i++) {
+    const pageBtn = document.createElement("button");
+    pageBtn.className = `px-3 py-1 border rounded ${i === currentUsersPage ? "bg-blue-500 text-white" : "bg-white"}`;
+    pageBtn.textContent = i;
+    pageBtn.addEventListener("click", () => {
+      currentUsersPage = i;
+      renderUsersTable(currentUsers);
+      updateUsersPaginationControls(currentUsers.length);
+    });
+    pageNumbers.appendChild(pageBtn);
+  }
+}
+
+// Event listeners para los botones de paginación de usuarios
+document.getElementById("usersPrevPage")?.addEventListener("click", () => {
+  if (currentUsersPage > 1) {
+    currentUsersPage--;
+    renderUsersTable(currentUsers);
+    updateUsersPaginationControls(currentUsers.length);
+  }
+});
+
+document.getElementById("usersNextPage")?.addEventListener("click", () => {
+  if (currentUsersPage < totalUsersPages) {
+    currentUsersPage++;
+    renderUsersTable(currentUsers);
+    updateUsersPaginationControls(currentUsers.length);
+  }
+});
+  // Modal de usuario
+  const userMenuBtn = document.getElementById("userMenuBtn");
+  const userModal = document.getElementById("userModal");
+  const closeUserModal = document.getElementById("closeUserModal");
+
+  userMenuBtn.addEventListener("click", () => {
+    userModal.classList.remove("hidden");
+  });
+
+  closeUserModal.addEventListener("click", () => {
+    userModal.classList.add("hidden");
+  });
+
+  logoutBtn.addEventListener("click", () => {
+    userModal.classList.add("hidden");
+    logoutModal.classList.remove("hidden");
+  });
+
+  logoutCancel.addEventListener("click", () => {
+    logoutModal.classList.add("hidden");
+  });
+
+  logoutConfirm.addEventListener("click", () => {
+    logout();
+  });

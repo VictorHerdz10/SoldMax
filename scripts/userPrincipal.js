@@ -33,6 +33,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Cargar datos iniciales
   await loadInitialData();
+  document.getElementById('viewProfileBtn')?.addEventListener('click', () => {
+    setTimeout(() => {
+      window.profileModule.setupProfileAvatar();
+    }, 100);
+  });
+  window.profileModule.updateHeaderAvatar();
 });
 
 async function loadInitialData() {

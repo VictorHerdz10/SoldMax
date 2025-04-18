@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/css/fontawesome-free-6.7.2-web/css/all.css">
     <script src="/scripts/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="/css/admin.css">
-    
+
 </head>
 
 <body class="bg-gray-100">
@@ -25,33 +25,32 @@
                 <nav class="hidden md:flex space-x-6">
                     <a href="#Dashboard" class="hover:text-blue-300 transition-colors flex items-center nav-link"
                         data-section="dashboard">
-                        <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
+                        Dashboard
                     </a>
                     <a href="#Usuarios" class="hover:text-blue-300 transition-colors flex items-center nav-link"
                         data-section="usuarios">
-                        <i class="fas fa-users mr-2"></i> Usuarios
+                        Usuarios
                     </a>
                     <a href="#Productos" class="hover:text-blue-300 transition-colors flex items-center nav-link"
                         data-section="productos">
-                        <i class="fas fa-boxes mr-2"></i> Productos
+                        Productos
                     </a>
                     <a href="#Ventas" class="hover:text-blue-300 transition-colors flex items-center nav-link"
                         data-section="ventas">
-                        <i class="fas fa-shopping-cart mr-2"></i> Ventas
+                        Ventas
                     </a>
                     <a href="#Reportes" class="hover:text-blue-300 transition-colors flex items-center nav-link"
                         data-section="reportes">
-                        <i class="fas fa-chart-bar mr-2"></i> Reportes
+                        Reportes
                     </a>
                 </nav>
             </div>
             <div class="flex items-center space-x-4">
-                <span id="userName" class="font-medium"></span>
-                <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg transition">
-                    Cerrar Sesión
+                <button id="userMenuBtn" class="flex items-center space-x-2">
+                    <span id="userName" class="font-medium"></span>
+                    <i class="fas fa-user-circle text-xl"></i>
                 </button>
             </div>
-        </div>
     </header>
 
     <!-- Menú móvil -->
@@ -116,8 +115,8 @@
         </section>
 
         <section id="Usuarios" class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-semibold">Gestión de Usuarios</h2>
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-6 gap-3">
+                <h2 class="text-xl md:text-2xl font-semibold">Gestión de Usuarios</h2>
             </div>
             <div class="table-container">
                 <table class="min-w-full bg-white divide-y divide-gray-200">
@@ -134,49 +133,89 @@
                         <!-- Usuarios se cargarán aquí -->
                     </tbody>
                 </table>
+                <div class="flex justify-between items-center mt-4">
+                    <div class="text-sm text-gray-600" id="usersPaginationInfo">
+                        Mostrando 0 de 0 usuarios
+                    </div>
+                    <div class="flex space-x-2">
+                        <button id="usersPrevPage" class="px-3 py-1 border rounded bg-white disabled:opacity-50"
+                            disabled>
+                            Anterior
+                        </button>
+                        <div id="usersPageNumbers" class="flex space-x-1"></div>
+                        <button id="usersNextPage" class="px-3 py-1 border rounded bg-white disabled:opacity-50"
+                            disabled>
+                            Siguiente
+                        </button>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section id="Productos" class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-semibold">Gestión de Productos</h2>
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-6 gap-3">
+                <h2 class="text-xl md:text-2xl font-semibold">Gestión de Productos</h2>
                 <button id="newProductBtn"
-                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center transition-colors">
-                    <i class="fas fa-plus mr-2"></i> Nuevo Producto
+                    class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 md:px-4 md:py-2 rounded-lg flex items-center transition-colors text-sm md:text-base">
+                    <i class="fas fa-plus mr-1 md:mr-2"></i> Nuevo Producto
                 </button>
             </div>
-            <div class="table-container">
+            <div class="table-container overflow-x-auto">
                 <table class="min-w-full bg-white divide-y divide-gray-200">
                     <thead class="bg-gray-50">
-                      <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Imagen</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoría</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
-                      </tr>
+                        <tr>
+                            <th class="py-3 px-4 text-center">
+                                ID</th>
+                            <th class="py-3 px-4 text-center">
+                                Imagen</th>
+                            <th class="py-3 px-4 text-center">
+                                Nombre</th>
+                            <th class="py-3 px-4 text-center">
+                                Categoría</th>
+                            <th class="py-3 px-4 text-center">
+                                Precio</th>
+                            <th class="py-3 px-4 text-center">
+                                Stock</th>
+                            <th class="py-3 px-4 text-center">
+                                Estado</th>
+                            <th class="py-3 px-4 text-center">
+                                Acciones</th>
+                        </tr>
                     </thead>
                     <tbody id="productsTable" class="bg-white divide-y divide-gray-200">
-                      <!-- Los productos se cargarán aquí dinámicamente -->
+                        <!-- Los productos se cargarán aquí dinámicamente -->
                     </tbody>
-                  </table>
+                </table>
+                <div class="flex justify-between items-center mt-4">
+                    <div class="text-sm text-gray-600" id="productsPaginationInfo">
+                        Mostrando 0 de 0 productos
+                    </div>
+                    <div class="flex space-x-2">
+                        <button id="productsPrevPage" class="px-3 py-1 border rounded bg-white disabled:opacity-50"
+                            disabled>
+                            Anterior
+                        </button>
+                        <div id="productsPageNumbers" class="flex space-x-1"></div>
+                        <button id="productsNextPage" class="px-3 py-1 border rounded bg-white disabled:opacity-50"
+                            disabled>
+                            Siguiente
+                        </button>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section id="Ventas" class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-semibold">Registro de Ventas</h2>
-                <div class="flex space-x-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-6 gap-3">
+                <h2 class="text-xl md:text-2xl font-semibold">Registro de Ventas</h2>
+                <div class="flex space-x-2 md:space-x-4">
                     <button onclick="window.salesModule.openFilterModal()"
-                        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center transition-colors">
-                        <i class="fas fa-filter mr-2"></i> Filtrar
+                        class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 md:px-4 md:py-2 rounded-lg flex items-center transition-colors text-sm md:text-base">
+                        <i class="fas fa-filter mr-1 md:mr-2"></i> <span class="hidden sm:inline">Filtrar</span>
                     </button>
                     <button onclick="window.salesModule.exportAllSales()"
-                        class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg flex items-center transition-colors">
-                        <i class="fas fa-file-export mr-2"></i> Exportar Todo
+                        class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 md:px-4 md:py-2 rounded-lg flex items-center transition-colors text-sm md:text-base">
+                        <i class="fas fa-file-export mr-1 md:mr-2"></i> <span class="hidden sm:inline">Exportar</span>
                     </button>
                 </div>
             </div>
@@ -197,6 +236,22 @@
                         <!-- Ventas se cargarán aquí -->
                     </tbody>
                 </table>
+                <div class="flex justify-between items-center mt-4">
+                    <div class="text-sm text-gray-600" id="salesPaginationInfo">
+                        Mostrando 0 de 0 ventas
+                    </div>
+                    <div class="flex space-x-2">
+                        <button id="salesPrevPage" class="px-3 py-1 border rounded bg-white disabled:opacity-50"
+                            disabled>
+                            Anterior
+                        </button>
+                        <div id="salesPageNumbers" class="flex space-x-1"></div>
+                        <button id="salesNextPage" class="px-3 py-1 border rounded bg-white disabled:opacity-50"
+                            disabled>
+                            Siguiente
+                        </button>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -208,26 +263,26 @@
                     <h3 class="font-semibold mb-4">Ventas Mensuales</h3>
                     <canvas id="monthlySalesChart"></canvas>
                 </div>
-                
+
                 <!-- Gráfico diario -->
                 <div class="bg-white p-4 rounded-lg shadow">
                     <h3 class="font-semibold mb-4">Ventas Diarias</h3>
                     <canvas id="dailySalesChart"></canvas>
                 </div>
-                
+
                 <!-- Productos más vendidos -->
                 <div class="bg-white p-4 rounded-lg shadow">
                     <h3 class="font-semibold mb-4">Productos Más Vendidos</h3>
                     <canvas id="topProductsChart"></canvas>
                 </div>
-                
+
                 <!-- Ventas por categoría -->
                 <div class="bg-white p-4 rounded-lg shadow">
                     <h3 class="font-semibold mb-4">Ventas por Categoría</h3>
                     <canvas id="categorySalesChart"></canvas>
                 </div>
             </div>
-            
+
             <!-- Resumen y ranking de favoritos -->
             <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mt-6">
                 <h3 class="text-lg font-semibold mb-4 flex items-center">
@@ -277,12 +332,12 @@
                     <div>
                         <label for="productImageUpload" class="block text-gray-700 mb-2">Imagen del Producto</label>
                         <input type="file" id="productImageUpload" accept="image/jpeg, image/png, image/gif, image/webp"
-                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors">
                         <div id="productImageUploadError" class="text-red-500 text-sm mt-1 hidden"></div>
-                        
+
                         <!-- Preview container -->
                         <div id="imagePreview" class="mt-2 relative hidden w-32 h-32"></div>
-                      </div>
+                    </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
@@ -442,6 +497,64 @@
             </div>
         </div>
     </div>
+    <div id="profileModalInfo" class="modal-overlay hidden">
+        <div class="modal-container max-w-2xl">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">Mi Perfil</h3>
+                    <button id="closeProfileModal" class="text-gray-500 hover:text-gray-700 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-1 flex flex-col items-center">
+                        <div class="relative mb-4">
+                            <div
+                                class="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden border-4 border-white shadow-lg">
+                                <!-- Aquí se insertará la imagen dinámicamente -->
+                                <i class="fas fa-user-circle text-6xl text-gray-400" id="profileAvatar"></i>
+                            </div>
+                            <button
+                                class="absolute bottom-0 right-0 bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 transition-colors">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                        </div>
+                        <h4 id="profileNameDisplay" class="text-xl font-semibold text-center"></h4>
+                        <p id="profileUsernameDisplay" class="text-gray-600 text-center"></p>
+                    </div>
+                    <div class="md:col-span-2">
+                        <div class="bg-white rounded-lg shadow-sm p-6">
+                            <h4 class="font-semibold text-lg mb-4 border-b pb-2">Información Personal</h4>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-500">Nombre completo</label>
+                                    <p id="profileFullName" class="mt-1 text-gray-900"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-500">Correo electrónico</label>
+                                    <p id="profileEmailDetails" class="mt-1 text-gray-900"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-500">Teléfono</label>
+                                    <p id="profilePhoneDetails" class="mt-1 text-gray-900"></p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-500">Dirección</label>
+                                    <p id="profileAddress" class="mt-1 text-gray-900"></p>
+                                </div>
+                            </div>
+                            <div class="mt-6 pt-4 border-t flex justify-end">
+                                <button id="editProfileBtn"
+                                    class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2">
+                                    <i class="fas fa-edit"></i> Editar Perfil
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Modal de Perfil -->
     <div id="profileModal"
         class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
@@ -542,6 +655,28 @@
             </form>
         </div>
     </div>
+    <div id="userModal" class="modal-overlay hidden">
+        <div class="modal-container">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">Mi Cuenta</h3>
+                    <button id="closeUserModal" class="text-gray-500 hover:text-gray-700 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="space-y-4">
+                    <button id="viewProfileBtn"
+                        class="w-full text-left p-3 hover:bg-gray-100 rounded-lg transition-colors">
+                        <i class="fas fa-user mr-2"></i> Mi Perfil
+                    </button>
+                    <button id="logoutBtn"
+                        class="w-full text-left p-3 hover:bg-gray-100 rounded-lg transition-colors text-red-500">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer class="bg-gray-800 text-white py-8">
         <div class="max-w-7xl mx-auto px-4">
@@ -558,7 +693,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Secciones</h4>
                     <ul class="space-y-2">
@@ -568,7 +703,7 @@
                         <li><a href="#Ventas" class="text-gray-300 hover:text-white">Ventas</a></li>
                     </ul>
                 </div>
-                
+
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Soporte</h4>
                     <ul class="space-y-2 text-gray-300">
@@ -583,7 +718,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-300">
                 <p>&copy; <span id="currentYear"></span> SoldMax Admin. Todos los derechos reservados.</p>
             </div>
@@ -596,6 +731,7 @@
     <script type="module" src="/scripts/products.js"></script>
     <script type="module" src="/scripts/sales.js"></script>
     <script type="module" src="/scripts/reports.js"></script>
+    <script type="module" src="/scripts/profileAccount.js"></script>
 </body>
 
 </html>

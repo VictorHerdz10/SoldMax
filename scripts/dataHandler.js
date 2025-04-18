@@ -8,9 +8,15 @@ export class DataHandler {
     this.favoritesKey = "soldmax_favorites_"; // Prefijo para favoritos por usuario
     this.globalFavoritesKey = "soldmax_global_favorites";
     this.pendingOrdersKey = "soldmax_pending_orders_";
+
+
+    // Verificar ofertas expiradas cada hora
+  setInterval(() => this.checkExpiredDiscounts(), 3600000);
+  this.checkExpiredDiscounts(); // Verificar al iniciar
   }
 
   async initialize() {
+    await this.checkExpiredDiscounts();
     await this.seedAdminUser();
     return true;
   }
@@ -597,6 +603,7 @@ async cancelOrder(orderId) {
 
   // Actualizar estado a Cancelada en ventas
   sales[orderIndex].status = "Cancelada";
+  sales[orderIndex].id = `C-${sales[orderIndex].id.split('-')[1]}`
   sales[orderIndex].cancellationDate = new Date().toISOString();
   await this.writeSales(sales);
   
@@ -850,5 +857,27 @@ async cancelOrder(orderId) {
       salesData: categories.map(cat => categoryMap[cat].sales),
       countData: categories.map(cat => categoryMap[cat].count)
     };
+  }
+  async checkExpiredDiscounts() {
+    const products = await this.readProducts();
+    const now = new Date();
+    let updated = false;
+  
+    const updatedProducts = products.map(product => {
+      if (product.discountEndDate && new Date(product.discountEndDate) < now) {
+        updated = true;
+        return {
+          ...product,
+          discountPrice: null,
+          discountEndDate: null
+        };
+      }
+      return product;
+    });
+  
+    if (updated) {
+      await this.writeProducts(updatedProducts);
+    }
+    return updated;
   }
 }

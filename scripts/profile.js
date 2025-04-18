@@ -1,7 +1,15 @@
 import { DataHandler } from "./dataHandler.js";
 import { showSuccess, showError } from "./auth.js";
+import { loadUserData } from "./ui.js";
 
 const dataHandler = new DataHandler();
+// En dataHandler.js o en un archivo de configuración
+const cloudinaryConfig = {
+  cloudName: 'dwad8nrdl',
+  apiKey: '266517934682538',
+  uploadPreset: 'SoldMax_Ventas',
+  avatarFolder: 'user_avatars' // Nueva carpeta para avatares
+};
 
 export const profileValidations = {
   name: {
@@ -262,6 +270,7 @@ export async function handleProfileSubmit(e) {
   try {
     const users = await dataHandler.readUsers();
     const userIndex = users.findIndex(u => u.id === session.user.id);
+    console.log(userIndex)
     
     if (userIndex !== -1) {
       const updatedUser = {
@@ -310,8 +319,11 @@ export async function handleProfileSubmit(e) {
       if (userNameElement) {
         userNameElement.textContent = profileData.name;
       }
-
+     if(session.user.role ==='admin'){
       await window.loadAdminData();
+    }else{
+      loadUserData();
+    }
       closeProfileModal();
       showSuccess("Perfil actualizado correctamente");
     }
@@ -369,10 +381,177 @@ function validateProfileForm(profileData) {
 
   return isValid;
 }
+// profile.js o en tu archivo principal
+export async function setupProfileAvatar() {
+  // Elementos del DOM
+  const avatarIcon = document.getElementById('profileAvatar');
+  const avatarContainer = document.querySelector('.relative.mb-4');
+  const avatarUploadBtn = avatarContainer.querySelector('button');
+  const avatarImage = document.createElement('img');
+  avatarImage.className = 'w-full h-full object-cover';
+  avatarImage.style.display = 'none';
+  
+  // Insertar la imagen dentro del contenedor
+  const avatarWrapper = avatarContainer.querySelector('div');
+  avatarWrapper.insertBefore(avatarImage, avatarWrapper.firstChild);
+
+  // Obtener el usuario actual
+  const session = dataHandler.getSession();
+  if (!session) return;
+
+  // Cargar avatar existente si hay uno
+  const users = await dataHandler.readUsers();
+  const currentUser = users.find(u => u.id === session.user.id);
+  
+  if (currentUser?.avatar) {
+    avatarImage.src = currentUser.avatar;
+    avatarImage.style.display = 'block';
+    avatarIcon.style.display = 'none';
+    
+    // Actualizar también el avatar en el header
+    const headerAvatar = document.querySelector('#userMenuBtn i');
+    if (headerAvatar) {
+      headerAvatar.style.display = 'none';
+      const headerImg = document.createElement('img');
+      headerImg.src = currentUser.avatar;
+      headerImg.className = 'w-8 h-8 rounded-full object-cover';
+      headerAvatar.parentNode.insertBefore(headerImg, headerAvatar);
+    }
+  }
+
+  // Configurar el evento de clic para subir imagen
+  avatarUploadBtn.addEventListener('click', async () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    
+    input.onchange = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      // Validar el archivo
+      if (!['image/jpeg', 'image/png', 'image/gif', 'image/webp'].includes(file.type)) {
+        showError('Formato de imagen no válido. Use JPG, PNG, GIF o WEBP.');
+        return;
+      }
+      
+      if (file.size > 2 * 1024 * 1024) {
+        showError('La imagen no debe exceder 2MB de tamaño.');
+        return;
+      }
+      
+      try {
+        // Mostrar previsualización
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          avatarImage.src = event.target.result;
+          avatarImage.style.display = 'block';
+          avatarIcon.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+        
+        // Subir a Cloudinary
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', cloudinaryConfig.uploadPreset);
+        formData.append('cloud_name', cloudinaryConfig.cloudName);
+        formData.append('folder', cloudinaryConfig.avatarFolder);
+        
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloudName}/image/upload`, {
+          method: 'POST',
+          body: formData
+        });
+        
+        if (!response.ok) throw new Error('Error al subir la imagen');
+        
+        const data = await response.json();
+        const optimizedUrl = data.secure_url.replace('/upload/', '/upload/w_200,h_200,c_fill,g_face,r_max/');
+        
+        // Actualizar el usuario con el nuevo avatar
+        const updatedUsers = users.map(u => {
+          if (u.id === session.user.id) {
+            return { ...u, avatar: optimizedUrl };
+          }
+          return u;
+        });
+        
+        await dataHandler.writeUsers(updatedUsers);
+        
+        // Actualizar el header
+        const headerAvatar = document.querySelector('#userMenuBtn i');
+        if (headerAvatar) {
+          const headerImg = headerAvatar.nextElementSibling?.tagName === 'IMG' 
+            ? headerAvatar.nextElementSibling 
+            : document.createElement('img');
+          
+          headerImg.src = optimizedUrl;
+          headerImg.className = 'w-8 h-8 rounded-full object-cover';
+          
+          if (!headerAvatar.nextElementSibling?.tagName === 'IMG') {
+            headerAvatar.style.display = 'none';
+            headerAvatar.parentNode.insertBefore(headerImg, headerAvatar);
+          }
+        }
+        
+        showSuccess('Avatar actualizado correctamente');
+        await updateHeaderAvatar();
+
+      } catch (error) {
+        console.error('Error al subir avatar:', error);
+        showError('Error al actualizar el avatar');
+      }
+    };
+    
+    input.click();
+  });
+}
+
+
+export async function updateHeaderAvatar() {
+  const session = dataHandler.getSession();
+  if (!session) return;
+
+  const users = await dataHandler.readUsers();
+  const currentUser = users.find(u => u.id === session.user.id);
+  const headerAvatar = document.querySelector('#userMenuBtn i');
+
+  if (!headerAvatar) return;
+
+  if (currentUser?.avatar) {
+    // Si ya hay una imagen, actualizarla
+    const existingImg = headerAvatar.nextElementSibling?.tagName === 'IMG' 
+      ? headerAvatar.nextElementSibling 
+      : null;
+    
+    if (existingImg) {
+      existingImg.src = currentUser.avatar;
+    } else {
+      // Crear nueva imagen
+      headerAvatar.style.display = 'none';
+      const headerImg = document.createElement('img');
+      headerImg.src = currentUser.avatar;
+      headerImg.className = 'w-8 h-8 rounded-full object-cover';
+      headerAvatar.parentNode.insertBefore(headerImg, headerAvatar);
+    }
+  } else {
+    // Si no hay avatar, mostrar el icono por defecto
+    headerAvatar.style.display = 'inline-block';
+    const existingImg = headerAvatar.nextElementSibling?.tagName === 'IMG' 
+      ? headerAvatar.nextElementSibling 
+      : null;
+    
+    if (existingImg) {
+      existingImg.remove();
+    }
+  }
+}
+
 
 // Exportar para acceso global
 window.profileModule = {
   openProfileModal,
   closeProfileModal,
-  handleProfileSubmit
+  handleProfileSubmit,
+  setupProfileAvatar,
+  updateHeaderAvatar
 };

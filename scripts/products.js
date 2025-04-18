@@ -3,6 +3,9 @@ import { showConfirmModal } from "./admin.js";
 import { showSuccess, showError } from "./auth.js";
 
 const dataHandler = new DataHandler();
+let currentProductsPage = 1;
+let totalProductsPages = 1;
+const itemsPerPage = 10;
 
 // Configuración de Cloudinary
 const cloudinaryConfig = {
@@ -651,7 +654,7 @@ export async function handleProductSubmit(e) {
   }
 }
 
-// Función para cargar productos en la tabla
+// Función para cargar productos con paginación
 export async function loadProducts() {
   try {
     const products = await dataHandler.readProducts();
@@ -660,7 +663,12 @@ export async function loadProducts() {
 
     tbody.innerHTML = "";
 
-    products.forEach((product) => {
+    // Calcular índices para la paginación
+    const startIndex = (currentProductsPage - 1) * itemsPerPage;
+    const endIndex = Math.min(startIndex + itemsPerPage, products.length);
+    const paginatedProducts = products.slice(startIndex, endIndex);
+
+    paginatedProducts.forEach((product) => {
       const productForModal = {
         id: product.id,
         name: product.name,
@@ -740,12 +748,18 @@ export async function loadProducts() {
       `;
       tbody.appendChild(row);
     });
+
+    // Actualizar información de paginación
+    document.getElementById("productsPaginationInfo").textContent = 
+      `Mostrando ${startIndex + 1}-${endIndex} de ${products.length} productos`;
+
+    // Actualizar controles de paginación
+    updateProductsPaginationControls(products.length);
   } catch (error) {
     console.error("Error al cargar productos:", error);
     showError("Error al cargar los productos");
   }
 }
-
 // Función auxiliar para escapar HTML
 function escapeHtml(unsafe) {
   return unsafe
@@ -892,4 +906,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Cargar productos al iniciar
   loadProducts();
+});
+// Función para actualizar los controles de paginación de productos
+function updateProductsPaginationControls(totalItems) {
+  totalProductsPages = Math.ceil(totalItems / itemsPerPage);
+  const prevBtn = document.getElementById("productsPrevPage");
+  const nextBtn = document.getElementById("productsNextPage");
+  const pageNumbers = document.getElementById("productsPageNumbers");
+
+  prevBtn.disabled = currentProductsPage === 1;
+  nextBtn.disabled = currentProductsPage === totalProductsPages;
+
+  // Limpiar números de página existentes
+  pageNumbers.innerHTML = "";
+
+  // Mostrar máximo 5 números de página alrededor de la página actual
+  const startPage = Math.max(1, currentProductsPage - 2);
+  const endPage = Math.min(totalProductsPages, currentProductsPage + 2);
+
+  for (let i = startPage; i <= endPage; i++) {
+    const pageBtn = document.createElement("button");
+    pageBtn.className = `px-3 py-1 border rounded ${i === currentProductsPage ? "bg-blue-500 text-white" : "bg-white"}`;
+    pageBtn.textContent = i;
+    pageBtn.addEventListener("click", () => {
+      currentProductsPage = i;
+      loadProducts();
+    });
+    pageNumbers.appendChild(pageBtn);
+  }
+}
+
+// Event listeners para los botones de paginación de productos
+document.getElementById("productsPrevPage")?.addEventListener("click", () => {
+  if (currentProductsPage > 1) {
+    currentProductsPage--;
+    loadProducts();
+  }
+});
+
+document.getElementById("productsNextPage")?.addEventListener("click", () => {
+  if (currentProductsPage < totalProductsPages) {
+    currentProductsPage++;
+    loadProducts();
+  }
 });
