@@ -430,43 +430,9 @@ async function loadAdminData() {
       todayIncomeElement.textContent = `$${totalIncome.toFixed(2)}`;
     }
 
-    // Cargar tablas de usuarios y productos
-    const usersTable = document.getElementById("usersTable");
-    if (usersTable) {
-      usersTable.innerHTML = "";
-
-      currentUsers
-        .slice(-5)
-        .reverse()
-        .forEach((user) => {
-          const row = document.createElement("tr");
-          row.className = "border-b hover:bg-gray-50";
-          row.innerHTML = `
-                  <td class="py-3 px-4 text-center">${user.name}</td>
-                  <td class="py-3 px-4 text-center">${user.email}</td>
-                  <td class="py-3 px-4 text-center">${user.phone || "N/A"}</td>
-                  <td class="py-3 px-4 text-center">${user.role}</td>
-                  <td class="py-3 px-4 text-center whitespace-nowrap">
-                      <button onclick="window.showDetails(${
-                        user.id
-                      })" class="text-blue-500 hover:text-blue-700 mr-2">
-                          <i class="fas fa-eye"></i>
-                      </button>
-                      <button onclick="window.showRoleEdit(${
-                        user.id
-                      })" class="text-green-500 hover:text-green-700 mr-2">
-                          <i class="fas fa-user-edit"></i>
-                      </button>
-                      <button onclick="window.showDeleteConfirm(${
-                        user.id
-                      })" class="text-red-500 hover:text-red-700">
-                          <i class="fas fa-trash"></i>
-                      </button>
-                  </td>
-              `;
-          usersTable.appendChild(row);
-        });
-    }
+if (document.getElementById("usersTable")) {
+  renderUsersTable(currentUsers);
+}
 
     // Cargar otras secciones
     await loadProducts();
@@ -561,31 +527,31 @@ function renderUsersTable(users) {
   const paginatedUsers = users.slice(startIndex, endIndex);
 
   paginatedUsers.forEach((user) => {
-    const row = document.createElement("tr");
-    row.className = "border-b hover:bg-gray-50";
-    row.innerHTML = `
-      <td class="py-3 px-4 text-center">${user.name}</td>
-      <td class="py-3 px-4 text-center">${user.email}</td>
-      <td class="py-3 px-4 text-center">${user.phone || "N/A"}</td>
-      <td class="py-3 px-4 text-center">${user.role}</td>
-      <td class="py-3 px-4 text-center whitespace-nowrap">
-        <button onclick="window.showDetails(${user.id})" class="text-blue-500 hover:text-blue-700 mr-2">
-          <i class="fas fa-eye"></i>
-        </button>
-        <button onclick="window.showRoleEdit(${user.id})" class="text-green-500 hover:text-green-700 mr-2">
-          <i class="fas fa-user-edit"></i>
-        </button>
-        <button onclick="window.showDeleteConfirm(${user.id})" class="text-red-500 hover:text-red-700">
-          <i class="fas fa-trash"></i>
-        </button>
-      </td>
-    `;
-    tbody.appendChild(row);
+      const row = document.createElement("tr");
+      row.className = "border-b hover:bg-gray-50";
+      row.innerHTML = `
+          <td class="py-3 px-4 text-center">${user.name}</td>
+          <td class="py-3 px-4 text-center">${user.email}</td>
+          <td class="py-3 px-4 text-center">${user.phone || "N/A"}</td>
+          <td class="py-3 px-4 text-center">${user.role}</td>
+          <td class="py-3 px-4 text-center whitespace-nowrap">
+              <button onclick="window.showDetails(${user.id})" class="text-blue-500 hover:text-blue-700 mr-2">
+                  <i class="fas fa-eye"></i>
+              </button>
+              <button onclick="window.showRoleEdit(${user.id})" class="text-green-500 hover:text-green-700 mr-2">
+                  <i class="fas fa-user-edit"></i>
+              </button>
+              <button onclick="window.showDeleteConfirm(${user.id})" class="text-red-500 hover:text-red-700">
+                  <i class="fas fa-trash"></i>
+              </button>
+          </td>
+      `;
+      tbody.appendChild(row);
   });
 
   // Actualizar información de paginación
   document.getElementById("usersPaginationInfo").textContent = 
-    `Mostrando ${startIndex + 1}-${endIndex} de ${users.length} usuarios`;
+      `Mostrando ${startIndex + 1}-${endIndex} de ${users.length} usuarios`;
 
   // Actualizar controles de paginación
   updateUsersPaginationControls(users.length);

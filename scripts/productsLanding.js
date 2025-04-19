@@ -1,12 +1,12 @@
-// scripts/products.js
 import { DataHandler } from './dataHandler.js';
 
 export class ProductManager {
     constructor() {
         this.dataHandler = new DataHandler();
         this.init();
-        this.visibleProducts = 5; // Número inicial de productos a mostrar
-        this.loadMoreStep = 5; // Cuántos productos cargar al hacer clic en "Ver más"
+        this.visibleProducts = 4; // Número inicial de productos a mostrar (coincide con el grid)
+        this.loadMoreStep = 4; // Cuántos productos cargar al hacer clic en "Ver más"
+        this.isExpanded = false; // Estado para controlar si se muestran todos los productos
     }
 
     async init() {
@@ -18,7 +18,7 @@ export class ProductManager {
         if (!container) return;
 
         // Mostrar skeleton loading
-        container.innerHTML = this.getSkeletonLoading(options.skeletonCount || 5);
+        container.innerHTML = this.getSkeletonLoading(options.skeletonCount || this.visibleProducts);
 
         try {
             // Obtener productos si no se proporcionan
@@ -35,41 +35,8 @@ export class ProductManager {
                 return;
             }
 
-            // Renderizar solo los primeros 5 productos inicialmente
-            const initialProducts = productsToRender.slice(0, this.visibleProducts);
-            container.innerHTML = '';
-            initialProducts.forEach(product => {
-                container.innerHTML += this.getProductCard(product);
-            });
-
-            // Agregar botón "Ver más" si hay más productos
-            if (productsToRender.length > this.visibleProducts) {
-                const loadMoreBtn = document.createElement('button');
-                loadMoreBtn.className = 'mt-6 mx-auto bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors duration-300 block';
-                loadMoreBtn.innerHTML = '<i class="fas fa-plus-circle mr-2"></i> Ver más productos';
-                loadMoreBtn.addEventListener('click', async () => {
-                    loadMoreBtn.disabled = true;
-                    loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Cargando...';
-                    
-                    // Mostrar los siguientes productos
-                    this.visibleProducts += this.loadMoreStep;
-                    const nextProducts = productsToRender.slice(0, this.visibleProducts);
-                    
-                    // Volver a renderizar todos los productos visibles
-                    container.innerHTML = '';
-                    nextProducts.forEach(product => {
-                        container.innerHTML += this.getProductCard(product);
-                    });
-
-                    // Volver a agregar el botón si aún hay más productos
-                    if (productsToRender.length > this.visibleProducts) {
-                        container.appendChild(loadMoreBtn);
-                        loadMoreBtn.disabled = false;
-                        loadMoreBtn.innerHTML = '<i class="fas fa-plus-circle mr-2"></i> Ver más productos';
-                    }
-                });
-                container.appendChild(loadMoreBtn);
-            }
+            // Renderizar productos
+            this.updateProductDisplay(container, productsToRender);
 
         } catch (error) {
             console.error('Error al renderizar productos:', error);
@@ -82,11 +49,56 @@ export class ProductManager {
         }
     }
 
+    updateProductDisplay(container, products) {
+        // Determinar qué productos mostrar según el estado
+        const productsToShow = this.isExpanded ? 
+            products : 
+            products.slice(0, this.visibleProducts);
+        
+        // Limpiar el contenedor
+        container.innerHTML = '';
+        
+        // Renderizar los productos seleccionados
+        productsToShow.forEach(product => {
+            container.innerHTML += this.getProductCard(product);
+        });
+
+        // Agregar controles de expansión si hay más productos
+        if (products.length > this.visibleProducts) {
+            this.addExpansionControls(container, products);
+        }
+    }
+
+    addExpansionControls(container, products) {
+        const controlsDiv = document.createElement('div');
+        controlsDiv.className = 'col-span-full text-center mt-6';
+        
+        const toggleBtn = document.createElement('button');
+        toggleBtn.className = 'bg-gradient-to-r from-blue-600 to-purple-600 hover:opacity-90 text-white px-6 py-2 rounded-lg font-medium transition duration-300 shadow-md';
+        
+        if (this.isExpanded) {
+            toggleBtn.innerHTML = '<i class="fas fa-minus-circle mr-2"></i> Mostrar menos';
+            toggleBtn.addEventListener('click', () => {
+                this.isExpanded = false;
+                this.updateProductDisplay(container, products);
+            });
+        } else {
+            toggleBtn.innerHTML = '<i class="fas fa-plus-circle mr-2"></i> Ver más productos';
+            toggleBtn.addEventListener('click', () => {
+                this.isExpanded = true;
+                this.updateProductDisplay(container, products);
+            });
+        }
+        
+        controlsDiv.appendChild(toggleBtn);
+        container.appendChild(controlsDiv);
+    }
+
     getSkeletonLoading(count) {
         let skeletons = '';
         for (let i = 0; i < count; i++) {
             skeletons += `
-                <div class="text-center py-12">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
                     <div class="animate-pulse">
                         <div class="h-64 bg-gray-200 rounded-lg mb-4"></div>
                         <div class="h-4 bg-gray-200 rounded w-3/4 mx-auto mb-2"></div>
@@ -113,29 +125,33 @@ export class ProductManager {
             <span class="text-gray-800 font-bold">$${product.price.toFixed(2)}</span>
         `;
 
-        // Estrellas basadas en favoritos (simulado)
-        const favoriteStars = Math.min(5, Math.max(1, Math.floor(Math.random() * 5) + 1));
+        // Estrellas basadas en ventas (simuladas)
+        const ratingStars = this.calculateRatingStars(product.sold || 0);
 
         return `
-            <div class="product-card bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300">
-                <div class="relative overflow-hidden h-64">
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 h-full flex flex-col">
+                <div class="relative overflow-hidden h-48">
                     <img src="${product.image || '/images/no-image-icon.png'}" 
                          alt="${product.name}" 
                          class="w-full h-full object-cover transition duration-500 hover:scale-110">
                     ${discountBadge}
+                    ${product.status === 'Agotado' ? `
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                            <span class="text-white font-bold bg-red-500 px-2 py-1 rounded">AGOTADO</span>
+                        </div>
+                    ` : ''}
                 </div>
-                <div class="p-4">
+                <div class="p-4 flex-grow flex flex-col">
                     <h3 class="font-semibold text-lg mb-1 truncate">${product.name}</h3>
-                    <p class="text-gray-600 text-sm mb-2 line-clamp-2">${product.description || 'Descripción no disponible'}</p>
+                    <p class="text-gray-600 text-sm mb-2 line-clamp-2 flex-grow">${product.description || 'Descripción no disponible'}</p>
                     <div class="flex items-center mb-2">
                         <div class="flex text-yellow-400 text-sm">
-                            ${'<i class="fas fa-star"></i>'.repeat(favoriteStars)}
-                            ${'<i class="far fa-star"></i>'.repeat(5 - favoriteStars)}
+                            ${ratingStars}
                         </div>
                         <span class="text-gray-500 text-sm ml-1">(${product.sold || 0})</span>
                     </div>
-                    <div class="flex items-center justify-between">
-                        <div>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="text-sm">
                             ${priceSection}
                         </div>
                     </div>
@@ -144,41 +160,55 @@ export class ProductManager {
         `;
     }
 
-    async renderFeaturedProducts(containerId, limit = 4) {
+    calculateRatingStars(soldCount) {
+        // Lógica para calcular estrellas basadas en ventas
+        let stars = 0;
+        if (soldCount > 50) stars = 5;
+        else if (soldCount > 30) stars = 4;
+        else if (soldCount > 15) stars = 3;
+        else if (soldCount > 5) stars = 2;
+        else stars = 1;
+        
+        let starsHTML = '';
+        for (let i = 0; i < 5; i++) {
+            if (i < stars) {
+                starsHTML += '<i class="fas fa-star"></i>';
+            } else {
+                starsHTML += '<i class="far fa-star"></i>';
+            }
+        }
+        return starsHTML;
+    }
+
+    async renderFeaturedProducts(containerId, limit = 20) {
         const container = document.getElementById(containerId);
         if (!container) return;
 
         try {
-            // Primero intentar con productos destacados
-            let featuredProducts = await this.dataHandler.getTopProducts(limit);
+            // Obtener productos más vendidos
+            let topSoldProducts = await this.dataHandler.getTopProducts(limit);
             
-            // Si no hay suficientes, mezclar con favoritos
-            if (!featuredProducts || featuredProducts.length < limit) {
-                const favorites = await this.dataHandler.getTopFavorites(limit);
-                if (favorites && favorites.length > 0) {
-                    // Combinar y eliminar duplicados
-                    const combined = [...(featuredProducts || []), ...favorites];
-                    const uniqueProducts = combined.reduce((acc, current) => {
-                        const x = acc.find(item => item.id === current.id);
-                        if (!x) {
-                            return acc.concat([current]);
-                        } else {
-                            return acc;
-                        }
-                    }, []);
-                    featuredProducts = uniqueProducts.slice(0, limit);
-                }
-            }
+            // Obtener productos más favoritos
+            const topFavorites = await this.dataHandler.getTopFavorites(limit);
             
-            // Si aún no hay suficientes, obtener los últimos productos
-            if (!featuredProducts || featuredProducts.length < limit) {
+            // Combinar y eliminar duplicados
+            let featuredProducts = this.combineProducts(topSoldProducts, topFavorites, limit);
+            
+            // Si aún no hay suficientes, obtener los últimos productos agregados
+            if (featuredProducts.length < limit) {
                 const allProducts = await this.dataHandler.readProducts();
-                featuredProducts = allProducts
+                const newestProducts = allProducts
                     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                    .slice(0, limit - featuredProducts.length);
+                
+                featuredProducts = [...featuredProducts, ...newestProducts]
+                    .filter((product, index, self) => 
+                        index === self.findIndex(p => p.id === product.id)
+                    )
                     .slice(0, limit);
             }
 
-            // Renderizar productos
+            // Renderizar productos destacados
             await this.renderProducts(containerId, featuredProducts, { skeletonCount: limit });
 
         } catch (error) {
@@ -191,16 +221,30 @@ export class ProductManager {
             `;
         }
     }
+
+    combineProducts(topSold, topFavorites, limit) {
+        // Convertir topFavorites a formato consistente si es necesario
+        const formattedFavorites = topFavorites.map(fav => {
+            return fav.product ? fav.product : fav;
+        });
+        
+        // Combinar sin duplicados
+        const combined = [...(topSold || []), ...formattedFavorites];
+        const uniqueProducts = combined.reduce((acc, current) => {
+            const exists = acc.some(item => item.id === current.id);
+            if (!exists) {
+                return [...acc, current];
+            }
+            return acc;
+        }, []);
+        
+        return uniqueProducts.slice(0, limit);
+    }
 }
 
 // Inicialización cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
     const productManager = new ProductManager();
-    
-    // Renderizar productos en la página principal
-    if (document.getElementById('productsContainer')) {
-        productManager.renderProducts('productsContainer');
-    }
     
     // Renderizar productos destacados en la página principal
     if (document.getElementById('featuredProducts')) {
