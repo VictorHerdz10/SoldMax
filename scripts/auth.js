@@ -98,7 +98,7 @@ function checkRememberedUser() {
 async function handleRegister(e) {
     e.preventDefault();
     if(error){
-        return
+        return;
     } 
     const formData = {
         name: document.getElementById('name').value,
@@ -109,17 +109,36 @@ async function handleRegister(e) {
     };
     
     try {
-        const userExists = await dataHandler.findUserByEmail(formData.email);
-        if (userExists) {
-            showError('El email ya está registrado');
-            return;
-        }
-        
-        const created = await dataHandler.createUser(formData);
-        if (created) {
-            showSuccess('¡Registro completado con éxito!');
-                window.location.href = '/pages/login.html';
-        }
+          // Verificar si el email ya está registrado
+      const emailExists = await dataHandler.findUserByEmail(formData.email);
+      if (emailExists) {
+          showError('El email ya está registrado');
+          return;
+      }
+      
+      // Verificar si el username ya existe
+      const usernameExists = await dataHandler.findUserByUsername(formData.username);
+      if (usernameExists) {
+          showError('El nombre de usuario ya está en uso');
+          return;
+      }
+      
+      // Verificar si el teléfono ya existe
+      const phoneExists = await dataHandler.findUserByPhone(formData.phone);
+      if (phoneExists) {
+          showError('El número de teléfono ya está registrado');
+          return;
+      }
+      
+      // Crear el usuario
+      const created = await dataHandler.createUser(formData);
+      if (created) {
+          showSuccess('¡Registro completado con éxito!');
+          // Redirigir después de 2 segundos para que se vea el mensaje
+          setTimeout(() => {
+              window.location.href = '/pages/login.html';
+          }, 2000);
+      }
     } catch (error) {
         showError('Error en el registro');
         console.error('Registration error:', error);
@@ -145,10 +164,10 @@ export function showSuccess(message) {
       successDiv.classList.replace('animate-slide-in', 'animate-slide-out');
       setTimeout(() => successDiv.remove(), 800);
     }, 5000);
-  }
+}
   
-  // Función para mostrar mensajes de información
-  export function showInfo(message) {
+// Función para mostrar mensajes de información
+export function showInfo(message) {
     const existingToast = document.querySelector('.toast-message.info');
     if (existingToast) existingToast.remove();
   
@@ -166,10 +185,10 @@ export function showSuccess(message) {
       infoDiv.classList.replace('animate-slide-in', 'animate-slide-out');
       setTimeout(() => infoDiv.remove(), 800);
     }, 5000);
-  }
+}
   
-  // Función para mostrar mensajes de error
-  export function showError(message) {
+// Función para mostrar mensajes de error
+export function showError(message) {
     const existingToast = document.querySelector('.toast-message.error');
     if (existingToast) existingToast.remove();
   
@@ -187,4 +206,4 @@ export function showSuccess(message) {
       errorDiv.classList.replace('animate-slide-in', 'animate-slide-out');
       setTimeout(() => errorDiv.remove(), 800);
     }, 5000);
-  }
+}

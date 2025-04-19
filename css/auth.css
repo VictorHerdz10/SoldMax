@@ -1,3 +1,4 @@
+/* auth.css */
 .input-error {
     border-color: #ef4444 !important;
 }
@@ -23,5 +24,81 @@
 @media (max-width: 768px) {
     .register-container {
         background: rgba(255, 255, 255, 0.95);
+    }
+}
+
+/* Estilos para las notificaciones - Actualizados para coincidir con admin.css */
+.toast-message {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 50;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    transform: translateX(120%);
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.toast-message.success {
+    background-color: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+}
+
+.toast-message.error {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+}
+
+.toast-message.info {
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e40af;
+}
+
+.toast-message i {
+    margin-right: 0.5rem;
+}
+
+.animate-slide-in {
+    animation: slideIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.animate-slide-out {
+    animation: slideOut 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+    80% {
+        transform: translateX(-10%);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    20% {
+        transform: translateX(-10%);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(120%);
+        opacity: 0;
     }
 }

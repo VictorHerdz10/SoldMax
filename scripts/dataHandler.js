@@ -899,4 +899,17 @@ async addSubscriber(email) {
   localStorage.setItem(this.newsletterKey, JSON.stringify(subscribers));
   return true;
 }
+/* ==================== VALIDACIONES ADICIONALES ==================== */
+async findUserByUsername(username) {
+  const users = await this.readUsers();
+  return users.find((user) => 
+    user.username && username && 
+    user.username.toLowerCase() === username.toLowerCase()
+  );
+}
+
+async findUserByPhone(phone) {
+  const users = await this.readUsers();
+  return users.find((user) => user.phone && user.phone === phone);
+}
 }

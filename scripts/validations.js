@@ -216,31 +216,36 @@ const validations = {
       e.stopPropagation();
       let isValid = true;
       const formData = {
-        password: document.getElementById("password")?.value,
+          password: document.getElementById("password")?.value,
       };
-    
+  
       // Validar todos los campos incluyendo términos
       Object.keys(validations).forEach((field) => {
-        const input = document.getElementById(field);
-        if (input) {
-          let value;
-          if (input.type === 'checkbox') {
-            value = input.checked; // Para checkboxes, usamos el estado checked
-          } else {
-            value = input.value;
+          const input = document.getElementById(field);
+          if (input) {
+              let value;
+              if (input.type === 'checkbox') {
+                  value = input.checked;
+              } else {
+                  value = input.value;
+              }
+              
+              if (!validateField(field, value, formData)) {
+                  isValid = false;
+                  error = true;
+              }
           }
-          
-          if (!validateField(field, value, formData)) {
-            isValid = false;
-            error = true;
-          }
-        }
       });
-    
-      if (isValid) {
-        error = false;
-        this.submit();
-      } 
-    });
+  
+      if (!isValid) {
+          error = true;
+          return; // Detener el proceso si hay errores
+      } else {
+          error = false;
+          // Disparar un evento personalizado para que auth.js maneje el envío
+          const event = new CustomEvent('validFormSubmit', { detail: formData });
+          document.dispatchEvent(event);
+      }
+  });
   });
   
