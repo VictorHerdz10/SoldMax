@@ -386,15 +386,23 @@ export async function setupProfileAvatar() {
   // Elementos del DOM
   const avatarIcon = document.getElementById('profileAvatar');
   const avatarContainer = document.querySelector('.relative.mb-4');
-  const avatarUploadBtn = avatarContainer.querySelector('button');
-  const avatarImage = document.createElement('img');
-  avatarImage.className = 'w-full h-full object-cover';
-  avatarImage.style.display = 'none';
   
-  // Insertar la imagen dentro del contenedor
-  const avatarWrapper = avatarContainer.querySelector('div');
-  avatarWrapper.insertBefore(avatarImage, avatarWrapper.firstChild);
+  // Verificar si ya existe una imagen y reutilizarla
+  let avatarImage = avatarContainer.querySelector('img.avatar-image');
+  
+  if (!avatarImage) {
+    avatarImage = document.createElement('img');
+    avatarImage.className = 'w-full h-full object-cover avatar-image';
+    avatarImage.style.display = 'none';
+    
+    // Insertar la imagen dentro del contenedor
+    const avatarWrapper = avatarContainer.querySelector('div');
+    avatarWrapper.insertBefore(avatarImage, avatarWrapper.firstChild);
+  }
 
+  // Resto del código permanece igual...
+  const avatarUploadBtn = avatarContainer.querySelector('button');
+  
   // Obtener el usuario actual
   const session = dataHandler.getSession();
   if (!session) return;
@@ -406,17 +414,10 @@ export async function setupProfileAvatar() {
   if (currentUser?.avatar) {
     avatarImage.src = currentUser.avatar;
     avatarImage.style.display = 'block';
-    avatarIcon.style.display = 'none';
+    if (avatarIcon) avatarIcon.style.display = 'none';
     
     // Actualizar también el avatar en el header
-    const headerAvatar = document.querySelector('#userMenuBtn i');
-    if (headerAvatar) {
-      headerAvatar.style.display = 'none';
-      const headerImg = document.createElement('img');
-      headerImg.src = currentUser.avatar;
-      headerImg.className = 'w-8 h-8 rounded-full object-cover';
-      headerAvatar.parentNode.insertBefore(headerImg, headerAvatar);
-    }
+    await updateHeaderAvatar();
   }
 
   // Configurar el evento de clic para subir imagen
@@ -513,39 +514,58 @@ export async function updateHeaderAvatar() {
 
   const users = await dataHandler.readUsers();
   const currentUser = users.find(u => u.id === session.user.id);
-  const headerAvatar = document.querySelector('#userMenuBtn i');
+  const headerButton = document.querySelector('#userMenuBtn');
+  
+  if (!headerButton) return;
 
-  if (!headerAvatar) return;
+  // Buscar elementos existentes
+  const iconElement = headerButton.querySelector('i.fa-user-circle');
+  let avatarImage = headerButton.querySelector('img.avatar-image');
 
   if (currentUser?.avatar) {
     // Si ya hay una imagen, actualizarla
-    const existingImg = headerAvatar.nextElementSibling?.tagName === 'IMG' 
-      ? headerAvatar.nextElementSibling 
-      : null;
-    
-    if (existingImg) {
-      existingImg.src = currentUser.avatar;
+    if (avatarImage) {
+      avatarImage.src = currentUser.avatar;
     } else {
-      // Crear nueva imagen
-      headerAvatar.style.display = 'none';
-      const headerImg = document.createElement('img');
-      headerImg.src = currentUser.avatar;
-      headerImg.className = 'w-8 h-8 rounded-full object-cover';
-      headerAvatar.parentNode.insertBefore(headerImg, headerAvatar);
+      // Crear nueva imagen si no existe
+      avatarImage = document.createElement('img');
+      avatarImage.src = currentUser.avatar;
+      avatarImage.className = 'w-8 h-8 rounded-full object-cover avatar-image';
+      
+      // Reemplazar el icono con la imagen
+      if (iconElement) {
+        iconElement.replaceWith(avatarImage);
+      } else {
+        // Si no hay icono, insertar la imagen en la misma posición
+        const userNameSpan = headerButton.querySelector('#userName');
+        if (userNameSpan) {
+          userNameSpan.insertAdjacentElement('afterend', avatarImage);
+        } else {
+          headerButton.appendChild(avatarImage);
+        }
+      }
     }
   } else {
-    // Si no hay avatar, mostrar el icono por defecto
-    headerAvatar.style.display = 'inline-block';
-    const existingImg = headerAvatar.nextElementSibling?.tagName === 'IMG' 
-      ? headerAvatar.nextElementSibling 
-      : null;
-    
-    if (existingImg) {
-      existingImg.remove();
+    // Eliminar imagen si existe
+    if (avatarImage) {
+      // Restaurar el icono si lo teníamos guardado
+      if (iconElement) {
+        avatarImage.replaceWith(iconElement);
+      } else {
+        avatarImage.remove();
+        // Crear icono si no existe
+        const icon = document.createElement('i');
+        icon.className = 'fas fa-user-circle text-xl';
+        const userNameSpan = headerButton.querySelector('#userName');
+        if (userNameSpan) {
+          userNameSpan.insertAdjacentElement('afterend', icon);
+        } else {
+          headerButton.appendChild(icon);
+        }
+      }
     }
   }
 }
-
 
 // Exportar para acceso global
 window.profileModule = {

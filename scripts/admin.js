@@ -543,12 +543,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
-  document.getElementById('viewProfileBtn')?.addEventListener('click', () => {
-    setTimeout(() => {
-      window.profileModule.setupProfileAvatar();
-    }, 100);
-  });
-  window.profileModule.updateHeaderAvatar();
+  
+  window.profileModule.setupProfileAvatar();
+
 });
 
 // Función para renderizar la tabla de usuarios con paginación
