@@ -119,7 +119,7 @@ async function handleRegister(e) {
         if (created) {
             showSuccess('¡Registro completado con éxito!');
             setTimeout(() => {
-                window.location.href = 'login.html';
+                window.location.href = '/pages/login.html';
             }, 2000);
         }
     } catch (error) {
