@@ -118,9 +118,7 @@ async function handleRegister(e) {
         const created = await dataHandler.createUser(formData);
         if (created) {
             showSuccess('¡Registro completado con éxito!');
-            setTimeout(() => {
                 window.location.href = '/pages/login.html';
-            }, 2000);
         }
     } catch (error) {
         showError('Error en el registro');
