@@ -8,6 +8,7 @@ export class DataHandler {
     this.favoritesKey = "soldmax_favorites_"; // Prefijo para favoritos por usuario
     this.globalFavoritesKey = "soldmax_global_favorites";
     this.pendingOrdersKey = "soldmax_pending_orders_";
+    this.newsletterKey = "soldmax_newsletter_subscribers";
 
 
     // Verificar ofertas expiradas cada hora
@@ -880,4 +881,22 @@ async cancelOrder(orderId) {
     }
     return updated;
   }
+  /* ==================== NEWSLETTER ==================== */
+async getSubscribers() {
+  const subscribers = localStorage.getItem(this.newsletterKey);
+  return subscribers ? JSON.parse(subscribers) : [];
+}
+
+async addSubscriber(email) {
+  const subscribers = await this.getSubscribers();
+  
+  // Verificar si el email ya está suscrito
+  if (subscribers.includes(email)) {
+    throw new Error('Este correo ya está suscrito');
+  }
+  
+  subscribers.push(email);
+  localStorage.setItem(this.newsletterKey, JSON.stringify(subscribers));
+  return true;
+}
 }

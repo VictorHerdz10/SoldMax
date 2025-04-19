@@ -40,12 +40,14 @@ footer a:not(.no-underline):after {
 footer a:not(.no-underline):hover:after {
     width: 100%;
 }
+
 /* Animations */
 @keyframes fadeInUp {
     from {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -55,58 +57,110 @@ footer a:not(.no-underline):hover:after {
 .animate-fade-in {
     animation: fadeInUp 0.5s ease-out forwards;
 }
-         /* Transiciones suaves */
-         .transition-colors {
-            transition-property: background-color, border-color, color;
-            transition-duration: 150ms;
-            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        }
 
-        /* Estilos para las notificaciones */
-        .toast-message {
-            transition: all 0.5s ease;
-            transform: translateX(120%);
-            opacity: 0;
-        }
+/* Transiciones suaves */
+.transition-colors {
+    transition-property: background-color, border-color, color;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-        .animate-slide-in {
-            animation: slideIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-        }
+/* Estilos para las notificaciones */
+.toast-message {
+    transition: all 0.5s ease;
+    transform: translateX(120%);
+    opacity: 0;
+}
 
-        .animate-slide-out {
-            animation: slideOut 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-        }
+.animate-slide-in {
+    animation: slideIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
 
-        @keyframes slideIn {
-            0% {
-                transform: translateX(120%);
-                opacity: 0;
-            }
+.animate-slide-out {
+    animation: slideOut 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
 
-            80% {
-                transform: translateX(-10%);
-                opacity: 1;
-            }
+@keyframes slideIn {
+    0% {
+        transform: translateX(120%);
+        opacity: 0;
+    }
 
-            100% {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
+    80% {
+        transform: translateX(-10%);
+        opacity: 1;
+    }
 
-        @keyframes slideOut {
-            0% {
-                transform: translateX(0);
-                opacity: 1;
-            }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
 
-            20% {
-                transform: translateX(-10%);
-                opacity: 1;
-            }
+@keyframes slideOut {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
 
-            100% {
-                transform: translateX(120%);
-                opacity: 0;
-            }
-        }
+    20% {
+        transform: translateX(-10%);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+}
+
+/* Animaciones para el spinner moderno */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spin-reverse {
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+.animate-spin-reverse {
+    animation: spin-reverse 1.5s linear infinite;
+}
+
+/* Transiciones para los mensajes */
+.message-transition {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.message-enter {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.message-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Estilos para mensajes */
+.message-success {
+    color: #10B981;
+}
+
+.message-error {
+    color: #EF4444;
+}
+
+/* Estilo para el botón deshabilitado */
+button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}

@@ -1,3 +1,4 @@
+import{showError, showSuccess} from './auth.js';
 document.getElementById('currentYear').textContent = new Date().getFullYear();
         
         // Validaciones del formulario de contacto
@@ -107,20 +108,9 @@ document.getElementById('currentYear').textContent = new Date().getFullYear();
                         submitBtn.disabled = true;
                         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Enviando...';
                         
+                        
                         setTimeout(() => {
-                            submitBtn.innerHTML = '<i class="fas fa-check mr-2"></i> Enviado';
-                            
-                            // Mostrar mensaje de éxito
-                            const successDiv = document.createElement('div');
-                            successDiv.className = 'bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4';
-                            successDiv.innerHTML = `
-                                <div class="flex items-center">
-                                    <i class="fas fa-check-circle mr-2"></i>
-                                    <span>¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto.</span>
-                                </div>
-                            `;
-                            
-                            contactForm.parentNode.insertBefore(successDiv, contactForm);
+                            showSuccess(`Gracias por tu mensaje${nameInput.value}! Nos pondremos en contacto contigo pronto`)
                             contactForm.reset();
                             
                             // Restaurar botón después de 3 segundos
@@ -136,6 +126,7 @@ document.getElementById('currentYear').textContent = new Date().getFullYear();
                         if (firstError) {
                             firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         }
+                        showError('Todos los campos son obligatorios');
                     }
                 });
             }
