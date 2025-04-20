@@ -313,7 +313,10 @@ function exportToExcel(salesData, fileName = "ventas") {
       {
         Métrica: "Ventas Pendientes",
         Valor: salesData.filter((s) => s.status === "Pendiente").length,
-      },
+      },{
+        Métrica: "Ventas Canceladas",
+        Valor: salesData.filter((s) => s.status === "Cancelada").length,
+      }
     ];
 
     const wsStats = XLSX.utils.json_to_sheet(statsData);
