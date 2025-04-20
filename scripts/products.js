@@ -9,15 +9,16 @@ const itemsPerPage = 10;
 
 // Configuración de Cloudinary
 const cloudinaryConfig = {
-  cloudName: 'dwad8nrdl',
-  apiKey: '266517934682538',
-  uploadPreset: 'SoldMax_Ventas'
+  cloudName: "dwad8nrdl",
+  apiKey: "266517934682538",
+  uploadPreset: "SoldMax_Ventas",
 };
 
 export const productValidations = {
   name: {
     regex: /^[A-ZÁÉÍÓÚ][a-záéíóúñ0-9\s]{1,24}$/,
-    error: "Debe comenzar con mayúscula, solo letras/números y máximo 25 caracteres",
+    error:
+      "Debe comenzar con mayúscula, solo letras/números y máximo 25 caracteres",
     empty: "Nombre no puede estar vacío",
     maxLength: 25,
   },
@@ -26,6 +27,7 @@ export const productValidations = {
     error: "Formato de precio inválido (ej. 10.99)",
     empty: "Precio no puede estar vacío",
     min: 0.01,
+    max: 100000,
   },
   stock: {
     regex: /^\d+$/,
@@ -44,9 +46,9 @@ export const productValidations = {
     error: "La descripción debe tener entre 5 y 200 caracteres",
   },
   image: {
-    allowedTypes: ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
+    allowedTypes: ["image/jpeg", "image/png", "image/gif", "image/webp"],
     maxSize: 2 * 1024 * 1024, // 2MB
-    error: "Formato de imagen no válido o tamaño excedido (max 2MB)"
+    error: "Formato de imagen no válido o tamaño excedido (max 2MB)",
   },
   discountPrice: {
     validate: (value, originalPrice) => {
@@ -56,7 +58,7 @@ export const productValidations = {
       if (numValue <= 0) return "Debe ser mayor que 0";
       if (numValue >= originalPrice) return "Debe ser menor al precio original";
       return null;
-    }
+    },
   },
   discountEndDate: {
     validate: (value) => {
@@ -65,54 +67,60 @@ export const productValidations = {
       if (isNaN(date.getTime())) return "Fecha inválida";
       if (date < new Date()) return "La fecha no puede ser en el pasado";
       return null;
-    }
-  }
+    },
+  },
 };
 
 let editingProductId = null;
 
 async function uploadImageToCloudinary(file) {
   // 1. Validación del archivo
-  const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+  const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
   if (!allowedTypes.includes(file.type)) {
-    throw new Error('Formato de imagen no válido. Use JPG, PNG, GIF o WEBP.');
+    throw new Error("Formato de imagen no válido. Use JPG, PNG, GIF o WEBP.");
   }
 
   // 2. Validación de tamaño (2MB máximo)
   if (file.size > 2 * 1024 * 1024) {
-    throw new Error('La imagen no debe exceder 2MB de tamaño.');
+    throw new Error("La imagen no debe exceder 2MB de tamaño.");
   }
 
   // 3. Configurar FormData
   const formData = new FormData();
-  formData.append('file', file);
-  formData.append('upload_preset', cloudinaryConfig.uploadPreset);
-  formData.append('cloud_name', cloudinaryConfig.cloudName);
-  formData.append('api_key', cloudinaryConfig.apiKey);
+  formData.append("file", file);
+  formData.append("upload_preset", cloudinaryConfig.uploadPreset);
+  formData.append("cloud_name", cloudinaryConfig.cloudName);
+  formData.append("api_key", cloudinaryConfig.apiKey);
 
   try {
     // 4. Subir a Cloudinary
-    const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloudName}/image/upload`, {
-      method: 'POST',
-      body: formData
-    });
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloudName}/image/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json();
-      showError(errorData.error?.message || 'Error al subir la imagen');
+      showError(errorData.error?.message || "Error al subir la imagen");
     }
 
     const data = await response.json();
-    
+
     // 5. Aplicar transformaciones de optimización
-    const optimizedUrl = data.secure_url
-      .replace('/upload/', '/upload/q_auto,f_auto,w_800,c_scale/');
+    const optimizedUrl = data.secure_url.replace(
+      "/upload/",
+      "/upload/q_auto,f_auto,w_800,c_scale/"
+    );
     showSuccess("Imagen subida correctamente");
     return optimizedUrl;
-
   } catch (error) {
-    console.error('Cloudinary upload error:', error);
-    showError(error.message || 'No se pudo procesar la imagen. Intente nuevamente.');
+    console.error("Cloudinary upload error:", error);
+    showError(
+      error.message || "No se pudo procesar la imagen. Intente nuevamente."
+    );
   }
 }
 
@@ -216,12 +224,18 @@ function setupDescriptionValidation() {
     updateDescriptionCounter(value);
 
     if (value.length === 0) {
-      showProductError("productDescription", productValidations.description.empty);
+      showProductError(
+        "productDescription",
+        productValidations.description.empty
+      );
     } else if (
       value.length < productValidations.description.minLength ||
       value.length > productValidations.description.maxLength
     ) {
-      showProductError("productDescription", productValidations.description.error);
+      showProductError(
+        "productDescription",
+        productValidations.description.error
+      );
     } else {
       clearError("productDescription");
     }
@@ -239,7 +253,15 @@ function setupPriceValidation() {
     if (isNaN(value) || this.value.trim() === "") {
       showProductError("productPrice", productValidations.price.empty);
     } else if (value < productValidations.price.min) {
-      showProductError("productPrice", `El precio mínimo es ${productValidations.price.min}`);
+      showProductError(
+        "productPrice",
+        `El precio mínimo es ${productValidations.price.min}`
+      );
+    } else if (value > productValidations.price.max) {
+      showProductError(
+        "productPrice",
+        `El precio máximo es ${productValidations.price.max}`
+      );
     } else {
       clearError("productPrice");
     }
@@ -260,7 +282,10 @@ function setupStockValidation() {
     } else if (!/^\d+$/.test(value)) {
       showProductError("productStock", productValidations.stock.error);
     } else if (numericValue > productValidations.stock.max) {
-      showProductError("productStock", `El stock máximo es ${productValidations.stock.max}`);
+      showProductError(
+        "productStock",
+        `El stock máximo es ${productValidations.stock.max}`
+      );
     } else {
       clearError("productStock");
     }
@@ -298,14 +323,20 @@ function setupDiscountValidation() {
   if (!discountPriceInput || !discountDateInput || !priceInput) return;
 
   // Validación precio de descuento
-  discountPriceInput.addEventListener("input", function() {
+  discountPriceInput.addEventListener("input", function () {
     const value = this.value.trim();
     const originalPrice = parseFloat(priceInput.value) || 0;
-    
+
     if (value === "") {
-      showProductError("productDiscountPrice", productValidations.discountPrice.validate("", originalPrice));
+      showProductError(
+        "productDiscountPrice",
+        productValidations.discountPrice.validate("", originalPrice)
+      );
     } else {
-      const error = productValidations.discountPrice.validate(value, originalPrice);
+      const error = productValidations.discountPrice.validate(
+        value,
+        originalPrice
+      );
       if (error) {
         showProductError("productDiscountPrice", error);
       } else {
@@ -315,7 +346,7 @@ function setupDiscountValidation() {
   });
 
   // Validación fecha de descuento
-  discountDateInput.addEventListener("change", function() {
+  discountDateInput.addEventListener("change", function () {
     const value = this.value;
     const error = productValidations.discountEndDate.validate(value);
     if (error) {
@@ -332,15 +363,19 @@ function setupDiscountToggle() {
   if (discountCheckbox) {
     discountCheckbox.addEventListener("change", (e) => {
       toggleDiscountFields(e.target.checked);
-      
+
       // Limpiar errores al desactivar
       if (!e.target.checked) {
         clearError("productDiscountPrice");
         clearError("productDiscountEndDate");
       } else {
         // Forzar validación al activar
-        document.getElementById("productDiscountPrice").dispatchEvent(new Event("input"));
-        document.getElementById("productDiscountEndDate").dispatchEvent(new Event("change"));
+        document
+          .getElementById("productDiscountPrice")
+          .dispatchEvent(new Event("input"));
+        document
+          .getElementById("productDiscountEndDate")
+          .dispatchEvent(new Event("change"));
       }
     });
   }
@@ -350,24 +385,28 @@ function setupDiscountToggle() {
 function setupDiscountCalculations() {
   const priceInput = document.getElementById("productPrice");
   const discountPriceInput = document.getElementById("productDiscountPrice");
-  
+
   if (priceInput && discountPriceInput) {
     const calculateDiscount = () => {
       const price = parseFloat(priceInput.value) || 0;
       const discountPrice = parseFloat(discountPriceInput.value) || 0;
-      
+
       if (price > 0 && discountPrice > 0 && discountPrice < price) {
-        const discountPercentage = Math.round(((price - discountPrice) / price) * 100);
+        const discountPercentage = Math.round(
+          ((price - discountPrice) / price) * 100
+        );
         const discountAmount = price - discountPrice;
-        
-        document.getElementById("discountPercentageDisplay").textContent = discountPercentage;
-        document.getElementById("discountAmountDisplay").textContent = discountAmount.toFixed(2);
+
+        document.getElementById("discountPercentageDisplay").textContent =
+          discountPercentage;
+        document.getElementById("discountAmountDisplay").textContent =
+          discountAmount.toFixed(2);
       } else {
         document.getElementById("discountPercentageDisplay").textContent = "0";
         document.getElementById("discountAmountDisplay").textContent = "0.00";
       }
     };
-    
+
     priceInput.addEventListener("input", calculateDiscount);
     discountPriceInput.addEventListener("input", calculateDiscount);
   }
@@ -377,10 +416,10 @@ function setupDiscountCalculations() {
 function setupImageUpload() {
   const imageInput = document.getElementById("productImageUpload");
   const imagePreview = document.getElementById("imagePreview");
-  
+
   if (!imageInput || !imagePreview) return;
 
-  imageInput.addEventListener("change", function(e) {
+  imageInput.addEventListener("change", function (e) {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -400,7 +439,7 @@ function setupImageUpload() {
 
     // Mostrar previsualización
     const reader = new FileReader();
-    reader.onload = function(event) {
+    reader.onload = function (event) {
       imagePreview.innerHTML = `
         <img src="${event.target.result}" class="w-32 h-32 object-cover rounded-lg">
         <button type="button" onclick="window.productModule.clearImageUpload()" 
@@ -418,7 +457,7 @@ function setupImageUpload() {
 function clearImageUpload() {
   const imageInput = document.getElementById("productImageUpload");
   const imagePreview = document.getElementById("imagePreview");
-  
+
   imageInput.value = "";
   imagePreview.innerHTML = "";
   imagePreview.classList.add("hidden");
@@ -451,13 +490,16 @@ export async function openProductModal(product = null) {
   toggleDiscountFields(false);
 
   // Si el producto viene como string (desde el onclick), parsearlo
-  const productData = typeof product === 'string' ? JSON.parse(product) : product;
+  const productData =
+    typeof product === "string" ? JSON.parse(product) : product;
 
   if (productData) {
-    document.getElementById("productModalTitle").textContent = "Editar Producto";
+    document.getElementById("productModalTitle").textContent =
+      "Editar Producto";
     document.getElementById("productName").value = productData.name;
-    document.getElementById("productDescription").value = productData.description || "";
-    
+    document.getElementById("productDescription").value =
+      productData.description || "";
+
     // Mostrar imagen existente si hay una
     if (productData.image) {
       const imagePreview = document.getElementById("imagePreview");
@@ -470,15 +512,17 @@ export async function openProductModal(product = null) {
       `;
       imagePreview.classList.remove("hidden");
     }
-    
+
     document.getElementById("productPrice").value = productData.price;
     document.getElementById("productStock").value = productData.stock;
     document.getElementById("productCategory").value = productData.category;
-    
+
     if (productData.discountPrice && productData.discountEndDate) {
       document.getElementById("productHasDiscount").checked = true;
-      document.getElementById("productDiscountPrice").value = productData.discountPrice;
-      document.getElementById("productDiscountEndDate").value = productData.discountEndDate.split('T')[0];
+      document.getElementById("productDiscountPrice").value =
+        productData.discountPrice;
+      document.getElementById("productDiscountEndDate").value =
+        productData.discountEndDate.split("T")[0];
       toggleDiscountFields(true);
       updateDiscountDisplay(productData.price, productData.discountPrice);
     }
@@ -490,11 +534,13 @@ export async function openProductModal(product = null) {
 
   // Actualizar contadores
   updateCharacterCounter(document.getElementById("productName").value || "");
-  updateDescriptionCounter(document.getElementById("productDescription").value || "");
+  updateDescriptionCounter(
+    document.getElementById("productDescription").value || ""
+  );
 
   // Configurar validaciones
   setupFormValidations();
-  
+
   document.getElementById("productModal").classList.remove("hidden");
 }
 
@@ -506,10 +552,11 @@ export function closeProductModal() {
 // Función para actualizar la visualización del descuento
 function updateDiscountDisplay(price, discountPrice) {
   if (!price || !discountPrice) return;
-  
+
   const { percentage, amount } = calculateDiscount(price, discountPrice);
   document.getElementById("discountPercentageDisplay").textContent = percentage;
-  document.getElementById("discountAmountDisplay").textContent = amount.toFixed(2);
+  document.getElementById("discountAmountDisplay").textContent =
+    amount.toFixed(2);
 }
 
 // Función para calcular el descuento
@@ -531,7 +578,7 @@ export async function handleProductSubmit(e) {
     stock: parseInt(document.getElementById("productStock").value) || 0,
     category: document.getElementById("productCategory").value,
     discountPrice: null,
-    discountEndDate: null
+    discountEndDate: null,
   };
 
   // Manejar la imagen subida
@@ -548,7 +595,7 @@ export async function handleProductSubmit(e) {
   } else if (editingProductId) {
     // Mantener la imagen existente si no se subió una nueva
     const products = await dataHandler.readProducts();
-    const existingProduct = products.find(p => p.id === editingProductId);
+    const existingProduct = products.find((p) => p.id === editingProductId);
     if (existingProduct && existingProduct.image) {
       formData.image = existingProduct.image;
     }
@@ -568,13 +615,19 @@ export async function handleProductSubmit(e) {
 
   // Validar descripción
   if (!formData.description) {
-    showProductError("productDescription", productValidations.description.empty);
+    showProductError(
+      "productDescription",
+      productValidations.description.empty
+    );
     isValid = false;
   } else if (
     formData.description.length < productValidations.description.minLength ||
     formData.description.length > productValidations.description.maxLength
   ) {
-    showProductError("productDescription", productValidations.description.error);
+    showProductError(
+      "productDescription",
+      productValidations.description.error
+    );
     isValid = false;
   }
 
@@ -583,7 +636,10 @@ export async function handleProductSubmit(e) {
     showProductError("productPrice", productValidations.price.empty);
     isValid = false;
   } else if (formData.price < productValidations.price.min) {
-    showProductError("productPrice", `Precio debe ser mayor o igual a ${productValidations.price.min}`);
+    showProductError(
+      "productPrice",
+      `Precio debe ser mayor o igual a ${productValidations.price.min}`
+    );
     isValid = false;
   }
 
@@ -605,22 +661,28 @@ export async function handleProductSubmit(e) {
   // Validar descuento si está activo
   const hasDiscount = document.getElementById("productHasDiscount").checked;
   if (hasDiscount) {
-    formData.discountPrice = document.getElementById("productDiscountPrice").value.trim();
-    formData.discountEndDate = document.getElementById("productDiscountEndDate").value.trim();
-    
+    formData.discountPrice = document
+      .getElementById("productDiscountPrice")
+      .value.trim();
+    formData.discountEndDate = document
+      .getElementById("productDiscountEndDate")
+      .value.trim();
+
     // Validar precio de descuento
     const discountError = productValidations.discountPrice.validate(
-      formData.discountPrice, 
+      formData.discountPrice,
       formData.price
     );
-    
+
     if (discountError) {
       showProductError("productDiscountPrice", discountError);
       isValid = false;
     }
-    
+
     // Validar fecha de descuento
-    const dateError = productValidations.discountEndDate.validate(formData.discountEndDate);
+    const dateError = productValidations.discountEndDate.validate(
+      formData.discountEndDate
+    );
     if (dateError) {
       showProductError("productDiscountEndDate", dateError);
       isValid = false;
@@ -629,7 +691,9 @@ export async function handleProductSubmit(e) {
     // Convertir a valores numéricos/fecha si son válidos
     if (isValid) {
       formData.discountPrice = parseFloat(formData.discountPrice);
-      formData.discountEndDate = new Date(formData.discountEndDate).toISOString();
+      formData.discountEndDate = new Date(
+        formData.discountEndDate
+      ).toISOString();
     }
   }
 
@@ -679,30 +743,38 @@ export async function loadProducts() {
         category: product.category,
         status: product.status,
         discountPrice: product.discountPrice,
-        discountEndDate: product.discountEndDate
+        discountEndDate: product.discountEndDate,
       };
 
-      const hasDiscount = product.discountPrice && product.discountEndDate && 
-                       new Date(product.discountEndDate) >= new Date();
-      
-      const { percentage } = hasDiscount ? 
-        calculateDiscount(product.price, product.discountPrice) : 
-        { percentage: 0 };
+      const hasDiscount =
+        product.discountPrice &&
+        product.discountEndDate &&
+        new Date(product.discountEndDate) >= new Date();
+
+      const { percentage } = hasDiscount
+        ? calculateDiscount(product.price, product.discountPrice)
+        : { percentage: 0 };
 
       const row = document.createElement("tr");
       row.className = "border-b hover:bg-gray-50";
       row.innerHTML = `
         <td class="py-3 px-4 text-center">${product.id}</td>
         <td class="py-3 px-4 text-center">
-          ${product.image ? 
-            `<img src="${product.image}" alt="${product.name}" class="w-10 h-10 object-cover mx-auto rounded">` : 
-            '<i class="fas fa-image text-gray-400 text-xl"></i>'}
+          ${
+            product.image
+              ? `<img src="${product.image}" alt="${product.name}" class="w-10 h-10 object-cover mx-auto rounded">`
+              : '<i class="fas fa-image text-gray-400 text-xl"></i>'
+          }
         </td>
         <td class="py-3 px-4 text-center">${product.name}</td>
         <td class="py-3 px-4 text-center">${product.category}</td>
         <td class="py-3 px-4 text-center">
-          ${hasDiscount ? `
-            <span class="text-gray-500 line-through">$${product.price.toFixed(2)}</span>
+          ${
+            hasDiscount
+              ? `
+            <span class="text-gray-500 line-through">$${product.price.toFixed(
+              2
+            )}</span>
             <br>
             <span class="text-green-600 font-semibold">
               $${product.discountPrice.toFixed(2)}
@@ -711,28 +783,42 @@ export async function loadProducts() {
               </span>
             </span>
             <i class="fas fa-tag text-red-500 ml-1"></i>
-          ` : `$${product.price.toFixed(2)}`}
+          `
+              : `$${product.price.toFixed(2)}`
+          }
         </td>
-        <td class="py-3 px-4 text-center ${product.stock < 10 ? 'text-red-600 font-semibold' : ''}">
+        <td class="py-3 px-4 text-center ${
+          product.stock < 10 ? "text-red-600 font-semibold" : ""
+        }">
           ${product.stock}
         </td>
         <td class="py-3 px-4 text-center">
           <span class="px-2 py-1 rounded-full text-xs ${
-            product.status === "Activo" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+            product.status === "Activo"
+              ? "bg-green-100 text-green-800"
+              : "bg-red-100 text-red-800"
           }">
             ${product.status}
           </span>
         </td>
         <td class="py-3 px-4 text-center space-x-2 whitespace-nowrap">
-          ${hasDiscount ? `
+          ${
+            hasDiscount
+              ? `
             <span class="relative group">
               <i class="fas fa-tag text-red-500 cursor-help"></i>
               <span class="absolute z-10 hidden group-hover:block bg-white shadow-lg p-2 rounded text-xs w-auto left-0 transform -translate-x-1/2">
-                Oferta válida hasta: ${new Date(product.discountEndDate).toLocaleDateString()}
+                Oferta válida hasta: ${new Date(
+                  product.discountEndDate
+                ).toLocaleDateString()}
               </span>
             </span>
-          ` : ''}
-          <button onclick="window.productModule.openProductModal(${escapeHtml(JSON.stringify(productForModal))})" 
+          `
+              : ""
+          }
+          <button onclick="window.productModule.openProductModal(${escapeHtml(
+            JSON.stringify(productForModal)
+          )})" 
             class="text-blue-500 hover:text-blue-700 p-1 rounded hover:bg-blue-50">
             <i class="fas fa-edit"></i>
           </button>
@@ -740,7 +826,9 @@ export async function loadProducts() {
             class="text-red-500 hover:text-red-700 p-1 rounded hover:bg-red-50">
             <i class="fas fa-trash"></i>
           </button>
-          <button onclick="window.productModule.showProductDetails(${product.id})"
+          <button onclick="window.productModule.showProductDetails(${
+            product.id
+          })"
             class="text-purple-500 hover:text-purple-700 p-1 rounded hover:bg-purple-50">
             <i class="fas fa-eye"></i>
           </button>
@@ -750,8 +838,11 @@ export async function loadProducts() {
     });
 
     // Actualizar información de paginación
-    document.getElementById("productsPaginationInfo").textContent = 
-      `Mostrando ${startIndex + 1}-${endIndex} de ${products.length} productos`;
+    document.getElementById(
+      "productsPaginationInfo"
+    ).textContent = `Mostrando ${startIndex + 1}-${endIndex} de ${
+      products.length
+    } productos`;
 
     // Actualizar controles de paginación
     updateProductsPaginationControls(products.length);
@@ -774,29 +865,33 @@ function escapeHtml(unsafe) {
 async function showProductDetails(productId) {
   try {
     const products = await dataHandler.readProducts();
-    const product = products.find(p => p.id === productId);
-    
+    const product = products.find((p) => p.id === productId);
+
     if (!product) {
       showError("Producto no encontrado");
       return;
     }
 
-    const hasDiscount = product.discountPrice && product.discountEndDate && 
-                      new Date(product.discountEndDate) >= new Date();
-    
-    const { percentage, amount } = hasDiscount ? 
-      calculateDiscount(product.price, product.discountPrice) : 
-      { percentage: 0, amount: 0 };
+    const hasDiscount =
+      product.discountPrice &&
+      product.discountEndDate &&
+      new Date(product.discountEndDate) >= new Date();
+
+    const { percentage, amount } = hasDiscount
+      ? calculateDiscount(product.price, product.discountPrice)
+      : { percentage: 0, amount: 0 };
 
     document.getElementById("modalTitle").textContent = "Detalles del Producto";
     const modalContent = document.getElementById("modalContent");
-    
+
     modalContent.innerHTML = `
       <div class="grid grid-cols-1 gap-6">
         <div class="flex flex-col items-center">
-          ${product.image ? 
-            `<img src="${product.image}" alt="${product.name}" class="w-full max-w-xs h-64 object-contain rounded-lg shadow-md mb-4">` : 
-            '<div class="w-64 h-64 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400 text-4xl mb-4"><i class="fas fa-image"></i></div>'}
+          ${
+            product.image
+              ? `<img src="${product.image}" alt="${product.name}" class="w-full max-w-xs h-64 object-contain rounded-lg shadow-md mb-4">`
+              : '<div class="w-64 h-64 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400 text-4xl mb-4"><i class="fas fa-image"></i></div>'
+          }
           
           <div class="text-center">
             <h3 class="text-2xl font-bold text-gray-800">${product.name}</h3>
@@ -810,7 +905,9 @@ async function showProductDetails(productId) {
           <div class="flex justify-between items-center mb-3">
             <span class="font-medium text-gray-700">Estado:</span>
             <span class="px-3 py-1 rounded-full text-sm ${
-              product.status === "Activo" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+              product.status === "Activo"
+                ? "bg-green-100 text-green-800"
+                : "bg-red-100 text-red-800"
             }">
               ${product.status}
             </span>
@@ -818,22 +915,32 @@ async function showProductDetails(productId) {
           
           <div class="flex justify-between items-center mb-3">
             <span class="font-medium text-gray-700">Stock disponible:</span>
-            <span class="font-semibold ${product.stock < 10 ? 'text-red-600' : 'text-gray-800'}">
+            <span class="font-semibold ${
+              product.stock < 10 ? "text-red-600" : "text-gray-800"
+            }">
               ${product.stock} unidades
             </span>
           </div>
           
           <div class="flex justify-between items-center mb-3">
             <span class="font-medium text-gray-700">Precio:</span>
-            <span class="text-lg ${hasDiscount ? 'text-green-600 font-semibold' : 'text-gray-800'}">
-              ${hasDiscount ? 
-                `<span class="text-gray-500 line-through mr-2">$${product.price.toFixed(2)}</span>
-                 $${product.discountPrice.toFixed(2)}` : 
-                `$${product.price.toFixed(2)}`}
+            <span class="text-lg ${
+              hasDiscount ? "text-green-600 font-semibold" : "text-gray-800"
+            }">
+              ${
+                hasDiscount
+                  ? `<span class="text-gray-500 line-through mr-2">$${product.price.toFixed(
+                      2
+                    )}</span>
+                 $${product.discountPrice.toFixed(2)}`
+                  : `$${product.price.toFixed(2)}`
+              }
             </span>
           </div>
           
-          ${hasDiscount ? `
+          ${
+            hasDiscount
+              ? `
             <div class="flex justify-between items-center mb-3">
               <span class="font-medium text-gray-700">Descuento:</span>
               <span class="text-sm bg-green-100 text-green-800 px-2 py-1 rounded">
@@ -846,17 +953,23 @@ async function showProductDetails(productId) {
                 ${new Date(product.discountEndDate).toLocaleDateString()}
               </span>
             </div>
-          ` : ''}
+          `
+              : ""
+          }
         </div>
         
         <div class="border-t pt-4">
           <h4 class="font-medium text-gray-800 mb-2">Descripción</h4>
-          <p class="text-gray-600">${product.description || "No hay descripción disponible"}</p>
+          <p class="text-gray-600">${
+            product.description || "No hay descripción disponible"
+          }</p>
         </div>
         
         <div class="border-t pt-4 text-sm text-gray-500">
           <p><span class="font-medium">ID del producto:</span> ${product.id}</p>
-          <p class="mt-1"><span class="font-medium">Fecha de creación:</span> ${new Date(product.createdAt).toLocaleDateString()}</p>
+          <p class="mt-1"><span class="font-medium">Fecha de creación:</span> ${new Date(
+            product.createdAt
+          ).toLocaleDateString()}</p>
         </div>
       </div>
     `;
@@ -894,7 +1007,7 @@ window.productModule = {
   calculateDiscount,
   updateDiscountDisplay,
   showProductDetails,
-  clearImageUpload
+  clearImageUpload,
 };
 
 // Asignar el manejador de eventos al formulario cuando el DOM esté cargado
@@ -926,7 +1039,9 @@ function updateProductsPaginationControls(totalItems) {
 
   for (let i = startPage; i <= endPage; i++) {
     const pageBtn = document.createElement("button");
-    pageBtn.className = `px-3 py-1 border rounded ${i === currentProductsPage ? "bg-blue-500 text-white" : "bg-white"}`;
+    pageBtn.className = `px-3 py-1 border rounded ${
+      i === currentProductsPage ? "bg-blue-500 text-white" : "bg-white"
+    }`;
     pageBtn.textContent = i;
     pageBtn.addEventListener("click", () => {
       currentProductsPage = i;
