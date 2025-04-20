@@ -222,7 +222,12 @@ export class DataHandler {
       discountPrice: newData.discountPrice || null,
       discountEndDate: newData.discountEndDate || null
     };
-  
+    // Actualizar favoritos globales
+    await this.updateProductInGlobalFavorites(productId, products[index]);
+
+    // Actualizar favoritos de usuarios
+    await this.updateProductInUserFavorites(productId, products[index]);
+    
     return this.writeProducts(products);
   }
   
@@ -472,6 +477,46 @@ async getTopFavorites(limit = 5) {
     const favorites = this.getFavorites();
     return favorites.some((fav) => fav.id === productId);
   }
+  // Nuevo método para actualizar en favoritos globales
+async updateProductInGlobalFavorites(productId, updatedProduct) {
+  const globalFavorites = await this.getGlobalFavorites();
+  const favoriteIndex = globalFavorites.findIndex(fav => fav.productId === productId);
+
+  if (favoriteIndex !== -1) {
+    globalFavorites[favoriteIndex] = {
+      ...globalFavorites[favoriteIndex],
+      productName: updatedProduct.name,
+      productImage: updatedProduct.image,
+      price: updatedProduct.price,
+      category: updatedProduct.category
+    };
+    localStorage.setItem(this.globalFavoritesKey, JSON.stringify(globalFavorites));
+  }
+}
+
+// Nuevo método para actualizar en favoritos de usuarios
+async updateProductInUserFavorites(productId, updatedProduct) {
+  const users = await this.readUsers();
+  
+  for (const user of users) {
+    const userFavoritesKey = `${this.favoritesKey}${user.id}`;
+    const userFavorites = JSON.parse(localStorage.getItem(userFavoritesKey) || '[]');
+    const favoriteIndex = userFavorites.findIndex(fav => fav.id === productId);
+
+    if (favoriteIndex !== -1) {
+      userFavorites[favoriteIndex] = {
+        ...userFavorites[favoriteIndex],
+        name: updatedProduct.name,
+        image: updatedProduct.image,
+        price: updatedProduct.price,
+        category: updatedProduct.category,
+        status: updatedProduct.status,
+        stock: updatedProduct.stock
+      };
+      localStorage.setItem(userFavoritesKey, JSON.stringify(userFavorites));
+    }
+  }
+}
 
   /* ==================== COMPRAS ==================== */
   async processPurchase(paymentData) {
