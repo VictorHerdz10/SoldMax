@@ -221,7 +221,6 @@ document.getElementById("confirmAction").addEventListener("click", async () => {
   }
 });
 
-// Mostrar detalles del usuario con diseño mejorado
 async function showDetails(id) {
   // Usar la lista global de usuarios o cargarla si no está disponible
   const users =
@@ -232,13 +231,18 @@ async function showDetails(id) {
   document.getElementById("modalTitle").textContent = "Detalles del Usuario";
   const modalContent = document.getElementById("modalContent");
 
+  // Determinar si mostrar avatar o icono por defecto
+  const avatarContent = user.avatar 
+    ? `<img src="${user.avatar}" class="w-16 h-16 rounded-full object-cover" alt="Avatar">`
+    : `<div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-2xl">
+         <i class="fas fa-user"></i>
+       </div>`;
+
   modalContent.innerHTML = `
     <div class="space-y-6">
       <!-- Encabezado con avatar -->
       <div class="flex items-center space-x-4">
-        <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-2xl">
-          <i class="fas fa-user"></i>
-        </div>
+        ${avatarContent}
         <div>
           <h3 class="text-xl font-semibold text-gray-800">${user.name}</h3>
           <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
