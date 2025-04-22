@@ -67,20 +67,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Scroll to Top Button (mejorado con animación)
+    // Scroll to Top Button (versión corregida)
     const scrollToTopBtn = document.getElementById('scrollToTopBtn');
     
     if (scrollToTopBtn) {
+        // Mostrar/ocultar botón basado en scroll
         window.addEventListener('scroll', function() {
             if (window.pageYOffset > 300) {
-                scrollToTopBtn.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
-                scrollToTopBtn.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+                scrollToTopBtn.classList.remove('opacity-0', 'invisible');
+                scrollToTopBtn.classList.add('opacity-100', 'visible');
             } else {
-                scrollToTopBtn.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
-                scrollToTopBtn.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+                scrollToTopBtn.classList.add('opacity-0', 'invisible');
+                scrollToTopBtn.classList.remove('opacity-100', 'visible');
             }
         });
         
+        // Comportamiento del click
         scrollToTopBtn.addEventListener('click', function(e) {
             e.preventDefault();
             window.scrollTo({
