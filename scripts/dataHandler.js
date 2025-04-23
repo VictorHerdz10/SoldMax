@@ -701,7 +701,6 @@ async cancelOrder(orderId) {
         throw new Error("Orden no encontrada");
     }
 
-    // No necesitamos verificar el stock nuevamente porque ya fue reservado
     const products = await this.readProducts();
     const updatedProducts = [...products];
 
@@ -709,7 +708,6 @@ async cancelOrder(orderId) {
     order.products.forEach(item => {
         const productIndex = updatedProducts.findIndex(p => p.id === item.productId);
         if (productIndex !== -1) {
-            // No necesitamos verificar stock, solo actualizar las ventas
             updatedProducts[productIndex].sold += item.quantity;
             if (updatedProducts[productIndex].stock <= 0) {
                 updatedProducts[productIndex].status = "Agotado";
@@ -723,8 +721,14 @@ async cancelOrder(orderId) {
     const sales = await this.readSales();
     const saleIndex = sales.findIndex(s => s.id === orderId);
     if (saleIndex !== -1) {
-        sales[saleIndex].status = "Completada";
-        sales[saleIndex].completedAt = new Date().toISOString();
+        // Cambiar el ID de P- a V- y actualizar estado
+        sales[saleIndex] = {
+            ...sales[saleIndex],
+            id: `V-${sales[saleIndex].id.split('-')[1]}`, // Cambiar prefijo
+            status: "Completada",
+            completedAt: new Date().toISOString(),
+            reservedStock: null // Eliminar stock reservado
+        };
         await this.writeSales(sales);
     }
 

@@ -340,12 +340,12 @@ export function setupModals() {
       }
     });
 
-  // Cancelar confirmación de contraseña
-  document
-    .getElementById("cancelPasswordConfirm")
-    ?.addEventListener("click", () => {
-      document.getElementById("passwordConfirmModal").classList.add("hidden");
-    });
+    const cancelPasswordConfirmBtns = document.querySelectorAll("#cancelPasswordConfirm, #closePasswordConfirmModal");
+    cancelPasswordConfirmBtns.forEach(btn => {
+      btn?.addEventListener("click", () => {
+        document.getElementById("passwordConfirmModal").classList.add("hidden");
+      });
+    })
 
   // Modal de detalles del producto
   const closeProductDetailModal = document.getElementById(

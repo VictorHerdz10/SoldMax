@@ -208,6 +208,9 @@ function exportToExcel(salesData, fileName = "ventas") {
     // Crear un libro de trabajo
     const wb = XLSX.utils.book_new();
 
+    // Filtrar solo ventas completadas para cálculos de totales
+    const completedSales = salesData.filter(s => s.status === "Completada");
+
     // Hoja de resumen de ventas - Mejorada
     const summaryData = salesData.map((sale) => ({
       "ID Venta": sale.id,
@@ -291,7 +294,7 @@ function exportToExcel(salesData, fileName = "ventas") {
 
     XLSX.utils.book_append_sheet(wb, wsDetails, "Detalle Productos");
 
-    // Hoja adicional con estadísticas (nueva)
+    // Hoja adicional con estadísticas (nueva) - Usando solo ventas completadas para ingresos
     const statsData = [
       { Métrica: "Total Ventas", Valor: salesData.length },
       {
@@ -301,19 +304,20 @@ function exportToExcel(salesData, fileName = "ventas") {
       {
         Métrica: "Ingresos Totales",
         Valor: {
-          v: salesData.reduce((sum, sale) => sum + sale.total, 0),
+          v: completedSales.reduce((sum, sale) => sum + sale.total, 0),
           t: "n",
           z: '"$"#,##0.00',
         },
       },
       {
         Métrica: "Ventas Completadas",
-        Valor: salesData.filter((s) => s.status === "Completada").length,
+        Valor: completedSales.length,
       },
       {
         Métrica: "Ventas Pendientes",
         Valor: salesData.filter((s) => s.status === "Pendiente").length,
-      },{
+      },
+      {
         Métrica: "Ventas Canceladas",
         Valor: salesData.filter((s) => s.status === "Cancelada").length,
       }
